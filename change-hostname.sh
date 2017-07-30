@@ -1,6 +1,7 @@
 #!/bin/bash
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 set -x
 DATE=`date '+%Y-%m-%d'`
 
@@ -38,6 +39,8 @@ echo $HOSTNAME_ORIG
 ipAddress 
 hostName
 =======
+=======
+>>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
 CLIENTKEY="/etc/chef/client.pem"
 HOSTNAME_ORIG=$(cat /etc/hostname)
 
@@ -87,4 +90,7 @@ else
         sleep 2
 	/etc/init.d/chef-client start
 fi
+<<<<<<< HEAD
+>>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
+=======
 >>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3

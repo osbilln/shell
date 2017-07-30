@@ -1,5 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #!/bin/bash -xe
+=======
+#!/bin/bash -x
+>>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
 =======
 #!/bin/bash -x
 >>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
@@ -22,8 +26,11 @@ echo "Cloning dashboard $CLONE_DASHBOARD"
   # get dbname
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   DB_HOST=$db_Host
 
+=======
+>>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
 =======
 >>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
   CLONE_DB_NAME=`echo $CLONE_DASHBOARD | tr -C -d 'A-Z0-9a-z' | tr 'A-Z' 'a-z' | sed s/dashboard//`
@@ -32,6 +39,7 @@ echo "Cloning dashboard $CLONE_DASHBOARD"
 
   SET_CLONE_DB_NAME=$CLONE_DB_NAME
 <<<<<<< HEAD
+<<<<<<< HEAD
   SET_CLONE_DB_STAGING_NAME=$SET_CLONE_DB_NAME
 
   stagingdbExists=`mysql -uroot -p$CLONE_DB_PW -h $CLONE_DB_HOST --skip-column-names -e "SHOW DATABASES like '${SET_CLONE_DB_NAME}_staging'"`
@@ -39,6 +47,8 @@ echo "Cloning dashboard $CLONE_DASHBOARD"
     SET_CLONE_DB_NAME=${SET_CLONE_DB_NAME}_staging
     SET_CLONE_DB_STAGING_NAME=$SET_CLONE_DB_NAME
 =======
+=======
+>>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
   if [[ $CLONE_DB_SCHEMA_NAME != "" ]]; then
 
     SET_CLONE_DB_NAME=$CLONE_DB_SCHEMA_NAME
@@ -50,6 +60,9 @@ echo "Cloning dashboard $CLONE_DASHBOARD"
 
     SET_CLONE_DB_STAGING_NAME=$CLONE_DB_STAGING_SCHEMA_NAME
 
+<<<<<<< HEAD
+>>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
+=======
 >>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
   fi
   
@@ -58,6 +71,7 @@ echo "SET_CLONE_DB_NAME is ${SET_CLONE_DB_NAME}"
 echo "SET_CLONE_DB_STAGING_NAME is ${SET_CLONE_DB_STAGING_NAME}"
 
 echo "Copying database $SET_CLONE_DB_NAME@$CLONE_DB_HOST to $DB_NAME@$DB_HOST"
+<<<<<<< HEAD
 <<<<<<< HEAD
   # get table list now will grab all VCB tables for lookup
   # OPS-2012 Converted query from subselect to Dave's new version with join
@@ -81,6 +95,8 @@ echo "Copying database $SET_CLONE_DB_NAME@$CLONE_DB_HOST to $DB_NAME@$DB_HOST"
 	mysqldump --routines --single-transaction -u $CLONE_DB_USER -p$CLONE_DB_PW -h $CLONE_DB_HOST $SET_CLONE_DB_NAME $NAEHAS_TABLES | gzip >  $CLONE_DB_NAME.sql.gz
   fi
 =======
+=======
+>>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
   
   # get table list now will grab all VCB tables for lookup
   LOOKUPS=`echo "select distinct tablename from N_DATA_LISTS dl join N_DATA_FEEDS df on dl.datafeed_id=df.id where dl.type not in ('DATA_FILE') and df.purpose='LOOKUP_LIST' and tablename in (select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = '${SET_CLONE_DB_STAGING_NAME}') UNION select distinct tablename from N_DATA_LISTS dl join N_DATA_FEEDS df on dl.datafeed_id=df.id where dl.type not in ('DATA_FILE','TMP','STAGING','EXTENSION') and df.purpose='DATA_LIST' and tablename in (select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = '${SET_CLONE_DB_STAGING_NAME}')" | mysql -uroot -p$CLONE_DB_PW -h $CLONE_DB_HOST ${SET_CLONE_DB_STAGING_NAME} -A -s`
@@ -120,4 +136,7 @@ echo "Copying database $SET_CLONE_DB_NAME@$CLONE_DB_HOST to $DB_NAME@$DB_HOST"
   fi   
   
 
+<<<<<<< HEAD
+>>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
+=======
 >>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3

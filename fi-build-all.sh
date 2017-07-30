@@ -199,7 +199,11 @@ function dev_aws_yml {
        rm ${f}.1 ${f}.2 ${f}.3 ${f}.4
        cp $f ${f}.local
 <<<<<<< HEAD
+<<<<<<< HEAD
     doneremote
+=======
+    done
+>>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
 =======
     done
 >>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #!/bin/bash
 
 cd 
@@ -13,6 +14,8 @@ cd $iCloud
 cd $dst_dir_local
 	eval $sync "~/iCloud/*" .
 =======
+=======
+>>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
 
 
 date > /root/sync.log
@@ -26,4 +29,7 @@ echo ""
 echo ""
 echo "END TIME"
 data >> /root/sync.log
+<<<<<<< HEAD
+>>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
+=======
 >>>>>>> 4a4eaaa47f616fdfc5699327b8fd1f321bdb02b3
