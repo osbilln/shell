@@ -1,0 +1,85 @@
+#!/bin/bash -x
+#
+# Upgrades the current instance.
+#
+# A. Cin
+
+CURR=`pwd`
+PROG=`which $0`
+cd `dirname $PROG`
+SCRIPT_DIR=`pwd`
+. $SCRIPT_DIR/im.properties
+cd $CURR
+
+INSTANCE_ID=`grep INSTANCE_ID base-dashboard.cfg | sed -e 's/[^0-9]//g'`
+if [ "$INSTANCE_ID" = "" ] ; then
+  echo "Please run this script from a dashboard's home directory."
+  exit 3
+fi
+
+MOD_REV_ID=$1
+if [ "$MOD_REV_ID" = "" ] ; then
+  CREATE_TYPE=head
+else
+  CREATE_TYPE=stable
+fi
+
+# -v is important for capturing response headers
+#
+CURL="/usr/bin/curl -b ./curl.cookie -c ./curl.cookie -v "
+
+# Authenticate ###############################################################
+#
+echo `date` "Authenticating."
+$CURL $IM/version > /dev/null 2>&1
+if ! $CURL $IM/j_security_check -d j_username=system -d 'j_password=nh%40dmin' 2> /dev/null | grep "action='j_security_check'" ; then
+  $CURL $IM/version > /dev/null 2>&1
+  echo `date` "Authenticated."
+else
+  echo `date` "Could not authenticate."
+  exit 4
+fi
+
+# Upgrade ####################################################################
+#
+STATUS_URL=`$CURL $IM/instance -d action=upgrade -d api=1 -d task=UPGRADE -d html=true -d createType=$CREATE_TYPE -d targetModuleRevisionId=$MOD_REV_ID -d parentId=$INSTANCE_ID 2>&1 | grep Location | sed -e 's/< Location: //'`
+
+echo `date` 'Waiting for upgrade completion.'
+sleep 100
+STATUS=`$CURL "$STATUS_URL" 2>&1 | egrep 'COMPLETED|ERROR' | sed -e 's/[^A-Z]//g'`
+COUNTER=0
+while [ "$STATUS" = "" -a $COUNTER -lt 60 ] ; do
+  echo `date` 'Waiting for upgrade completion.'
+  sleep 10
+  STATUS=`$CURL "$STATUS_URL" 2>&1 | egrep 'COMPLETED|ERROR' | sed -e 's/[^A-Z]//g'`
+  let COUNTER=COUNTER+1
+done
+if [[ "$STATUS" != "COMPLETED" ]] ; then 
+  echo `date` 'Error during upgrade: ' $STATUS $COUNTER
+  exit 1
+fi
+
+echo `date` "Done Upgrading."
+
+
+# Migrate ####################################################################
+
+STATUS_URL=`$CURL $IM/instance -d api=1 -d task=MIGRATE -d html=true -d parentId=$INSTANCE_ID 2>&1 | grep Location | sed -e 's/< Location: //'`
+
+echo `date` 'Waiting for migrate completion.'
+sleep 120
+STATUS=`$CURL "$STATUS_URL" 2>&1 | egrep 'COMPLETED|ERROR' | sed -e 's/[^A-Z]//g'`
+COUNTER=0
+while [ "$STATUS" = "" -a $COUNTER -lt 60 ] ; do
+  echo `date` 'Waiting for migrate completion.'
+  sleep 10
+  STATUS=`$CURL "$STATUS_URL" 2>&1 | egrep 'COMPLETED|ERROR' | sed -e 's/[^A-Z]//g'`
+  let COUNTER=COUNTER+1
+done
+
+if [[ "$STATUS" != "COMPLETED" ]] ; then 
+  echo `date` 'Error during migrate: ' $STATUS $COUNTER
+  exit 2
+fi
+
+echo `date` "Done."

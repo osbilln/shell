@@ -1,0 +1,87 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`
+export scriptDir=`dirname $0`
+
+if [[ (-z $1) || (-z $2) || (-z $3) || (-z $4) || (-z $5) ]]; then
+    echo "ERROR: usage: $PROGRAM_NAME <fromBox> <source> <newPath> <oldPath> <dbHost>"
+    echo "              <fromBox>:      The name of the box you are migrating from"
+    echo "              <source>:       The project of the instance (only supports base-ilp)"
+    echo "              <newPath>:      The path of the project being migrated"
+    echo "              <oldPath>:      The path of the project being replaced"
+    echo "              <dbHost>:       The database host"
+    echo ""
+    exit 1;
+fi
+
+fromBox=$1
+source=$2
+newPath=$3
+oldPath=$4
+dbHost=$5
+
+newInstanceDir=/usr/java/${newPath}
+
+eval `ssh-agent -s`
+echo "SSH_AGENT_PID = $SSH_AGENT_PID"
+ssh-add
+
+killAgentAndExit() {
+    kill -9 $SSH_AGENT_PID
+    exit $1
+}
+
+if [[ "base-ilp" != "${source}" ]]; then
+    echo "ERROR: $PROGRAM_NAME only applicable for base-ilp instances.";
+    killAgentAndExit 1;
+fi
+
+${scriptDir}/migrate-instance-details $fromBox $source $newPath 0 PROD $dbHost
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: error migrating instance $newPath";
+    killAgentAndExit 1;
+fi
+
+if ! [[ -e ${newInstanceDir}/${source}.cfg ]]; then
+    echo "ERROR: ${source}.cfg not found at ${newInstanceDir} (migrate must have failed)";
+    killAgentAndExit 1;
+fi
+
+. ${newInstanceDir}/${source}.cfg
+
+if [[ -z $URL ]]; then
+    echo "ERROR: URL not set. ";
+    killAgentAndExit 1;
+fi
+
+oldStagingUrl="${oldPath}.${STAGING_DOMAIN_SUFFIX}"
+
+export path=$oldPath
+export instanceType=STAGING
+sudo /bin/remove-virtual-host
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: sudo /bin/remove-virtual-host failed"
+    killAgentAndExit 1;
+fi
+
+export path=$oldPath
+export instanceType=PROD
+sudo /bin/remove-virtual-host
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: sudo /bin/remove-virtual-host failed"
+    killAgentAndExit 1;
+fi
+
+### create a new virtual host for the new live ilp
+svn update 
+export path=$newPath
+export instanceType=PROD
+${scriptDir}/generate_virtual_host_file
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: ${scriptDir}/generate_virtual_host_file failed"
+    killAgentAndExit 1;
+fi
+
+echo ${newInstanceDir} >> /home/naehas/conf/running_instances.cfg
+
+killAgentAndExit 0;

@@ -1,0 +1,9 @@
+#!/bin/sh
+#first argument should be the name of the production file to pull the audit rows from, the second argument should be the number of records to pull for each segment
+
+FOO=(`mysql -u root -pn3admin javelintraining_staging -e "select concat('''',name,'''') from N_SEGMENTS where landing_page_id = 256"`)
+
+for ((i=1;i<${#FOO[@]};i++)); do
+   echo ${i} ${FOO[${i}]}
+   grep -m 60 "${FOO[${i}]}" $1 | tail -$2 >> auditfile$2.csv
+done

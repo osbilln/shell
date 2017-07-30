@@ -1,0 +1,195 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`
+DEBUG=1
+
+usage() {
+    echo "usage: ${PROGRAM_NAME} <url> <source> <path> <instanceType> <dbHost>"
+    echo "       url	     : The svn repository url, ie file:///home/svn/repository/"
+    echo "       source	     : The source to be checked out, ie base-dashboard, base-ilp"
+    echo "       path	     : The destination path, ie prism-dashboard, canon-graph-expo-2006, schwab-dec-ilp"
+    echo "       instanceType: The type of instance (TEST|STAGING|PROD)" 
+    echo "       dbHost      : The database host"
+    echo ""
+    echo "  example: ${PROGRAM_NAME} svn+ssh://dev1.naehas.com/home/svn/repository base-dashboard microsoft-dashboard PROD prodcluster";
+    echo ""
+    exit 1;
+}
+
+debug() {
+    if [[ $DEBUG -eq 1 ]]; then
+        echo "`date +%Y/%m/%d_%H:%M:%S` | $1";
+    fi
+}
+
+if [[ (-z $1) || (-z $2) || (-z $3) || (-z $4) || (-z $5) ]]; then
+    usage
+fi
+
+export scriptDir=`dirname $0`;
+svnUrl=$1
+source=$2
+export path=$3
+export instanceType=$4
+export DBHOST=$5
+
+eval `ssh-agent -s`
+ssh-add
+
+killAgentAndExit() {
+    kill -9 $SSH_AGENT_PID
+    exit $1;
+}
+
+if [[ (-e /usr/java/${path}) || (-e /usr/java/staging/${path}) ]]; then
+    echo "ERROR: ${path} already exists!";
+    killAgentAndExit 1;
+fi
+
+export machineDir=""
+if [[ ("base-ilp" == "$source") ]]; then
+    export machineDir="staging"
+fi
+fullInstancePath=/usr/java/${machineDir}/${path}
+debug "Creating instance $fullInstancePath from $source";
+
+
+debug "Checking out ${path}-branch from ${source}";
+svn checkout ${svnUrl}/${source}/branches/${path} ${fullInstancePath}
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Error running svn checkout from ${svnUrl}";
+    killAgentAndExit 1;
+fi
+if ! [[ -e ${fullInstancePath} && -d ${fullInstancePath} ]]; then
+    echo "ERROR: svn checkout did not run successfully. ${fullInstancePath} not there or not directory.";
+    killAgentAndExit 1;
+fi
+
+cd ${fullInstancePath}
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Somehow we're not in ${fullInstancePath}".
+    killAgentAndExit 1;
+fi
+
+if ! [[ -e ${source}.cfg ]]; then
+    echo "ERROR: ${source}.cfg not present.";
+    killAgentAndExit 1;
+fi
+debug "Sourcing ${source}.cfg";
+. ${source}.cfg   
+
+baseSource=`echo ${source} | sed "s/base-\(.\+\)$/\1/"`;
+
+debug "Configuring by configure-${source}.";
+${scriptDir}/configure-${source}
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: configure-${source} failed";
+    killAgentAndExit 1;
+fi
+
+${scriptDir}/configure-port-numbers
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: configure-port-numbers failed.";
+    killAgentAndExit 1;
+fi
+
+debug "Compiling ${fullInstancePath}";
+ant compile
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Compilation failed";
+    killAgentAndExit 1;
+fi
+
+if [[ "$source" == "base-dashboard" ]]; then
+
+    debug "Running 'ant createschema_staging'";
+    ant createschema_staging
+    if [[ $? -ne 0 ]]; then 
+        echo "ERROR: Creating schema for ${DATABASE}_staging failed.";
+        killAgentAndExit 1;
+    fi
+
+    debug "Running 'ant upgradedatabase_staging'";
+    ant upgradedatabase_staging
+    if [[ $? -ne 0 ]]; then 
+        echo "ERROR: Upgrading database ${DATABASE}_staging failed.";
+        killAgentAndExit 1;
+    fi
+
+    debug "Running 'ant createschema'";
+    ant createschema
+    if [[ $? -ne 0 ]]; then 
+        echo "ERROR: Creating schema for ${DATABASE} failed.";
+        killAgentAndExit 1;
+    fi
+
+    debug "Running 'ant upgradedatabase'";
+    ant upgradedatabase
+    if [[ $? -ne 0 ]]; then 
+        echo "ERROR: Upgrading database ${DATABASE} failed.";
+        killAgentAndExit 1;
+    fi
+
+    debug "Modifying httpd.conf for dashboard information.";
+    ${scriptDir}/modify-apache ${path} ${source}
+    if [[ $? -ne 0 ]]; then 
+        echo "ERROR: modify-apache ${path} ${source} failed.";
+        killAgentAndExit 1;
+    fi
+
+elif [[ "$source" == "base-ilp" ]]; then
+    echo "Generating virtual host file."
+    ${scriptDir}/generate_virtual_host_file
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: generate_virtual_host_file failed."
+        killAgentAndExit 1;
+    fi
+    echo "Virtual host file generated."
+fi
+
+mkdir ${fullInstancePath}/logs    
+if [[ "$source" == "base-ilp" ]]; then
+    svn add . --force
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: svn add all failed."
+        killAgentAndExit 1;
+    fi
+    
+    svn commit -m "initial checkin"
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: svn commit failed."
+        killAgentAndExit 1;
+    fi
+fi
+
+cd bin
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Somehow we're not in the bin directory.";
+    killAgentAndExit 1;
+fi
+
+chmod a+x *.sh
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Permission changes in bin dir failed."
+    killAgentAndExit 1;
+fi
+
+if [[ "TEST" != "$instanceType" ]]; then
+	debug "Starting up tomcat server.";    
+    export CATALINA_PID=catalina.pid
+    ./startup.sh
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: Error starting $path";
+        killAgentAndExit 1;
+    fi
+else
+	debug "Skipping automatic-startup for TEST instance."
+fi
+    
+if [[ "base-dashboard" == "${source}" ]]; then
+    echo ${path} >> /home/naehas/conf/subversion_instances.cfg
+fi
+
+echo ${fullInstancePath} >> /home/naehas/conf/running_instances.cfg
+
+killAgentAndExit 0;

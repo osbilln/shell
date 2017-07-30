@@ -1,0 +1,32 @@
+#! /bin/bash
+
+STATE_OK=0
+STATE_WARNING=1
+STATE_CRITICAL=2
+STATE_UNKNOWN=3
+STATE_DEPENDENT=4
+
+if test -x /usr/bin/printf; then
+	ECHO=/usr/bin/printf
+else
+	ECHO=echo
+fi
+
+wget "prodmerge.naehas.com:7070/master/services/action/server" -O /tmp/check_http_prodwkmerge_server.txt
+merge_busy_count=`grep -f /usr/lib/nagios/plugins/check_http_prodmerge_server_busy_pattern.txt -o /tmp/check_http_prodwkmerge_server_busy_slaves.txt | wc -l`
+
+echo WKBUSYCOUNT: $merge_busy_count
+
+if [ $merge_busy_count -gt 5 ]; then
+	merge_status=CRITICAL
+else
+	merge_status=OK
+fi
+
+echo WKSTATUS: $merge_status
+
+if [ "$merge_status" = "CRITICAL" ]; then
+	exit $STATE_CRITICAL
+else
+	exit $STATE_OK
+fi

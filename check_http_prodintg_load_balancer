@@ -1,0 +1,33 @@
+#! /bin/bash
+
+STATE_OK=0
+STATE_WARNING=1
+STATE_CRITICAL=2
+STATE_UNKNOWN=3
+STATE_DEPENDENT=4
+
+if test -x /usr/bin/printf; then
+        ECHO=/usr/bin/printf
+else
+        ECHO=echo
+fi
+
+wget "http://integration.naehas.com/welcomekit/services/Document?wsdl" -O /tmp/check_http_prodintg_load_balancer.txt
+prodintg_working=`grep -f /usr/lib/nagios/plugins/check_http_prodintg_working_pattern.txt -o /tmp/check_http_prodintg_load_balancer.txt | wc -l`
+
+echo PRODINTGOK: $prodintg_working
+
+if [ $prodintg_working -gt 0 ]; then
+        prodintg_status=OK
+else
+        prodintg_status=CRITICAL
+fi
+
+echo PRODINTGSTATUS: $prodintg_status
+
+if [ "$prodintg_status" = "CRITICAL" ]; then
+        exit $STATE_CRITICAL
+else
+        exit $STATE_OK
+fi
+

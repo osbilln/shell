@@ -1,0 +1,98 @@
+#!/bin/bash
+
+export scriptDir=`dirname $0`;
+PROGRAM_NAME=`basename $0`
+DEBUG=1
+
+usage() {
+    echo "usage: ${PROGRAM_NAME} <from> <source> <path> <instanceId> <instanceType> <dbHost>"
+    echo "      <from>:         The name of the box you are migrating from"
+    echo "      <source>:       The project of the instance, (base-dashboard|base-ilp)"
+    echo "      <path>:         The path of the project"
+    echo "      <instanceId>:   The ID of the instance being deployed"
+    echo "      <instanceType>: The type of instance (TEST|STAGING|PROD)"
+    echo "      <dbHost>:       The database host"
+    echo "      example: ${PROGRAM_NAME} test1 base-dashboard apple-dashboard 1230 STAGING prodcluster"
+    echo ""
+    exit 1;
+}
+
+debug() {
+    if [[ $DEBUG -eq 1 ]]; then
+        echo "`date +%Y/%m/%d_%H:%M:%S` | $1";
+    fi
+}
+
+if [[ (-z $1) || (-z $2) || (-z $3) || (-z $4) || (-z $5) || (-z $6) ]]; then
+    usage;
+fi
+
+fromBox=$1
+source=$2
+export path=$3
+instanceId=$4
+export instanceType=$5
+export DBHOST=$6
+
+eval `ssh-agent -s`
+echo "SSH_AGENT_PID: $SSH_AGENT_PID"
+ssh-add
+
+killAgentAndExit() {
+    kill -9 $SSH_AGENT_PID
+    exit $1;
+}
+
+destParent=/usr/java
+
+if [[ ( "STAGING" == "$instanceType" ) && ("base-ilp" == "$source") ]]; then
+	# does this ever happen? if not, can we get rid of this condition?
+	destParent=$destParent/staging
+fi 
+
+destDir=$destParent/$path
+
+preExistingFlag=0;
+
+if [[ -d "$destDir" ]]; then
+    debug "Found $path in $destParent";
+    preExistingFlag=1;
+fi
+
+${scriptDir}/migrate-instance-details $fromBox $source $path $instanceId $instanceType $DBHOST
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Error migrating instance $path";
+    killAgentAndExit 1;
+fi
+
+if [ ! -f "${destDir}/${source}.cfg" ]; then
+    echo "ERROR: ${destDir}/${source}.cfg does not exist.";
+    killAgentAndExit 1;
+fi
+
+debug "Sourcing ${destDir}/${source}.cfg"
+. ${destDir}/${source}.cfg
+
+if [[ (preExistingFlag -eq 0) ]]; then 
+    #new instance
+    if [[ ("base-ilp" == "${source}") ]]; then
+        ${scriptDir}/generate_virtual_host_file
+        if [[ $? -ne 0 ]]; then
+            echo "ERROR: generate_virtual_host_file failed."
+            killAgentAndExit 1;
+        fi   
+    else
+        if [[ ("PROD" == "$instanceType") ]];then
+            export PORT=`expr $PORT + 5`
+        fi 
+        debug "Edit apache for new instance";
+        ${scriptDir}/modify-apache $path $source
+        if [[ $? -ne 0 ]]; then
+            echo "ERROR: modify-apache $path $source, failed.";
+            killAgentAndExit 1;
+        fi
+    fi
+    echo ${destDir} >> /home/naehas/conf/running_instances.cfg
+fi
+
+killAgentAndExit 0;

@@ -1,0 +1,27 @@
+# These sed substitutions are pretty fragile because whitespace changes will break things. 
+# If it becomes an issue we can adjust the regex to handle whitespace, or try using XPath (probably from an ant target)
+
+if [ -z ${INSTANCE_ID} ]
+then
+	echo ERROR: INSTANCE_ID variable must be set. Aborting.
+	exit 1
+fi 
+
+if [ -z ${INSTANCE_TYPE} ]
+then
+	echo ERROR: INSTANCE_TYPE variable must be set. Aborting.
+	exit 1
+fi 
+
+if [ ! -e webapps/dashboard/WEB-INF/global-beans.xml ]
+then 
+	echo ERROR: webapps/dashboard/WEB-INF/global-beans.xml not found. Aborting.
+	exit 1
+fi
+
+echo Setting instanceID=${INSTANCE_ID} and instanceType=${INSTANCE_TYPE}
+
+sed -i "s|\(<property name=\"instanceId\"><value>\)[0-9]*\(</value></property>\)|\1${INSTANCE_ID}\2|" webapps/dashboard/WEB-INF/global-beans.xml
+
+sed -i "s|\(<property name=\"instanceType\"><value>\)[A-Za-z]*\(</value></property>\)|\1${INSTANCE_TYPE}\2|" webapps/dashboard/WEB-INF/global-beans.xml
+${scriptDir}/set_database_info

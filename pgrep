@@ -1,0 +1,5 @@
+#!/bin/sh
+
+NEEDLE=$1
+shift
+sed -e '/./{H;$!d;}' -e "x;/$NEEDLE/!d;" $*

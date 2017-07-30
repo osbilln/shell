@@ -1,0 +1,21 @@
+#!/bin/bash
+set -x
+# Transfer files in parallel using rsync (simple script)
+# MAXCONN: maximum number "rsync" processes running at the same time:
+MAXCONN=10
+# Source and destination base paths. (not need to end with "/")
+SRC_BASE=/data1/mysql-data-db7/usbankprod_staging
+DST_BASE=ubuntu@172.16.125.9:/data/db7
+RSYNC_OPTS="--stats -ilrtpog "
+# Main loop:
+for FULLDIR in $SRC_BASE/*/; do
+    NUMRSYNC=`ps -Ao comm | grep '^'rsync'$' | wc -l `
+    while [ $NUMRSYNC -ge $MAXCONN ]; do
+        NUMRSYNC=`ps -Ao comm | grep '^'rsync'$' | wc -l `
+        sleep 10
+    done
+    DIR=`basename $FULLDIR`
+    rsync $RSYNC_OPTS -e "ssh -i /root/.ssh/dr-db.pem" $SRC_BASE/${DIR}/ $DST_BASE/${DIR}/ & 
+    sleep 1 
+done
+echo "Done."

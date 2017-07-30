@@ -1,0 +1,30 @@
+#!/bin/bash
+
+echo "Instructions: splitFiles prod.csv 2 to split prod.csv into two files of approx equal segments"
+FOO=('3001 - MW Default V 1' '3002 - MW Default V 2' '3003 - MW Default V 3' '3004 - Cleveland V 1' '3005 - Cleveland V 2' '3006 - Cleveland V 3' '3007 - South Bend V 1' '3008 - South Bend V 2' '3009 - South Bend V 3' '3010 - Toledo V 1' '3011 - Toledo V 2' '3012 - Toledo V 3' '3013 - Lansing V 1' '3014 - Lansing V 2' '3015 - Lansing V 3' '3016 - Flint V 1' '3017 - Flint V 2' '3018 - Flint V 3' '3019 - Madison V 1' '3020 - Madison V 2' '3021 - Madison V 3' '3022 - Milwaukee V 1' '3023 - Milwaukee V 2' '3024 - Milwaukee V 3' '3025 - Columbus V 1' '3026 - Columbus V 2' '3027 - Columbus V 3' '3028 - SW Default V 1' '3029 - SW Default V 2' '3030 - SW Default V 3' '3031 - Dallas V 1' '3032 - Dallas V 2' '3033 - Dallas V 3' '3034 - Tulsa V 1' '3035 - Tulsa V 2' '3036 - Tulsa V 3' '3037 - Wichita V 1' '3038 - Wichita V 2' '3039 - Wichita V 3' '3040 - Little Rock V 1' '3041 - Little Rock V 2' '3042 - Little Rock V 3' '3043 - Lubbock V 1' '3044 - Lubbock V 2' '3045 - Lubbock V 3' '3046 - St Louis V 1' '3047 - St Louis V 2' '3048 - St Louis V 3' '3049 - El Paso V 1' '3050 - El Paso V 2' '3051 - El Paso V 3' '3053 - Topeka V 2' '3054 - Topeka V 3' '3056 - Ft Sm-Fayet V 2' '3057 - Ft Sm-Fayet V 3' '3058 - Houston V 1' '3059 - Houston V 2' '3060 - Houston V 3' '3061 - Austin V 1' '3062 - Austin V 2' '3063 - Austin V 3' '3064 - San Antonio V 1' '3065 - San Antonio V 2' '3066 - San Antonio V 3' '3067 - Kansas City V 1' '3068 - Kansas City V 2' '3069 - Kansas City V 3' '3070 - Oklahoma City V 1' '3071 - Oklahoma City V 2' '3072 - Oklahoma City V 3' '3073 - West Default V 1' '3074 - West Default V 2' '3075 - West Default V 3' '3076 - San Francisco V 1' '3077 - San Francisco V 2' '3078 - San Francisco V 3' '3079 - San Diego V 1' '3080 - San Diego V 2' '3081 - San Diego V 3' '3082 - Sacramento V 1' '3083 - Sacramento V 2' '3084 - Sacramento V 3' '3085 - Reno V 1' '3086 - Reno V 2' '3087 - Reno V 3' '3088 - Fresno V 1' '3089 - Fresno V 2' '3090 - Fresno V 3' '3091 - Monterey V 1' '3092 - Monterey V 2' '3093 - Monterey V 3' '3094 - Bakersfield V 1' '3095 - Bakersfield V 2' '3096 - Bakersfield V 3' '3097 - East Default V 1' '3098 - East Default V 2' '3099 - East Default V 3' '3100 - FFC V 1' '3101 - FFC V 2' '3102 - FFC V 3' '3103 - SE Default V 1' '3104 - SE Default V 2' '3106 - Jacksonville V 1' '3107 - Jacksonville V 2' '3108 - Jacksonville V 3' '3109 - MW Default V 4' '3110 - Cleveland V 4' '3111 - South Bend V 4' '3112 - Toledo V 4' '3113 - Lansing V 4' '3114 - Flint V 4' '3115 - Madison V 4' '3116 - Milwaukee V 4' '3117 - Columbus V 4' '3118 - SW Default V 4' '3119 - Dallas V 4' '3120 - Tulsa V 4' '3121 - Wichita V 4' '3122 - Little Rock V 4' '3123 - Lubbock V 4' '3124 - St Louis V 4' '3125 - El Paso V 4' '3126 - Topeka V 4' '3127 - Ft Sm-Fayet V 4' '3128 - Houston V 4' '3129 - Austin V 4' '3130 - San Antonio V 4' '3131 - Kansas City V 4' '3132 - Oklahoma City V 4' '3133 - West Default V 4' '3134 - Sacramento V 4' '3135 - Reno V 4' '3136 - Fresno V 4' '3137 - Monterey V 4' '3138 - Bakersfield V 4' '3139 - San Francisco V 4' '3140 - San Diego V 4' '3141 - East Default V 4' '3142 - FFC V 4' '3143 - Hartford V 4' '3145 - Jacksonville V 4' '3149 - Atlanta NV 1' '3150 - Atlanta NV 2' '3151 - Atlanta NV 3' '3152 - Miami NV 1' '3153 - Miami NV 2' '3154 - Miami NV 3' '3155 - Orlando NV 1' '3156 - Orlando NV 2' '3157 - Orlando NV 3' '3158 - Nashville NV 1' '3159 - Nashville NV 2' '3160 - Nashville NV 3' '3161 - Charlotte NV 1' '3162 - Charlotte NV 2' '3163 - Charlotte NV 3' '3164 - Raleigh Durham NV 1' '3165 - Raleigh Durham NV 2' '3166 - Raleigh Durham NV 3' '3167 - Columbia NV 1' '3168 - Columbia NV 2' '3169 - Columbia NV 3' '3170 - Birmingham NV 1' '3171 - Birmingham NV 2' '3172 - Birmingham NV 3' '3173 - W Palm Beach NV 1' '3174 - W Palm Beach NV 2' '3175 - W Palm Beach NV 3' '3177 - Atlanta NV 4' '3178 - Miami NV 4' '3179 - Orlando NV 4' '3180 - Nashville NV 4' '3181 - Charlotte NV 4' '3182 - Raleigh Durham NV 4' '3183 - Columbia NV 4' '3184 - Birmingham NV 4' '3185 - W Palm Beach NV 4' '3186 - LA OC V 1' '3187 - LA OC V 2' '3188 - LA OC V 3' '3189 - Chicago V 1' '3190 - Chicago V 2' '3191 - Chicago V 3' '3192 - Dayton V 1' '3193 - Dayton V 2' '3194 - Dayton V 3' '3195 - Detroit V 1' '3196 - Detroit V 2' '3197 - Detroit V 3' '3198 - Grand Rapids V 1' '3199 - Grand Rapids V 2' '3200 - Grand Rapids V 3' '3201 - Green Bay V 1' '3202 - Green Bay V 2' '3203 - Green Bay V 3' '3204 - Indianapolis V 1' '3205 - Indianapolis V 2' '3206 - Indianapolis V 3' '3207 - LA OC V 4' '3208 - Chicago V 4' '3209 - Dayton V 4' '3210 - Grand Rapids V 4' '3211 - Green Bay V 4' '3212 - Indianapolis V 4' '3213 - Detroit V 4')
+
+segs=$((${#FOO[@]}/$2))
+remainder=$((${#FOO[@]}-$((${segs}*$2))))
+startIdx=0;
+endIdx=${segs}
+
+
+for ((j=1;j<=$2;j++)); do
+
+head -1 $1 > dataFile$j.csv
+
+echo ${j} $startIdx $endIdx 
+
+for ((i=${startIdx};i<${endIdx};i++)); do
+   echo ${i} ${FOO[${i}]}
+   grep "${FOO[${i}]}" $1 >> dataFile$j.csv
+done
+
+startIdx=$((${startIdx}+${segs}))
+endIdx=$((${endIdx}+${segs}))
+
+if [ $j = $(($2-1)) ]; then
+   endIdx=$((${endIdx}+${remainder}))
+fi
+
+done

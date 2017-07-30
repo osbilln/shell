@@ -1,0 +1,8 @@
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/mpspprod-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/o2mpsp3-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/mpsp2-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/comcastprod-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/citinew-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/usbankprod-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/naehasdemo10-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/dmiplatform-dashboard /usr/java/

@@ -1,0 +1,7 @@
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz 192.168.201.72:/export/data1/web2/staging/dmiplatform-dmiplatformfreetrial-ilp /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz 192.168.201.33:/tmp-svn-mnt/web3/staging/comcastprod-comcastprodtrialcampaign-ilp /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz 192.168.201.33:/tmp-svn-mnt/web3/staging/usbankprod-usbankprodtrialcampaign-ilp /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz 192.168.201.33:/tmp-svn-mnt/web3/staging/wlpprod-wlpprodtrialcampaign-ilp /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz 192.168.201.33:/tmp-svn-mnt/web1/staging/coxprod /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz 192.168.201.33:/tmp-svn-mnt/web1/staging/naehasdemo10-naehasdemo10trialcampaign-ilp /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz 192.168.201.33:/tmp-svn-mnt/web3/staging/citinewuat-citinewuattrialcampaign-ilp /usr/java/staging/

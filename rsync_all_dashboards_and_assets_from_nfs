@@ -1,0 +1,16 @@
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/mpspprod-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/o2mpsp3-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/mpsp2-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/comcastprod-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/citinew-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/usbankprod-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/naehasdemo10-dashboard /usr/java/
+rsync -Pav --exclude datafeeds --exclude downloads --exclude temp --exclude logs /nfs1/web1/usr/java/dmiplatform-dashboard /usr/java/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz /nfs1/web1/staging/mpspprod-mpspprodtrialcampaign-ilp /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz /nfs1/web1/staging/o2mpsp3-o2mpsp3trialcampaign-ilp /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz /nfs1/web1/staging/mpsp28-base-ilp /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz /nfs1/web1/staging/naehasdemo10-naehasdemo10trialcampaign-ilp /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz /nfs2/web2/staging/dmiplatform-dmiplatformfreetrial-ilp /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz /nfs1/web3/staging/citinewuat-citinewuattrialcampaign-ilp /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz /nfs1/web3/staging/comcastprod-comcastprodtrialcampaign-ilp /usr/java/staging/
+rsync -Pav --exclude Backup.tar --exclude .svn --exclude Backup.tar.gz /nfs1/web3/staging/usbankprod-usbankprodtrialcampaign-ilp /usr/java/staging/

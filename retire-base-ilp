@@ -1,0 +1,92 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`
+DEBUG=1
+
+usage() {
+    echo "ERROR: usage";
+    echo "usage: ${PROGRAM_NAME} <instanceType> <path> <suffix>"
+    echo "      path: The path of the base-ilp you wish to retire, ie canon-ilp or /usr/java/expo-ilp"
+    echo ""
+    exit 1;
+}
+
+debug() {
+    if [[ $DEBUG -eq 1 ]]; then
+        echo "`date +%Y/%m/%d_%H:%M%S` | $1";
+    fi
+}
+
+if [[ (-z $1) || (-z $2) || (-z $3) ]]; then
+    usage
+fi
+
+export instanceType=$1
+export path=`basename $2`
+suffix=$3
+scriptDir=`dirname $0`;
+box=`hostname | sed "s/^.\+-\(.\+\).naehas.\+$/\1/"`
+if [[ "STAGING" == "${instanceType}" || "TEST" == "${instanceType}" ]]; then
+    instanceDir=/usr/java/staging/$path
+else
+    instanceDir=/usr/java/$path
+fi
+
+if [[ ! -e ${instanceDir} ]]; then
+    echo "ERROR: ${instanceDir} does not exist.";
+    exit 1;
+fi
+
+debug "Retiring $instanceDir";
+
+cd ${instanceDir}/bin
+if [[ $? -ne 0 ]]; then
+	echo "ERROR: cd to bin dir failed."
+	exit 1;
+fi
+chmod a+x *.sh
+export CATALINA_PID=catalina.pid
+./shutdown.sh -force
+if [[ $? -ne 0 ]]; then
+	echo "ERROR: tomcat shutdown failed."
+	exit 1;
+fi
+
+if [[ ! -e ${instanceDir}/base-ilp.cfg ]]; then
+    echo "ERROR: base-ilp.cfg not present.";
+    exit 1;
+fi
+. ${instanceDir}/base-ilp.cfg
+
+cd ${instanceDir}
+
+if [[ "${VHOST_HOME}" == "" ]]; then
+    export VHOST_HOME=/etc/httpd/vhosts
+fi
+
+if [[ -e ${VHOST_HOME}/${instanceType}.${path}.vhost ]]; then
+    sudo /bin/remove-virtual-host
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: /bin/remove-virtual-host failed"
+        exit 1;
+    fi
+else
+    echo "${VHOST_HOME}/${instanceType}.${path}.vhost does not exist. Skipping remove-virtual-host."
+fi
+
+cd /usr/java
+sleep 1; # i don't think its done shutting down by this point.
+echo "rm -rf ${instanceDir}"
+rm -rf ${instanceDir}
+
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: deletion of directory failed."
+    exit 1;
+fi
+
+grep -v "${instanceDir}" /home/naehas/conf/running_instances.cfg > /home/naehas/conf/running_instances.cfg.tmp
+mv /home/naehas/conf/running_instances.cfg.tmp /home/naehas/conf/running_instances.cfg
+
+exit 0;
+
+

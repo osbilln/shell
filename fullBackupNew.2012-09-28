@@ -1,0 +1,44 @@
+#!/bin/bash
+# Backs up all naehas tables.
+# Excludes customer tables, and rendermap tables.
+
+PASSWORD=n3admin
+
+
+if [[ "$1" == "" ]] ; then
+        DB=dmiplatform
+else
+        DB=$1
+fi
+echo $DB
+
+SERVER=$2
+echo $SERVER
+
+MYSQLDUMP="mysqldump --socket=/var/lib/mysql/$SERVER.sock"
+echo $MYSQLDUMP
+MYSQL="mysql --socket=/var/lib/mysql/$SERVER.sock"
+echo $MYSQL
+
+
+LOOKUPS=`echo "select distinct tablename from N_DATA_LISTS where type not in ('DATA_FILE','TMP','STAGING') and tablename in (select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = '${DB}_staging')" | $MYSQL -uroot -p$PASSWORD ${DB}_staging -A -s`
+NAEHAS_TABLES=`echo "show tables where tables_in_${DB} like 'N\_%' and tables_in_${DB} not like 'N\_DATA\_MAPPINGS%';" | $MYSQL -uroot -p$PASSWORD $DB -A -s `
+echo Backing up $DB $NAEHAS_TABLES for $DB
+echo ""
+$MYSQLDUMP -u root -p$PASSWORD $DB $NAEHAS_TABLES                                 | gzip > $DB.sql.gz
+NAEHAS_TABLES=`echo "show tables where tables_in_${DB}_staging like 'N\_%' and tables_in_${DB}_staging not like 'N\_DATA\_MAPPINGS%';" | $MYSQL -uroot -p$PASSWORD ${DB}_staging -A -s `
+echo Backing up ${DB}_staging $NAEHAS_TABLES $LOOKUPS for ${DB}_staging
+echo ""
+$MYSQLDUMP -u root -p$PASSWORD ${DB}_staging $NAEHAS_TABLES $LOOKUPS | gzip > ${DB}_staging.sql.gz
+echo Backing up ${DB}_bonita_core
+echo ""
+$MYSQLDUMP -u root -p$PASSWORD ${DB}_bonita_core                                  | gzip > ${DB}_workflow.sql.gz
+echo Backing up ${DB}_bonita_history
+echo ""
+$MYSQLDUMP -u root -p$PASSWORD ${DB}_bonita_history                               | gzip > ${DB}_workflow_history.sql.gz
+
+# You could install these onto a target db with:
+### zcat $DB.sql.gz | mysql -uroot -p -A [target]
+### zcat $DB_staging].sql.gz | mysql -uroot -p -A [target]_staging
+
+echo 'Done.'

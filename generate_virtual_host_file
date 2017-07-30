@@ -1,0 +1,90 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`
+
+if [[ (-z ${path}) || (-z ${PORT}) || (-z ${instanceType}) || (-z ${URL}) || (-z ${STAGING_DOMAIN_SUFFIX}) || (-z ${VHOST_HOME}) ]]; then
+    echo "ERROR: usage: $PROGRAM_NAME requires the following environment variables to be set: ";
+    echo "              path                    The basename of the path on the disk, ie canonwideformat2007-ilp";
+    echo "              PORT                    The port number given by the instance manager.";
+    echo "              instanceType            The type of instance you are creating this virtual host file for, TEST, STAGING, PROD";
+    echo "              URL                     The url of the live campaign.";
+    echo "              STAGING_DOMAIN_SUFFIX   Domain suffix for cluster, ie naehaslp.com.";
+    echo "              VHOST_HOME              Location of vhost files.";
+    exit 1;
+fi
+
+fileName=${instanceType}.${path}.vhost
+fullInstancePath=/usr/java/${path}
+
+if [[ "STAGING" == "${instanceType}" ]]; then
+    fullInstancePath=/usr/java/staging/${path}
+fi
+
+if [[ ! -e ${fullInstancePath} ]]; then
+    echo "ERROR: ${fullInstancePath} does not exist."
+    exit 1;
+fi
+    
+svn update ${fullInstancePath}/${fileName}
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: svn update ${fullInstancePath}/${fileName} failed."
+    exit 1;
+fi
+
+if [[ ! -e ${fullInstancePath}/${fileName} ]]; then
+    echo "Creating new vhost file ${fullInstancePath}/${fileName}";
+    myPort=`expr $PORT + 6`
+    serverName=${URL}
+    if [[ "STAGING" == "${instanceType}" ]]; then
+        myPort=`expr $PORT + 1`
+        serverName=${path}.${STAGING_DOMAIN_SUFFIX}
+    fi
+    
+    echo "\
+<VirtualHost *:80>
+
+ServerName ${serverName}
+ServerAlias *.${serverName}
+
+RewriteEngine on
+RewriteCond %{REQUEST_URI} ^.*(jpg|gif|css|js|png)$ [NC]
+RewriteCond %{REQUEST_URI} !^/?([^/]+)$
+RewriteRule ^.*/([^/]+)\.([^/]+)$ http://${serverName}/\$1.\$2 [R]
+
+ProxyPass / http://127.0.0.1:${myPort}/ilp/
+ProxyPassReverse / http://127.0.0.1:${myPort}/ilp/
+
+</VirtualHost>" > ${fullInstancePath}/${fileName}
+    cat ${fullInstancePath}/${fileName}
+    echo ""
+    
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: Error echoing out VirtualHost file ${fullInstancePath}/${fileName}";
+        exit 1;
+    fi
+    
+    echo "svn add ${fullInstancePath}/${fileName}"
+    svn add ${fullInstancePath}/${fileName}
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: svn add ${fullInstancePath}/${fileName} failed."
+        exit 1;
+    fi
+    echo "svn commit ${fullInstancePath}/${fileName} -m \"auto from ${PROGRAM_NAME}\""
+    svn commit ${fullInstancePath}/${fileName} -m "auto from ${PROGRAM_NAME}"
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: svn commit ${fullInstancePath}/${fileName} failed."
+        exit 1;
+    fi
+else
+    # balance password calls
+    echo "${fullInstancePath}/${fileName} already exists"
+fi
+
+echo "sudo /bin/ln -s ${fullInstancePath}/${fileName} ${VHOST_HOME}/${fileName}"
+sudo /bin/ln -s ${fullInstancePath}/${fileName} ${VHOST_HOME}/${fileName}
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: sudo /bin/ln -s ${fullInstancePath}/${fileName} ${VHOST_HOME}/${fileName} failed"
+    exit 1;
+fi
+
+exit 0

@@ -1,0 +1,7 @@
+rm -rvf ../../../*/*.pyc
+rm -rvf ../../*/*.pyc
+rm -rvf ../*/*.pyc
+rm -rvf *.pyc
+rm -rvf */*.pyc
+rm -rvf */*/*.pyc
+rm -rvf */*/*/*.pyc

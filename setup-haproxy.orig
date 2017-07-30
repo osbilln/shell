@@ -1,0 +1,227 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`
+
+usage() {
+    echo "ERROR: usage: ${PROGRAM_NAME} url port proxyHost"
+    echo "              url             eg. MyDashboard, CanonDashboard, ValueDirectDashboard"
+    echo "              port            eg. 12345, 54320"
+    echo "              proxyHost       eg. 127.0.0.1, cluster3, prodcluster"
+    echo ""
+    exit 1;
+}
+
+if [[ (-z $1) || (-z $2) || (-z $3) ]]; then
+    usage
+fi;
+
+URL=$1
+PORT=$2
+port=`expr $PORT + 1`
+proxyHost=$3
+scriptDir=`dirname $0`
+TS=`date '+%Y%m%d-%H%M%S'`
+HAPROXY_HOME=/etc/haproxy
+HAPROXY_CONF=/etc/haproxy/haproxy.cfg
+HAPROXY=/usr/sbin/haproxy
+NAEHAS_ADMIN=/tmp/naehas-admin
+port=`expr $PORT + 1`
+
+function haproxy_cfg_before()
+	{
+	ssh naehas@$proxyHost -C "cp -r /etc/haproxy/haproxy.cfg $NAEHAS_ADMIN/haproxy.cfg.${TS}.before"
+	scp -rp naehas@$proxyHost:/etc/haproxy/haproxy.cfg /tmp/haproxy.cfg
+}
+
+function haproxy_cfg_after()
+	{
+	scp -rp /tmp/haproxy.cfg naehas@$proxyHost:/tmp/haproxy.cfg 
+	ssh naehas@$proxyHost -C "cp -r /tmp/haproxy.cfg $NAEHAS_ADMIN/haproxy.cfg.${TS}.after"
+}
+
+function sync_haproxy_config()
+        {
+        scp -rp /tmp/haproxy.cfg naehas@$proxyHost2:/tmp/haproxy.cfg
+        ssh naehas@$proxyHost2 -C "chmod 644 /tmp/haproxy.cfg"
+        ssh naehas@$proxyHost2 -C "sudo mv /tmp/haproxy.cfg $HAPROXY_CONF"
+
+}
+
+function update_haproxy_config()
+	{
+        ssh naehas@$proxyHost -C "chmod 644 /tmp/haproxy.cfg"
+	ssh naehas@$proxyHost -C "sudo mv /tmp/haproxy.cfg $HAPROXY_CONF"
+}
+
+function haproxy_status()
+{
+	ssh naehas@$proxyHost -C "output=$(cat /var/run/haproxy.pid)"
+        if [ $? -eq 0 ]; then
+            echo " * $service_name is running (pid $pid)."
+        else
+            echo " * $service_name is not running"
+            exit 1
+        fi;
+}
+
+function check_existing_dashboard()
+{
+        ssh naehas@$proxyHost "grep $URL /etc/haproxy/haproxy.cfg"
+        if [ $? -eq 0 ]; then
+           echo "ERROR: There is an existing dashboard, $URL.  Please select different Dashboard Name "
+           exit 1
+        fi;
+}
+
+function check_haproxy_config()
+{
+	ssh naehas@$proxyHost -C "$HAPROXY -c -f "/tmp/haproxy.cfg" >/dev/null"
+        if [ $? -eq 1 ]; then
+                echo "haproxy failed, Please check your haproxy.cfg"
+                exit 1
+        fi;
+}
+
+function restart_haproxy()
+{
+	echo "checking for haproxy configuration exists."
+	ssh naehas@$proxyHost -C "test -e /etc/haproxy/haproxy.cfg"
+        if [ $? -ne 0 ]; then
+            echo " Missing haproxy configuration file"
+            exit 1
+        fi;
+
+	echo "Restarting the haproxyserver..."
+	ssh naehas@$proxyHost -C "sudo /etc/init.d/haproxy reload"
+	if [[ $? -ne 0 ]]; then
+    		echo "ERROR: haproxy failed to restart"
+    	exit 1
+	fi;
+}
+
+function dashboard_status() 
+{
+        output=$(lsof -i tcp:${PORT} | grep -i listen)
+        if [ $? -eq 0 ]; then
+            pid=$(echo -e "$output" | tail -n 1 | awk -F" " '{print $2}')
+            echo " * $service_name is running (pid $pid)."
+        else
+            echo " * $service_name is not running"
+            exit 1
+        fi;
+}
+
+function frontend () 
+{
+	sed "/bind ${proxyIP}:80/a \        acl ${URL} path_reg ^/${URL}/?\n \       use_backend ${URL} if ${URL}\n" /tmp/haproxy.cfg  > /tmp/haproxy.cfg.1
+	sed "/bind ${proxyIP}:443/a \        acl ${URL} path_reg ^/${URL}/?\n \       use_backend ${URL} if ${URL}\n" /tmp/haproxy.cfg.1 > /tmp/haproxy.cfg.2
+}
+
+function backend () 
+{
+	cat <<EOF >> /tmp/haproxy.cfg.2
+backend ${URL}
+        balance roundrobin
+        option  http-server-close
+        timeout http-keep-alive 3000
+        option  forwardfor
+        option http-keep-alive
+        cookie JSESSIONID prefix
+	reqrep ^([^\ :]*)\ /${URL}\/*(.*) \1\ /dashboard/\2
+        rspirep ^(Location:)\ http://([^/]*)/dashboard/(.*)$    \1\ https://\2/${URL}/\3
+	redirect scheme https if !{ ssl_fc }
+        server $node1 $node1_ip:${port} cookie ${URL}$node1 check
+        server $node2 $node2_ip:${port} cookie ${URL}$node2 check
+EOF
+	mv /tmp/haproxy.cfg.2 /tmp/haproxy.cfg
+	rm /tmp/haproxy.cfg.1
+}
+
+function check_env()
+{
+	if [ $ENV = qadb1 ]; then
+	   node1=qa5
+	   node1_ip=`echo $qa5` 
+	   node2=qa6
+	   node2_ip=`echo $qa6`
+	   proxyIP=`echo $qavip`
+           proxyHost2=`echo $qalb2`
+	fi;
+	if [ $ENV = perfdb1 ]; then
+	   node1=perfweb1
+	   node1_ip=`echo $perfweb1`
+	   node2=perfweb2
+	   node2_ip=`echo $perfweb2`
+	   proxyIP=`echo $perfvip`
+	   proxyHost2=`echo $perflb2`
+	fi;
+	if [ $ENV = uatdb ]; then
+	   node1=uatweb3
+	   node1_ip=`echo $uatweb3`
+	   node2=uatweb4
+	   node2_ip=`echo $uatweb4`
+	   proxyIP=`echo $uatvip`
+	   proxyHost2=`echo $uatlb2`
+	fi;
+	if [ $ENV = db1 ]; then
+	   node1=web1
+	   node1_ip=`echo $web1`
+	   node2=web2
+	   node2_ip=`echo $web2`
+	   node3=web3
+	   node3_ip=`echo $web3`
+	   proxyIP=`echo $prodvip`
+	   proxyHost2=`echo $prodlb2`
+	fi;
+}
+
+DASHBOARD_DIRNAME=`echo $URL | tr A-Z a-z | sed "s/dashboard/-dashboard/"`
+if [ -e /usr/java/$DASHBOARD_DIRNAME ]; then
+   cd /usr/java/$DASHBOARD_DIRNAME
+fi
+
+#if [ -e base-dashboard.properties ]; then
+#   source base-dashboard.properties
+#fi
+
+dbHost=$(grep -w dbHost base-dashboard.properties)
+ENV=`echo $dbHost | cut -d"=" -f2`
+cd /home/naehas/proxy-bin
+if [ -e env.properties ]; then
+   source env.properties
+fi
+if [ -e vip.properties ]; then
+   source vip.properties
+fi
+if [ -e lb.properties ]; then
+   source lb.properties
+fi
+
+check_env 
+
+if [ -e $HAPROXY_HOME ]; then
+   cd $HAPROXY_HOME
+fi
+
+if ! [[ -e /tmp/naehas-admin ]]; then
+    mkdir /tmp/naehas-admin
+    chmod a+rwx /tmp/naehas-admin
+fi;
+
+eval `ssh-agent`
+ssh-add ~naehas/.au/id_rsa
+### This will check for existing URL if it exists then exit
+check_existing_dashboard $URL
+
+### Copy configuration before
+haproxy_cfg_before
+### Modify configuration
+frontend $NAEHAS_ADMIN 
+backend $NAEHAS_ADMIN
+### Check if configuration is working
+haproxy_cfg_after
+check_haproxy_config
+sync_haproxy_config
+update_haproxy_config
+restart_haproxy
+exit 0;

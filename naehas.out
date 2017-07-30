@@ -1,0 +1,833 @@
+    1  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ls -rlta
+    2  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas scp web2:/home/naehas/.bash_profile .
+    3  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas env | sort
+    4  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd /usr/java
+    5  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ls -lrta
+    6  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas rsync -Pav --exclude datafeeds --exclude downloads web2:/usr/java/dmiplatformuat-dashboard /usr/java/
+    7  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas mkdir /usr/java/dmiplatformuat-dashboard/webapps/dashboard/WEB-INF/datafeeds
+    8  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas mkdir /usr/java/dmiplatformuat-dashboard/webapps/dashboard/WEB-INF/downloads
+    9  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas mkdir /usr/java/dmiplatformuat-dashboard/webapps/dashboard/WEB-INF/downloads/headers
+   10  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas rsync -Pav  web2:/usr/java/jdk1.6.0_26 /usr/java/
+   11  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas rsync -Pav  web2:/usr/java/apache-ant-1.6.1 /usr/java/
+   12  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ln -s apache-ant-1.6.1/ ant
+   13  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ls -lrta
+   14  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas rsync -Pav  web2:/usr/java/jdk1.6.0_26-x64 /usr/java/
+   15  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ls -lrta
+   16  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd /usr/java/dmiplatformuat-dashboard/
+   17  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd bin
+   18  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ps -ef | grep dmi
+   19  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas uname -a
+   20  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ./startup.sh
+   21  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas java -version
+   22  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ps -ef | grep java
+   23  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas java -version
+   24  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd /usr/java/dmiplatformuat-dashboard/bin
+   25  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ./shutdown.sh 
+   26  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ./startup.sh
+   27  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ps -ef | grep dmi
+   28  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas tail -f ../logs/catalina.
+   29  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas tail -f ../logs/catalina.out 
+   30  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas tail -f ../logs/dashboard.log
+   31  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas top
+   32  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cat /proc/cpuinfo 
+   33  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas top
+   34  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cat /proc/cpuinfo 
+   35  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas top
+   36  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cat /proc/cpuinfo 
+   37  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas top
+   38  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cat /proc/cpuinfo 
+   39  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas top
+   40  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cat /proc/cpuinfo 
+   41  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas top
+   42  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cat /proc/cpuinfo 
+   43  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ./shutdown.sh 
+   44  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd /usr/java
+   45  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas di -sm .
+   46  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas du -sm .
+   47  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ls -lrta
+   48  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ps -ef | grep java
+   49  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas pwd
+   50  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd /usr/java
+   51  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas du -sm .
+   52  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd dmiplatformuat-dashboard/webapps/dashboard/WEB-INF/datafeeds/
+   53  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ls -lrta
+   54  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd /usr/java
+   55  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ls -lrta
+   56  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas Change ntp servers:
+   57  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas vi /etc/ntp.conf
+   58  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas rsync -Pav web2:/home/naehas/.bashrc /home/naehas/
+   59  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas rsync -Pav 192.168.201.19:/home/naehas/.bashrc /home/naehas/
+   60  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas rsync -Pav 192.168.201.19:/home/naehas/.bash_profile /home/naehas/
+   61  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas rsync -Pav 192.168.201.19:/home/naehas/.ssh /home/naehas/
+   62  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas rsync -Pav naehas@192.168.201.19:/home/naehas/web_server_package.tar.gz /tmp/
+   63  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd /usr/
+   64  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ls -al
+   65  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas mv java/ java_old
+   66  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ls -al
+   67  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd java
+   68  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ls
+   69  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas tar xvfz /tmp/web_server_package.tar.gz
+   70  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas rm -rf apache-ant-1.6.1/
+   71  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas exec ssh-agent bash
+   72  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ssh-add
+   73  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas sudo su -
+   74  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ifconfig -a
+   75  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cat /etc/passwd
+   76  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas su - srini
+   77  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ll
+   78  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas history 
+   79  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd /usr/java
+   80  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ll
+   81  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas exit
+   82  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas pwd
+   83  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ls -slart
+   84  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas car .profile 
+   85  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cat .profile 
+   86  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas vi .bashrc 
+   87  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas pwd
+   88  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ll
+   89  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd .ssh/
+   90  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas l
+   91  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ll
+   92  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd
+   93  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas pwd
+   94  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ll
+   95  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd .ssh/
+   96  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas ll
+   97  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas pwd
+   98  2015-01-08 01:10:27 billn pts/1 23:58 /home/naehas cd
+   99  2014-12-29 23:46:25 billn pts/1 23:58 /home/naehas ll
+  100  2014-12-29 23:47:01 billn pts/1 23:58 /home/naehas rsync -Pav naehas:/home/naehas/ttf /home/naehas/
+  101  2014-12-29 23:47:11 billn pts/1 23:58 /home/naehas rsync -Pav web3:/home/naehas/ttf /home/naehas/
+  102  2014-12-29 23:47:24 billn pts/1 23:58 /home/naehas ll
+  103  2014-12-29 23:47:27 billn pts/1 23:58 /home/naehas cd ttf/
+  104  2014-12-29 23:47:27 billn pts/1 23:58 /home/naehas ll
+  105  2014-12-29 23:47:29 billn pts/1 23:58 /home/naehas cd
+  106  2014-12-29 23:47:45 billn pts/1 23:58 /home/naehas rsync -Pav web3:/home/naehas/type1 /home/naehas/
+  107  2014-12-29 23:47:53 billn pts/1 23:58 /home/naehas ll
+  108  2014-12-29 23:48:23 billn pts/1 23:58 /home/naehas exit
+  109  2014-12-30 00:00:28 billn pts/1 23:58 /home/naehas pwd
+  110  2014-12-30 00:00:28 billn pts/1 23:58 /home/naehas ll
+  111  2014-12-30 00:00:38 billn pts/1 23:58 /home/naehas gpg --list
+  112  2014-12-30 00:00:47 billn pts/1 23:58 /home/naehas gpg -list-keys
+  113  2014-12-30 00:00:55 billn pts/1 23:58 /home/naehas gpg --list-keys
+  114  2014-12-30 00:03:57 billn pts/1 23:58 /home/naehas cd /tmp
+  115  2014-12-30 00:04:01 billn pts/1 23:58 /home/naehas exit
+  116  2014-12-30 00:05:11 billn pts/1 23:58 /home/naehas gpg --import /tmp/public_keys.asc
+  117  2014-12-30 00:05:11 billn pts/1 23:58 /home/naehas gpg --import /tmp/private_keys.asc
+  118  2014-12-30 00:05:11 billn pts/1 23:58 /home/naehas gpg --list-keys
+  119  2014-12-30 00:05:30 billn pts/1 23:58 /home/naehas cd .gnupg/
+  120  2014-12-30 00:05:31 billn pts/1 23:58 /home/naehas ll
+  121  2014-12-30 00:05:34 billn pts/1 23:58 /home/naehas vi gpg.conf 
+  122  2014-12-30 00:06:37 billn pts/1 23:58 /home/naehas cd
+  123  2014-12-30 00:06:37 billn pts/1 23:58 /home/naehas ll
+  124  2014-12-30 00:06:45 billn pts/1 23:58 /home/naehas cd .gnupg/
+  125  2014-12-30 00:06:45 billn pts/1 23:58 /home/naehas ll
+  126  2014-12-30 00:06:58 billn pts/1 23:58 /home/naehas java -version 
+  127  2014-12-30 00:07:17 billn pts/1 23:58 /home/naehas grep use-agent gpg.conf 
+  128  2014-12-30 00:08:14 billn pts/1 23:58 /home/naehas vi gpg.conf 
+  129  2014-12-30 00:08:51 billn pts/1 23:58 /home/naehas pwd
+  130  2014-12-30 00:08:51 billn pts/1 23:58 /home/naehas ll
+  131  2014-12-30 00:16:47 billn pts/1 23:58 /home/naehas pwd
+  132  2014-12-30 00:16:47 billn pts/1 23:58 /home/naehas ll
+  133  2014-12-30 00:16:55 billn pts/1 23:58 /home/naehas exit
+  134  2015-01-06 17:52:50 billn pts/1 23:58 /home/naehas ssh-add 
+  135  2015-01-06 17:54:02 billn pts/1 23:58 /home/naehas cd /usr/java/
+  136  2015-01-06 17:54:03 billn pts/1 23:58 /home/naehas ll
+  137  2015-01-06 17:54:27 billn pts/1 23:58 /home/naehas SVNROOT="svn+ssh://svn.naehas.com/home/svn/repository"
+  138  2015-01-06 18:00:06 billn pts/1 23:58 /home/naehas RELEASE="$SVNROOT/base-dashboard/tags/Juggernaut-Sprint122-Build1"
+  139  2015-01-06 18:01:35 billn pts/1 23:58 /home/naehas mkdir bill-dashboard
+  140  2015-01-06 18:01:36 billn pts/1 23:58 /home/naehas cd bill-dashboard/
+  141  2015-01-06 18:01:37 billn pts/1 23:58 /home/naehas ll
+  142  2015-01-06 18:01:46 billn pts/1 23:58 /home/naehas echo $RELEASE
+  143  2015-01-06 18:02:32 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  144  2015-01-06 18:02:49 billn pts/1 23:58 /home/naehas echo $RELEASE
+  145  2015-01-06 18:03:20 billn pts/1 23:58 /home/naehas ssh svn.naehas.com
+  146  2015-01-06 18:03:23 billn pts/1 23:58 /home/naehas cd
+  147  2015-01-06 18:03:27 billn pts/1 23:58 /home/naehas cd .ssh/
+  148  2015-01-06 18:03:30 billn pts/1 23:58 /home/naehas vi known_hosts 
+  149  2015-01-06 18:04:14 billn pts/1 23:58 /home/naehas ssh-keygen -f "/home/naehas/.ssh/known_hosts" -R svn.naehas.com
+  150  2015-01-06 18:04:17 billn pts/1 23:58 /home/naehas cd
+  151  2015-01-06 18:04:33 billn pts/1 23:58 /home/naehas ssh svn.naehas.com
+  152  2015-01-06 18:06:41 billn pts/1 23:58 /home/naehas pwd
+  153  2015-01-06 18:09:30 billn pts/1 23:58 /home/naehas cd -
+  154  2015-01-06 18:09:31 billn pts/1 23:58 /home/naehas cd
+  155  2015-01-06 18:09:31 billn pts/1 23:58 /home/naehas c
+  156  2015-01-06 18:09:38 billn pts/1 23:58 /home/naehas cd /usr/java/bill-dashboard/
+  157  2015-01-06 18:09:40 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  158  2015-01-06 18:10:58 billn pts/1 23:58 /home/naehas svn info $RELEASE > SVN_INFO
+  159  2015-01-06 18:11:03 billn pts/1 23:58 /home/naehas cat $SVN_INFO
+  160  2015-01-06 18:11:13 billn pts/1 23:58 /home/naehas echo $SVN_INFO
+  161  2015-01-06 18:11:24 billn pts/1 23:58 /home/naehas svn info $RELEASE
+  162  2015-01-06 18:11:32 billn pts/1 23:58 /home/naehas cat SVN_INFO 
+  163  2015-01-06 18:11:41 billn pts/1 23:58 /home/naehas ./setup
+  164  2015-01-06 18:11:54 billn pts/1 23:58 /home/naehas vi base-dashboard.properties 
+  165  2015-01-06 18:12:08 billn pts/1 23:58 /home/naehas pwd
+  166  2015-01-06 18:12:12 billn pts/1 23:58 /home/naehas java -version 
+  167  2015-01-06 18:12:21 billn pts/1 23:58 /home/naehas vi base-dashboard.properties 
+  168  2015-01-06 18:12:30 billn pts/1 23:58 /home/naehas echo $JAVA_HOME
+  169  2015-01-06 18:12:31 billn pts/1 23:58 /home/naehas pwd
+  170  2015-01-06 18:12:44 billn pts/1 23:58 /home/naehas cd
+  171  2015-01-06 18:12:46 billn pts/1 23:58 /home/naehas vi .profile 
+  172  2015-01-06 18:13:03 billn pts/1 23:58 /home/naehas vi .bash_profile 
+  173  2015-01-06 18:13:10 billn pts/1 23:58 /home/naehas vi /etc/profile
+  174  2015-01-06 18:13:12 billn pts/1 23:58 /home/naehas vi .bash_profile 
+  175  2015-01-06 18:15:20 billn pts/1 23:58 /home/naehas cd -
+  176  2015-01-06 18:15:22 billn pts/1 23:58 /home/naehas ll
+  177  2015-01-06 18:15:46 billn pts/1 23:58 /home/naehas vi memOpts.env
+  178  2015-01-06 18:16:37 billn pts/1 23:58 /home/naehas ll -d ../jdk1.8.0_40
+  179  2015-01-06 18:16:45 billn pts/1 23:58 /home/naehas vi memOpts.env 
+  180  2015-01-06 18:17:19 billn pts/1 23:58 /home/naehas vi bin/startup.sh
+  181  2015-01-06 18:19:07 billn pts/1 23:58 /home/naehas vi memOpts.env 
+  182  2015-01-06 18:19:16 billn pts/1 23:58 /home/naehas opwd
+  183  2015-01-06 18:19:29 billn pts/1 23:58 /home/naehas ./setup
+  184  2015-01-06 18:19:45 billn pts/1 23:58 /home/naehas cd /usr/java
+  185  2015-01-06 18:19:46 billn pts/1 23:58 /home/naehas ll
+  186  2015-01-06 18:19:58 billn pts/1 23:58 /home/naehas tar xzvf jdk1.8.0_40.tar.gz 
+  187  2015-01-06 18:20:03 billn pts/1 23:58 /home/naehas cd -
+  188  2015-01-06 18:20:07 billn pts/1 23:58 /home/naehas ./setup
+  189  2015-01-06 18:20:27 billn pts/1 23:58 /home/naehas vi memOpts.env 
+  190  2015-01-06 18:20:52 billn pts/1 23:58 /home/naehas ./setup
+  191  2015-01-06 18:20:57 billn pts/1 23:58 /home/naehas cd
+  192  2015-01-06 18:21:01 billn pts/1 23:58 /home/naehas vi .bash_profile 
+  193  2015-01-06 18:21:09 billn pts/1 23:58 /home/naehas cd -
+  194  2015-01-06 18:21:14 billn pts/1 23:58 /home/naehas d
+  195  2015-01-06 18:21:15 billn pts/1 23:58 /home/naehas cd
+  196  2015-01-06 18:21:20 billn pts/1 23:58 /home/naehas . .bash_profile 
+  197  2015-01-06 18:21:22 billn pts/1 23:58 /home/naehas cd -
+  198  2015-01-06 18:21:23 billn pts/1 23:58 /home/naehas ll
+  199  2015-01-06 18:21:25 billn pts/1 23:58 /home/naehas ./setup
+  200  2015-01-06 18:21:39 billn pts/1 23:58 /home/naehas echo $JAVA_HOME
+  201  2015-01-06 18:21:43 billn pts/1 23:58 /home/naehas cd
+  202  2015-01-06 18:21:46 billn pts/1 23:58 /home/naehas vi .bash_profile 
+  203  2015-01-06 18:21:57 billn pts/1 23:58 /home/naehas cd -
+  204  2015-01-06 18:22:02 billn pts/1 23:58 /home/naehas vi setup
+  205  2015-01-06 18:22:52 billn pts/1 23:58 /home/naehas ./setup
+  206  2015-01-06 18:24:28 billn pts/1 23:58 /home/naehas mysql -u root -p
+  207  2015-01-06 18:27:15 billn pts/1 23:58 /home/naehas vi base-dashboard.properties 
+  208  2015-01-06 18:27:39 billn pts/1 23:58 /home/naehas ping localhost
+  209  2015-01-06 18:27:43 billn pts/1 23:58 /home/naehas ifconfig -a
+  210  2015-01-06 18:27:51 billn pts/1 23:58 /home/naehas vi setup
+  211  2015-01-06 18:28:03 billn pts/1 23:58 /home/naehas vi base-dashboard.properties 
+  212  2015-01-06 18:28:27 billn pts/1 23:58 /home/naehas ./setup
+  213  2015-01-06 18:30:22 billn pts/1 23:58 /home/naehas mysql -uroot -p -h 192.168.201.194
+  214  2015-01-06 18:30:36 billn pts/1 23:58 /home/naehas mysql -uroot -p -h127.0.0.1
+  215  2015-01-06 18:30:50 billn pts/1 23:58 /home/naehas mysql -uroot -p
+  216  2015-01-06 18:31:00 billn pts/1 23:58 /home/naehas vi base-dashboard.properties 
+  217  2015-01-06 18:31:19 billn pts/1 23:58 /home/naehas pwd
+  218  2015-01-06 18:31:22 billn pts/1 23:58 /home/naehas ./setup
+  219  2015-01-06 18:53:03 billn pts/1 23:58 /home/naehas pwd
+  220  2015-01-06 18:53:06 billn pts/1 23:58 /home/naehas history 
+  221  2015-01-06 18:53:15 billn pts/1 23:58 /home/naehas history | grep svn
+  222  2015-01-06 18:53:33 billn pts/1 23:58 /home/naehas echo $RELEASE
+  223  2015-01-06 18:55:15 billn pts/1 23:58 /home/naehas history 
+  224  2015-01-06 18:55:35 billn pts/1 23:58 /home/naehas RELEASE="$SVNROOT/base-dashboard/tags/Imp-Sprint120-Build1"
+  225  2015-01-06 18:56:15 billn pts/1 23:58 /home/naehas svn info $RELEASE > SVN_INFO
+  226  2015-01-06 18:56:18 billn pts/1 23:58 /home/naehas cat SVN_INFO 
+  227  2015-01-06 18:56:44 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  228  2015-01-06 18:57:13 billn pts/1 23:58 /home/naehas ./setup
+  229  2015-01-06 18:57:45 billn pts/1 23:58 /home/naehas cd ..
+  230  2015-01-06 18:57:52 billn pts/1 23:58 /home/naehas ln -s jdk1.8.0_40 ./jdk
+  231  2015-01-06 18:57:53 billn pts/1 23:58 /home/naehas cd 0
+  232  2015-01-06 18:57:55 billn pts/1 23:58 /home/naehas cd -
+  233  2015-01-06 18:57:57 billn pts/1 23:58 /home/naehas vi setup
+  234  2015-01-06 18:58:15 billn pts/1 23:58 /home/naehas pwd
+  235  2015-01-06 18:58:20 billn pts/1 23:58 /home/naehas ./setup
+  236  2015-01-06 19:00:54 billn pts/1 23:58 /home/naehas javac
+  237  2015-01-06 19:00:58 billn pts/1 23:58 /home/naehas which javac
+  238  2015-01-06 19:01:12 billn pts/1 23:58 /home/naehas ll -d /usr/java/jdk/bin/javac -version 
+  239  2015-01-06 19:01:15 billn pts/1 23:58 /home/naehas ll -d /usr/java/jdk/bin/javac --version 
+  240  2015-01-06 19:01:33 billn pts/1 23:58 /home/naehas /usr/java/jdk/bin/javac -version 
+  241  2015-01-06 19:02:21 billn pts/1 23:58 /home/naehas vi setup
+  242  2015-01-06 19:03:24 billn pts/1 23:58 /home/naehas ./setup
+  243  2015-01-06 19:04:16 billn pts/1 23:58 /home/naehas mv memOpts.env ../.
+  244  2015-01-06 19:04:17 billn pts/1 23:58 /home/naehas ll
+  245  2015-01-06 19:04:21 billn pts/1 23:58 /home/naehas rm -rf *
+  246  2015-01-06 19:04:22 billn pts/1 23:58 /home/naehas ll
+  247  2015-01-06 19:04:27 billn pts/1 23:58 /home/naehas history 
+  248  2015-01-06 19:04:30 billn pts/1 23:58 /home/naehas history  | grep svn
+  249  2015-01-06 19:04:47 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  250  2015-01-06 19:05:12 billn pts/1 23:58 /home/naehas ./setup
+  251  2015-01-06 19:05:20 billn pts/1 23:58 /home/naehas cp ../memOpts.env .
+  252  2015-01-06 19:05:30 billn pts/1 23:58 /home/naehas ./setup
+  253  2015-01-06 19:05:41 billn pts/1 23:58 /home/naehas cat memOpts.env 
+  254  2015-01-06 19:05:45 billn pts/1 23:58 /home/naehas vi setup
+  255  2015-01-06 19:05:57 billn pts/1 23:58 /home/naehas ./setup
+  256  2015-01-06 19:11:31 billn pts/1 23:58 /home/naehas cd ..
+  257  2015-01-06 19:11:32 billn pts/1 23:58 /home/naehas ll
+  258  2015-01-06 19:11:42 billn pts/1 23:58 /home/naehas tar zxvf jdk_6.0.26.tar.gz 
+  259  2015-01-06 19:11:48 billn pts/1 23:58 /home/naehas ll
+  260  2015-01-06 19:11:54 billn pts/1 23:58 /home/naehas rm -rf jdk
+  261  2015-01-06 19:12:11 billn pts/1 23:58 /home/naehas ln s- jdk1.6.0_26 ./jdk
+  262  2015-01-06 19:12:18 billn pts/1 23:58 /home/naehas ln -s jdk1.6.0_26 ./jdk
+  263  2015-01-06 19:12:20 billn pts/1 23:58 /home/naehas cd jdk
+  264  2015-01-06 19:12:21 billn pts/1 23:58 /home/naehas ll
+  265  2015-01-06 19:12:22 billn pts/1 23:58 /home/naehas cd bin/
+  266  2015-01-06 19:12:22 billn pts/1 23:58 /home/naehas ll
+  267  2015-01-06 19:12:23 billn pts/1 23:58 /home/naehas cd ..
+  268  2015-01-06 19:12:27 billn pts/1 23:58 /home/naehas ll
+  269  2015-01-06 19:12:29 billn pts/1 23:58 /home/naehas java -version 
+  270  2015-01-06 19:12:31 billn pts/1 23:58 /home/naehas pwd
+  271  2015-01-06 19:12:37 billn pts/1 23:58 /home/naehas cd /etc/alternatives/
+  272  2015-01-06 19:12:38 billn pts/1 23:58 /home/naehas ll
+  273  2015-01-06 19:12:39 billn pts/1 23:58 /home/naehas ll -d java 
+  274  2015-01-06 19:12:42 billn pts/1 23:58 /home/naehas rm -rf java 
+  275  2015-01-06 19:12:57 billn pts/1 23:58 /home/naehas ln -s /usr/java/jdk/bin/java ./
+  276  2015-01-06 19:13:04 billn pts/1 23:58 /home/naehas ll -d java 
+  277  2015-01-06 19:13:07 billn pts/1 23:58 /home/naehas rm -rf java
+  278  2015-01-06 19:13:10 billn pts/1 23:58 /home/naehas sudo rm -rf java
+  279  2015-01-06 19:14:10 billn pts/1 23:58 /home/naehas exit
+  280  2015-01-06 17:50:51 billn pts/1 23:58 /home/naehas ssh-add
+  281  2015-01-06 17:51:00 billn pts/1 23:58 /home/naehas chmod 700 .ssh/
+  282  2015-01-06 17:51:02 billn pts/1 23:58 /home/naehas cd .ssh/
+  283  2015-01-06 17:51:03 billn pts/1 23:58 /home/naehas ll
+  284  2015-01-06 17:51:13 billn pts/1 23:58 /home/naehas chmod 600 id_rsa* authorized_keys 
+  285  2015-01-06 17:51:13 billn pts/1 23:58 /home/naehas ll
+  286  2015-01-06 17:51:25 billn pts/1 23:58 /home/naehas chmod 600 known_hosts 
+  287  2015-01-06 17:51:35 billn pts/1 23:58 /home/naehas cd
+  288  2015-01-06 17:51:40 billn pts/1 23:58 /home/naehas ssh-add
+  289  2015-01-06 17:52:14 billn pts/1 23:58 /home/naehas ll
+  290  2015-01-06 17:52:15 billn pts/1 23:58 /home/naehas cd .ssh/
+  291  2015-01-06 17:52:16 billn pts/1 23:58 /home/naehas ll
+  292  2015-01-06 17:52:28 billn pts/1 23:58 /home/naehas cat authorized_keys 
+  293  2015-01-06 17:52:32 billn pts/1 23:58 /home/naehas cd
+  294  2015-01-06 17:52:45 billn pts/1 23:58 /home/naehas ssh-agent /bin/bash
+  295  2015-01-06 19:14:12 billn pts/1 23:58 /home/naehas exit
+  296  2015-01-06 17:50:28 billn pts/1 23:58 /home/naehas pwd
+  297  2015-01-06 17:50:28 billn pts/1 23:58 /home/naehas ll
+  298  2015-01-06 17:50:34 billn pts/1 23:58 /home/naehas pwd
+  299  2015-01-06 17:50:43 billn pts/1 23:58 /home/naehas ssh-agent /bin/bash
+  300  2015-01-06 19:14:14 billn pts/1 23:58 /home/naehas exit
+  301  2015-01-06 19:47:33 billn pts/1 23:58 /home/naehas pwd
+  302  2015-01-06 19:47:33 billn pts/1 23:58 /home/naehas ll
+  303  2015-01-06 19:47:44 billn pts/1 23:58 /home/naehas cd /usr/java/bill-dashboard/
+  304  2015-01-06 19:47:44 billn pts/1 23:58 /home/naehas ll
+  305  2015-01-06 19:47:47 billn pts/1 23:58 /home/naehas ant upgradedatabase:
+  306  2015-01-06 19:47:58 billn pts/1 23:58 /home/naehas vi build.xml 
+  307  2015-01-06 19:48:30 billn pts/1 23:58 /home/naehas mysql -uroot -p
+  308  2015-01-06 19:52:02 billn pts/1 23:58 /home/naehas cd /etc/mysql/conf.d/
+  309  2015-01-06 19:52:02 billn pts/1 23:58 /home/naehas ll
+  310  2015-01-06 19:52:04 billn pts/1 23:58 /home/naehas cd ..
+  311  2015-01-06 19:52:04 billn pts/1 23:58 /home/naehas ll
+  312  2015-01-06 19:52:06 billn pts/1 23:58 /home/naehas cat grants.sql 
+  313  2015-01-06 19:52:16 billn pts/1 23:58 /home/naehas exit
+  314  2015-01-06 19:15:26 billn pts/1 23:58 /home/naehas cd /usr/java/bin
+  315  2015-01-06 19:15:29 billn pts/1 23:58 /home/naehas cd /usr/java/bill-dashboard/
+  316  2015-01-06 19:15:29 billn pts/1 23:58 /home/naehas ll
+  317  2015-01-06 19:15:32 billn pts/1 23:58 /home/naehas ./setup
+  318  2015-01-06 20:29:59 billn pts/1 23:58 /home/naehas ssh-add
+  319  2015-01-06 20:30:22 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  320  2015-01-06 20:30:34 billn pts/1 23:58 /home/naehas ./setup
+  321  2015-01-06 20:32:50 billn pts/1 23:58 /home/naehas cd lib/
+  322  2015-01-06 20:32:52 billn pts/1 23:58 /home/naehas ll -d mysql-connector-java-5.1.18-bin.jar 
+  323  2015-01-06 20:10:35 billn pts/1 23:58 /home/naehas cd /usr/java/bill-dashboard/
+  324  2015-01-06 20:10:36 billn pts/1 23:58 /home/naehas ll
+  325  2015-01-06 20:10:41 billn pts/1 23:58 /home/naehas ./setup
+  326  2015-01-06 20:12:22 billn pts/1 23:58 /home/naehas ant upgradedatabase
+  327  2015-01-06 20:13:13 billn pts/1 23:58 /home/naehas pwd
+  328  2015-01-06 20:14:29 billn pts/1 23:58 /home/naehas vi setup
+  329  2015-01-06 20:14:34 billn pts/1 23:58 /home/naehas vi customize 
+  330  2015-01-06 20:16:14 billn pts/1 23:58 /home/naehas mysql -uroot -p
+  331  2015-01-06 20:17:08 billn pts/1 23:58 /home/naehas wd
+  332  2015-01-06 20:17:09 billn pts/1 23:58 /home/naehas pwd
+  333  2015-01-06 20:17:22 billn pts/1 23:58 /home/naehas find . | grep jdbc
+  334  2015-01-06 20:17:38 billn pts/1 23:58 /home/naehas cd ..
+  335  2015-01-06 20:17:40 billn pts/1 23:58 /home/naehas find . | grep jdbc
+  336  2015-01-06 20:17:49 billn pts/1 23:58 /home/naehas cd bill-dashboard/lib
+  337  2015-01-06 20:17:54 billn pts/1 23:58 /home/naehas ll -d *jdbc*
+  338  2015-01-06 20:18:48 billn pts/1 23:58 /home/naehas msyql -uroot -p
+  339  2015-01-06 20:18:53 billn pts/1 23:58 /home/naehas mysql -uroot -p
+  340  2015-01-06 20:20:54 billn pts/1 23:58 /home/naehas pwd
+  341  2015-01-06 20:20:55 billn pts/1 23:58 /home/naehas cd ..
+  342  2015-01-06 20:20:57 billn pts/1 23:58 /home/naehas pwd
+  343  2015-01-06 20:21:00 billn pts/1 23:58 /home/naehas cd bill-dashboard/
+  344  2015-01-06 20:21:07 billn pts/1 23:58 /home/naehas history | grep RELEASE
+  345  2015-01-06 20:21:30 billn pts/1 23:58 /home/naehas RELEASE="$SVNROOT/base-dashboard/tags/Havok-Sprint122-Build1"
+  346  2015-01-06 20:22:04 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  347  2015-01-06 20:22:21 billn pts/1 23:58 /home/naehas pwd
+  348  2015-01-06 20:22:23 billn pts/1 23:58 /home/naehas cd ..
+  349  2015-01-06 20:22:24 billn pts/1 23:58 /home/naehas ll
+  350  2015-01-06 20:22:26 billn pts/1 23:58 /home/naehas cd -
+  351  2015-01-06 20:22:27 billn pts/1 23:58 /home/naehas ll
+  352  2015-01-06 20:22:29 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  353  2015-01-06 20:22:34 billn pts/1 23:58 /home/naehas history 
+  354  2015-01-06 20:22:56 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  355  2015-01-06 20:23:19 billn pts/1 23:58 /home/naehas ll
+  356  2015-01-06 20:23:22 billn pts/1 23:58 /home/naehas rm -rf *
+  357  2015-01-06 20:23:23 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  358  2015-01-06 20:25:29 billn pts/1 23:58 /home/naehas pwd
+  359  2015-01-06 20:25:32 billn pts/1 23:58 /home/naehas ls
+  360  2015-01-06 20:25:43 billn pts/1 23:58 /home/naehas ll
+  361  2015-01-06 20:25:48 billn pts/1 23:58 /home/naehas cd .customizations/
+  362  2015-01-06 20:25:48 billn pts/1 23:58 /home/naehas ll
+  363  2015-01-06 20:25:52 billn pts/1 23:58 /home/naehas cat base-dashboard.properties 
+  364  2015-01-06 20:26:11 billn pts/1 23:58 /home/naehas cd ..
+  365  2015-01-06 20:26:13 billn pts/1 23:58 /home/naehas pwd
+  366  2015-01-06 20:26:13 billn pts/1 23:58 /home/naehas ll
+  367  2015-01-06 20:27:19 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  368  2015-01-06 20:27:21 billn pts/1 23:58 /home/naehas svn
+  369  2015-01-06 20:27:41 billn pts/1 23:58 /home/naehas echo $RELEASE
+  370  2015-01-06 20:27:53 billn pts/1 23:58 /home/naehas history | grep RELEASE
+  371  2015-01-06 20:28:07 billn pts/1 23:58 /home/naehas history | grep SVN
+  372  2015-01-06 20:28:18 billn pts/1 23:58 /home/naehas SVNROOT="svn+ssh://svn.naehas.com/home/svn/repository"
+  373  2015-01-06 20:28:34 billn pts/1 23:58 /home/naehas RELEASE="$SVNROOT/base-dashboard/tags/Havok-Sprint122-Build1"
+  374  2015-01-06 20:28:38 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  375  2015-01-06 20:29:25 billn pts/1 23:58 /home/naehas cp ../memOpts.env .
+  376  2015-01-06 20:29:28 billn pts/1 23:58 /home/naehas ./setup
+  377  2015-01-06 20:29:53 billn pts/1 23:58 /home/naehas ssh-agent /bin/bash
+  378  2015-01-07 14:46:58 billn pts/1 23:58 /home/naehas pwd
+  379  2015-01-07 14:46:58 billn pts/1 23:58 /home/naehas ll
+  380  2015-01-07 14:47:06 billn pts/1 23:58 /home/naehas cd /usr/java/bill-dashboard/
+  381  2015-01-07 14:47:07 billn pts/1 23:58 /home/naehas ll
+  382  2015-01-07 14:49:33 billn pts/1 23:58 /home/naehas pwd
+  383  2015-01-07 14:50:11 billn pts/1 23:58 /home/naehas grep -R static *
+  384  2015-01-07 14:56:20 billn pts/1 23:58 /home/naehas grep -R static * 
+  385  2015-01-07 14:56:22 billn pts/1 23:58 /home/naehas cd ..
+  386  2015-01-07 14:56:23 billn pts/1 23:58 /home/naehas ll
+  387  2015-01-07 14:56:35 billn pts/1 23:58 /home/naehas STATIC="svn+ssh://svn.naehas.com/home/svn/repository/static/trunk"
+  388  2015-01-07 14:56:39 billn pts/1 23:58 /home/naehas history 
+  389  2015-01-07 14:57:32 billn pts/1 23:58 /home/naehas mkdir www-static
+  390  2015-01-07 14:57:34 billn pts/1 23:58 /home/naehas pwd
+  391  2015-01-07 14:57:34 billn pts/1 23:58 /home/naehas ll
+  392  2015-01-07 14:57:35 billn pts/1 23:58 /home/naehas cd www-static/
+  393  2015-01-07 14:57:39 billn pts/1 23:58 /home/naehas history | grep svn
+  394  2015-01-07 14:57:56 billn pts/1 23:58 /home/naehas svn export $STATIC . --force
+  395  2015-01-07 14:58:37 billn pts/1 23:58 /home/naehas ll
+  396  2015-01-07 14:58:46 billn pts/1 23:58 /home/naehas echo $STATIC
+  397  2015-01-07 14:59:08 billn pts/1 23:58 /home/naehas svn export $STATIC . --force
+  398  2015-01-07 14:59:44 billn pts/1 23:58 /home/naehas ll
+  399  2015-01-07 15:01:33 billn pts/1 23:58 /home/naehas cd ../bill-dashboard/
+  400  2015-01-07 15:01:34 billn pts/1 23:58 /home/naehas l
+  401  2015-01-07 15:01:37 billn pts/1 23:58 /home/naehas cat base-dashboard.properties 
+  402  2015-01-07 15:02:15 billn pts/1 23:58 /home/naehas vi webapps/dashboard/WEB-INF/messages/messages.properties 
+  403  2015-01-07 15:02:51 billn pts/1 23:58 /home/naehas cd ../www-static/
+  404  2015-01-07 15:02:51 billn pts/1 23:58 /home/naehas ll
+  405  2015-01-07 15:02:57 billn pts/1 23:58 /home/naehas mkdir www-static-elixir
+  406  2015-01-07 15:03:03 billn pts/1 23:58 /home/naehas rm -rf *
+  407  2015-01-07 15:03:05 billn pts/1 23:58 /home/naehas mkdir www-static-elixir
+  408  2015-01-07 15:03:06 billn pts/1 23:58 /home/naehas cd www-static-elixir/
+  409  2015-01-07 15:03:07 billn pts/1 23:58 /home/naehas ll
+  410  2015-01-07 15:03:11 billn pts/1 23:58 /home/naehas svn export $STATIC . --force
+  411  2015-01-07 15:04:05 billn pts/1 23:58 /home/naehas cd /etc/apache2/
+  412  2015-01-07 15:04:05 billn pts/1 23:58 /home/naehas ll
+  413  2015-01-07 15:04:10 billn pts/1 23:58 /home/naehas pwd
+  414  2015-01-07 15:04:17 billn pts/1 23:58 /home/naehas cd sites-available/
+  415  2015-01-07 15:04:18 billn pts/1 23:58 /home/naehas ll
+  416  2015-01-07 15:04:23 billn pts/1 23:58 /home/naehas vi default
+  417  2015-01-07 15:04:30 billn pts/1 23:58 /home/naehas vi default*
+  418  2015-01-07 15:05:15 billn pts/1 23:58 /home/naehas ll
+  419  2015-01-07 15:05:17 billn pts/1 23:58 /home/naehas vi default
+  420  2015-01-07 15:05:33 billn pts/1 23:58 /home/naehas exit
+  421  2015-01-07 12:36:07 billn pts/1 23:58 /home/naehas mysql -uroot -pn3admin
+  422  2015-01-07 12:45:30 billn pts/1 23:58 /home/naehas netstat -tunelp | grep mysql
+  423  2015-01-07 12:46:59 billn pts/1 23:58 /home/naehas netstat -tunelp 
+  424  2015-01-07 13:13:52 billn pts/1 23:58 /home/naehas cd /usr/java/bill-dashboard/
+  425  2015-01-07 13:13:53 billn pts/1 23:58 /home/naehas ll
+  426  2015-01-07 13:13:54 billn pts/1 23:58 /home/naehas cd bin && ./shutdown.sh
+  427  2015-01-07 13:14:04 billn pts/1 23:58 /home/naehas ./startup.sh
+  428  2015-01-07 13:14:12 billn pts/1 23:58 /home/naehas tail -f ../logs/catalina.out 
+  429  2015-01-07 13:16:19 billn pts/1 23:58 /home/naehas pwd
+  430  2015-01-07 13:16:19 billn pts/1 23:58 /home/naehas ll
+  431  2015-01-07 13:16:22 billn pts/1 23:58 /home/naehas cd ..
+  432  2015-01-07 13:16:22 billn pts/1 23:58 /home/naehas ll
+  433  2015-01-07 13:16:30 billn pts/1 23:58 /home/naehas ls
+  434  2015-01-07 13:16:36 billn pts/1 23:58 /home/naehas cat base-dashboard.properties 
+  435  2015-01-07 13:17:04 billn pts/1 23:58 /home/naehas ./customize -list
+  436  2015-01-07 13:18:56 billn pts/1 23:58 /home/naehas cat base-dashboard.properties 
+  437  2015-01-07 15:50:09 billn pts/1 23:58 /home/naehas cd /usr/java/bill-dashboard/
+  438  2015-01-07 15:50:09 billn pts/1 23:58 /home/naehas ld
+  439  2015-01-07 15:50:10 billn pts/1 23:58 /home/naehas ll
+  440  2015-01-07 15:50:12 billn pts/1 23:58 /home/naehas cd bin/
+  441  2015-01-07 15:50:12 billn pts/1 23:58 /home/naehas ls
+  442  2015-01-07 15:50:15 billn pts/1 23:58 /home/naehas cd ..
+  443  2015-01-07 15:50:16 billn pts/1 23:58 /home/naehas ll
+  444  2015-01-07 15:50:18 billn pts/1 23:58 /home/naehas cd bin/
+  445  2015-01-07 15:50:23 billn pts/1 23:58 /home/naehas ./startup.sh
+  446  2015-01-07 15:50:27 billn pts/1 23:58 /home/naehas cd ..
+  447  2015-01-07 15:50:38 billn pts/1 23:58 /home/naehas tail -f logs/dashboard.log.2015-01-07 
+  448  2015-01-07 15:50:48 billn pts/1 23:58 /home/naehas tail -f logs/catalina.out 
+  449  2015-01-07 15:52:23 billn pts/1 23:58 /home/naehas tail -f /var/log/apache2/error.log 
+  450  2015-01-07 15:52:42 billn pts/1 23:58 /home/naehas vi /etc/hosts
+  451  2015-01-07 15:52:53 billn pts/1 23:58 /home/naehas sudo vi /etc/hosts
+  452  2015-01-07 15:53:13 billn pts/1 23:58 /home/naehas exit
+  453  2015-01-07 15:53:26 billn pts/1 23:58 /home/naehas cd /usr/java/bill-dashboard/
+  454  2015-01-07 15:53:26 billn pts/1 23:58 /home/naehas ll
+  455  2015-01-07 15:53:27 billn pts/1 23:58 /home/naehas pwd
+  456  2015-01-07 15:53:37 billn pts/1 23:58 /home/naehas cd webapps/
+  457  2015-01-07 15:53:38 billn pts/1 23:58 /home/naehas ll
+  458  2015-01-07 15:53:43 billn pts/1 23:58 /home/naehas cd ..
+  459  2015-01-07 15:53:47 billn pts/1 23:58 /home/naehas cat base-dashboard.properties 
+  460  2015-01-07 15:54:02 billn pts/1 23:58 /home/naehas pwd
+  461  2015-01-07 15:54:02 billn pts/1 23:58 /home/naehas ll
+  462  2015-01-07 15:54:12 billn pts/1 23:58 /home/naehas bin/shutdown.sh 
+  463  2015-01-07 15:54:26 billn pts/1 23:58 /home/naehas ps aux | grep java
+  464  2015-01-07 15:54:31 billn pts/1 23:58 /home/naehas ps aux | grep mysql
+  465  2015-01-07 15:54:44 billn pts/1 23:58 /home/naehas bin/startup.sh ; tail -f logs/catalina.out 
+  466  2015-01-07 15:58:04 billn pts/1 23:58 /home/naehas cd
+  467  2015-01-07 15:58:08 billn pts/1 23:58 /home/naehas mysql -uroot -p
+  468  2015-01-07 16:00:34 billn pts/1 23:58 /home/naehas pwd
+  469  2015-01-07 16:00:50 billn pts/1 23:58 /home/naehas exit
+  470  2015-01-07 12:32:28 billn pts/1 23:58 /home/naehas ssh-add 
+  471  2015-01-07 12:32:51 billn pts/1 23:58 /home/naehas svn info $RELEASE > SVN_INFO
+  472  2015-01-07 12:33:11 billn pts/1 23:58 /home/naehas SVNROOT="svn+ssh://svn.naehas.com/home/svn/repository"
+  473  2015-01-07 12:33:16 billn pts/1 23:58 /home/naehas RELEASE="$SVNROOT/base-dashboard/tags/Havok-Sprint122-Build1"
+  474  2015-01-07 12:33:23 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  475  2015-01-07 12:34:15 billn pts/1 23:58 /home/naehas svn info $RELEASE > SVN_INFO
+  476  2015-01-07 12:34:23 billn pts/1 23:58 /home/naehas ./setup
+  477  2015-01-07 13:19:06 billn pts/1 23:58 /home/naehas pwd
+  478  2015-01-07 13:19:06 billn pts/1 23:58 /home/naehas ll
+  479  2015-01-07 13:19:08 billn pts/1 23:58 /home/naehas cd
+  480  2015-01-07 13:42:58 billn pts/1 23:58 /home/naehas netstat -tunelp | grep jav
+  481  2015-01-07 13:43:09 billn pts/1 23:58 /home/naehas cd /usr/java/bill-dashboard/
+  482  2015-01-07 13:43:10 billn pts/1 23:58 /home/naehas ll
+  483  2015-01-07 13:43:14 billn pts/1 23:58 /home/naehas grep -Ro 51670 *
+  484  2015-01-07 13:44:01 billn pts/1 23:58 /home/naehas grep -R 4155  *
+  485  2015-01-07 13:44:34 billn pts/1 23:58 /home/naehas grep -R 4155 * | grep -v conf | grep logs 
+  486  2015-01-07 12:29:19 billn pts/1 23:58 /home/naehas pwd
+  487  2015-01-07 12:29:23 billn pts/1 23:58 /home/naehas cd /usr/java
+  488  2015-01-07 12:29:24 billn pts/1 23:58 /home/naehas ll
+  489  2015-01-07 12:29:25 billn pts/1 23:58 /home/naehas cd bill-dashboard/
+  490  2015-01-07 12:29:25 billn pts/1 23:58 /home/naehas ll
+  491  2015-01-07 12:29:32 billn pts/1 23:58 /home/naehas history | grep svn
+  492  2015-01-07 12:29:39 billn pts/1 23:58 /home/naehas SVNROOT="svn+ssh://svn.naehas.com/home/svn/repository"
+  493  2015-01-07 12:29:58 billn pts/1 23:58 /home/naehas history | grep RELEASE
+  494  2015-01-07 12:30:09 billn pts/1 23:58 /home/naehas RELEASE="$SVNROOT/base-dashboard/tags/Havok-Sprint122-Build1"
+  495  2015-01-07 12:30:17 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  496  2015-01-07 12:32:12 billn pts/1 23:58 /home/naehas svn info $RELEASE > SVN_INFO
+  497  2015-01-07 12:32:22 billn pts/1 23:58 /home/naehas ssh-agent /bin/bash
+  498  2015-01-07 16:57:16 billn pts/1 23:58 /home/naehas ssh-add 
+  499  2015-01-07 16:57:37 billn pts/1 23:58 /home/naehas pwd
+  500  2015-01-07 16:57:37 billn pts/1 23:58 /home/naehas ll
+  501  2015-01-07 16:57:48 billn pts/1 23:58 /home/naehas SVNROOT="svn+ssh://svn.naehas.com/home/svn/repository"
+  502  2015-01-07 16:57:54 billn pts/1 23:58 /home/naehas history | grep RELEASE
+  503  2015-01-07 16:58:03 billn pts/1 23:58 /home/naehas RELEASE="$SVNROOT/base-dashboard/tags/Havok-Sprint122-Build1"
+  504  2015-01-07 16:58:17 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  505  2015-01-07 16:58:42 billn pts/1 23:58 /home/naehas svn info $RELEASE > SVN_INFO
+  506  2015-01-07 16:58:51 billn pts/1 23:58 /home/naehas ./setup
+  507  2015-01-07 17:08:51 billn pts/1 23:58 /home/naehas pwd
+  508  2015-01-07 17:08:53 billn pts/1 23:58 /home/naehas cd bin/
+  509  2015-01-07 17:09:57 billn pts/1 23:58 /home/naehas pwd
+  510  2015-01-07 17:10:19 billn pts/1 23:58 /home/naehas cd ..
+  511  2015-01-07 17:10:26 billn pts/1 23:58 /home/naehas find . | grep server
+  512  2015-01-07 17:10:29 billn pts/1 23:58 /home/naehas find . | grep server.xml
+  513  2015-01-07 17:10:39 billn pts/1 23:58 /home/naehas vi conf/server.xml
+  514  2015-01-07 17:10:56 billn pts/1 23:58 /home/naehas bin/startup.sh
+  515  2015-01-07 17:11:04 billn pts/1 23:58 /home/naehas tail -f logs/catalina.out 
+  516  2015-01-07 17:11:49 billn pts/1 23:58 /home/naehas netstat -tunelp | grep jav
+  517  2015-01-07 17:11:57 billn pts/1 23:58 /home/naehas netstat -tunelp | grep 41640
+  518  2015-01-07 17:13:16 billn pts/1 23:58 /home/naehas pwd
+  519  2015-01-07 17:13:19 billn pts/1 23:58 /home/naehas cd webapps/
+  520  2015-01-07 17:13:23 billn pts/1 23:58 /home/naehas mkdir static
+  521  2015-01-07 17:13:24 billn pts/1 23:58 /home/naehas pwd
+  522  2015-01-07 17:13:28 billn pts/1 23:58 /home/naehas cd static/
+  523  2015-01-07 17:13:28 billn pts/1 23:58 /home/naehas ll
+  524  2015-01-07 17:13:43 billn pts/1 23:58 /home/naehas cp -rp ../../../www-static/www-static-elixir/* .
+  525  2015-01-07 17:14:01 billn pts/1 23:58 /home/naehas cd /usr/java/bill-dashboard/webapps/
+  526  2015-01-07 17:14:02 billn pts/1 23:58 /home/naehas ll
+  527  2015-01-07 17:14:04 billn pts/1 23:58 /home/naehas rm -rf static/
+  528  2015-01-07 17:14:10 billn pts/1 23:58 /home/naehas sudo rm -rf static/
+  529  2015-01-07 17:14:38 billn pts/1 23:58 /home/naehas pwd
+  530  2015-01-07 17:14:40 billn pts/1 23:58 /home/naehas exit
+  531  2015-01-07 16:32:20 billn pts/1 23:58 /home/naehas cd /usr/java/bill-dashboard/bin/
+  532  2015-01-07 16:32:23 billn pts/1 23:58 /home/naehas ps aux | grep mysql
+  533  2015-01-07 16:32:26 billn pts/1 23:58 /home/naehas ps aux | grep java
+  534  2015-01-07 16:32:34 billn pts/1 23:58 /home/naehas ./shutdown.sh 
+  535  2015-01-07 16:32:46 billn pts/1 23:58 /home/naehas ps aux | grep java
+  536  2015-01-07 16:33:01 billn pts/1 23:58 /home/naehas kill -9 11931
+  537  2015-01-07 16:33:03 billn pts/1 23:58 /home/naehas ps aux | grep java
+  538  2015-01-07 16:33:08 billn pts/1 23:58 /home/naehas ./startup.sh
+  539  2015-01-07 16:33:14 billn pts/1 23:58 /home/naehas tail -f ../logs/catalina.out 
+  540  2015-01-07 16:37:04 billn pts/1 23:58 /home/naehas pwd
+  541  2015-01-07 16:37:05 billn pts/1 23:58 /home/naehas ll
+  542  2015-01-07 16:37:08 billn pts/1 23:58 /home/naehas cd ..
+  543  2015-01-07 16:37:20 billn pts/1 23:58 /home/naehas cd webapps/dashboard/WEB-INF/
+  544  2015-01-07 16:37:25 billn pts/1 23:58 /home/naehas vi campaign.properties
+  545  2015-01-07 16:38:01 billn pts/1 23:58 /home/naehas ls
+  546  2015-01-07 16:38:04 billn pts/1 23:58 /home/naehas vi global-beans.xml
+  547  2015-01-07 16:38:47 billn pts/1 23:58 /home/naehas pwd
+  548  2015-01-07 16:38:48 billn pts/1 23:58 /home/naehas cd ..
+  549  2015-01-07 16:38:51 billn pts/1 23:58 /home/naehas cd ../bin
+  550  2015-01-07 16:38:51 billn pts/1 23:58 /home/naehas pwd
+  551  2015-01-07 16:38:52 billn pts/1 23:58 /home/naehas cd ..
+  552  2015-01-07 16:38:53 billn pts/1 23:58 /home/naehas ls
+  553  2015-01-07 16:38:53 billn pts/1 23:58 /home/naehas ll
+  554  2015-01-07 16:38:57 billn pts/1 23:58 /home/naehas cd ../bin/
+  555  2015-01-07 16:38:57 billn pts/1 23:58 /home/naehas ls
+  556  2015-01-07 16:39:03 billn pts/1 23:58 /home/naehas ./shutdown.sh 
+  557  2015-01-07 16:39:52 billn pts/1 23:58 /home/naehas ps aux | grep java
+  558  2015-01-07 16:40:00 billn pts/1 23:58 /home/naehas ./startup.sh
+  559  2015-01-07 16:40:04 billn pts/1 23:58 /home/naehas tail -f ../logs/catalina.out  
+  560  2015-01-07 16:42:31 billn pts/1 23:58 /home/naehas cd ..
+  561  2015-01-07 16:42:41 billn pts/1 23:58 /home/naehas cd webapps/dashboard/WEB-INF/
+  562  2015-01-07 16:42:42 billn pts/1 23:58 /home/naehas l
+  563  2015-01-07 16:42:49 billn pts/1 23:58 /home/naehas vi campaign.properties
+  564  2015-01-07 16:43:39 billn pts/1 23:58 /home/naehas ll
+  565  2015-01-07 16:43:43 billn pts/1 23:58 /home/naehas grep -R billn *
+  566  2015-01-07 16:43:47 billn pts/1 23:58 /home/naehas grep -R bill *
+  567  2015-01-07 16:45:09 billn pts/1 23:58 /home/naehas vi web.xml
+  568  2015-01-07 16:45:22 billn pts/1 23:58 /home/naehas grep -R bill *
+  569  2015-01-07 16:45:36 billn pts/1 23:58 /home/naehas vi classes/web.xml 
+  570  2015-01-07 16:45:47 billn pts/1 23:58 /home/naehas grep -R bill *
+  571  2015-01-07 16:45:57 billn pts/1 23:58 /home/naehas cd ../../
+  572  2015-01-07 16:45:57 billn pts/1 23:58 /home/naehas ll
+  573  2015-01-07 16:46:00 billn pts/1 23:58 /home/naehas cd ../bin/
+  574  2015-01-07 16:46:01 billn pts/1 23:58 /home/naehas ls
+  575  2015-01-07 16:46:02 billn pts/1 23:58 /home/naehas pwd
+  576  2015-01-07 16:46:06 billn pts/1 23:58 /home/naehas ./shutdown.sh 
+  577  2015-01-07 16:46:22 billn pts/1 23:58 /home/naehas pwd
+  578  2015-01-07 16:46:22 billn pts/1 23:58 /home/naehas ll
+  579  2015-01-07 16:46:32 billn pts/1 23:58 /home/naehas ps aux | grep jav
+  580  2015-01-07 16:46:36 billn pts/1 23:58 /home/naehas ./startup.sh
+  581  2015-01-07 16:46:38 billn pts/1 23:58 /home/naehas ps aux | grep jav
+  582  2015-01-07 16:46:46 billn pts/1 23:58 /home/naehas tail -f ../logs/dashboard.log.2015-01-07 
+  583  2015-01-07 16:46:55 billn pts/1 23:58 /home/naehas tail -f ../logs/catalina.out 
+  584  2015-01-07 16:48:09 billn pts/1 23:58 /home/naehas pwd
+  585  2015-01-07 16:48:10 billn pts/1 23:58 /home/naehas cd ../webapps/
+  586  2015-01-07 16:48:11 billn pts/1 23:58 /home/naehas ll
+  587  2015-01-07 16:48:34 billn pts/1 23:58 /home/naehas tail ../logs/dashboard.log.2015-01-07 
+  588  2015-01-07 16:48:38 billn pts/1 23:58 /home/naehas tail -f ../logs/dashboard.log.2015-01-07 
+  589  2015-01-07 16:49:11 billn pts/1 23:58 /home/naehas pwd
+  590  2015-01-07 16:49:16 billn pts/1 23:58 /home/naehas grep -R bill *
+  591  2015-01-07 16:49:26 billn pts/1 23:58 /home/naehas grep -R bill * | grep -v static
+  592  2015-01-07 16:50:15 billn pts/1 23:58 /home/naehas grep -R "\/bill" * | grep -v static
+  593  2015-01-07 16:50:50 billn pts/1 23:58 /home/naehas cd ..
+  594  2015-01-07 16:50:51 billn pts/1 23:58 /home/naehas grep -R "\/bill" * | grep -v static
+  595  2015-01-07 16:50:56 billn pts/1 23:58 /home/naehas cler
+  596  2015-01-07 16:50:58 billn pts/1 23:58 /home/naehas clear
+  597  2015-01-07 16:51:01 billn pts/1 23:58 /home/naehas grep -R "\/bill" * | grep -v static
+  598  2015-01-07 16:55:42 billn pts/1 23:58 /home/naehas pwd
+  599  2015-01-07 16:55:45 billn pts/1 23:58 /home/naehas cd ..
+  600  2015-01-07 16:55:47 billn pts/1 23:58 /home/naehas pwd
+  601  2015-01-07 16:55:51 billn pts/1 23:58 /home/naehas cd bill-dashboard/
+  602  2015-01-07 16:55:52 billn pts/1 23:58 /home/naehas ll
+  603  2015-01-07 16:55:53 billn pts/1 23:58 /home/naehas pwd
+  604  2015-01-07 16:55:54 billn pts/1 23:58 /home/naehas ls
+  605  2015-01-07 16:56:05 billn pts/1 23:58 /home/naehas cd ..
+  606  2015-01-07 16:56:10 billn pts/1 23:58 /home/naehas bill2-dashboard
+  607  2015-01-07 16:56:29 billn pts/1 23:58 /home/naehas mkdir bill2-dashboard
+  608  2015-01-07 16:56:30 billn pts/1 23:58 /home/naehas pwd
+  609  2015-01-07 16:56:31 billn pts/1 23:58 /home/naehas cd bill
+  610  2015-01-07 16:56:36 billn pts/1 23:58 /home/naehas cd bill2-dashboard/
+  611  2015-01-07 16:56:36 billn pts/1 23:58 /home/naehas ll
+  612  2015-01-07 16:57:09 billn pts/1 23:58 /home/naehas ssh-agent /bin/bash
+  613  2015-01-07 17:14:43 billn pts/1 23:58 /home/naehas exit
+  614  2015-01-07 17:50:06 billn pts/1 23:58 /home/naehas pwd
+  615  2015-01-07 17:50:06 billn pts/1 23:58 /home/naehas ll
+  616  2015-01-07 17:50:14 billn pts/1 23:58 /home/naehas cd /usr/java/bill2-dashboard/
+  617  2015-01-07 17:50:14 billn pts/1 23:58 /home/naehas ll
+  618  2015-01-07 17:50:33 billn pts/1 23:58 /home/naehas vi ../bill-dashboard/conf/server.xml
+  619  2015-01-07 17:50:49 billn pts/1 23:58 /home/naehas vi conf/server.xml
+  620  2015-01-07 17:50:56 billn pts/1 23:58 /home/naehas pwd
+  621  2015-01-07 17:51:19 billn pts/1 23:58 /home/naehas cd bin/
+  622  2015-01-07 17:51:19 billn pts/1 23:58 /home/naehas pwd
+  623  2015-01-07 17:51:27 billn pts/1 23:58 /home/naehas exit
+  624  2015-01-07 18:47:32 billn pts/1 23:58 /home/naehas ssh-add 
+  625  2015-01-07 18:47:58 billn pts/1 23:58 /home/naehas SVNROOT="svn+ssh://svn.naehas.com/home/svn/repository"
+  626  2015-01-07 18:48:16 billn pts/1 23:58 /home/naehas RELEASE="$SVNROOT/base-dashboard/tags/Juggernaut-Sprint122-Build2""
+  627  2015-01-07 18:48:23 billn pts/1 23:58 /home/naehas RELEASE="$SVNROOT/base-dashboard/tags/Juggernaut-Sprint122-Build2"
+  628  2015-01-07 18:48:40 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  629  2015-01-07 18:50:02 billn pts/1 23:58 /home/naehas svn info $RELEASE > SVN_INFO
+  630  2015-01-07 18:50:10 billn pts/1 23:58 /home/naehas ./setup
+  631  2015-01-07 18:02:04 billn pts/1 23:58 /home/naehas cd /usr/java/bill-dashboard/bin/
+  632  2015-01-07 18:02:05 billn pts/1 23:58 /home/naehas ls
+  633  2015-01-07 18:02:06 billn pts/1 23:58 /home/naehas ll
+  634  2015-01-07 18:02:12 billn pts/1 23:58 /home/naehas ./startup.sh
+  635  2015-01-07 18:02:24 billn pts/1 23:58 /home/naehas tail -f ../logs/catalina.out 
+  636  2015-01-07 18:02:40 billn pts/1 23:58 /home/naehas tail -200f ../logs/catalina.out 
+  637  2015-01-07 18:03:16 billn pts/1 23:58 /home/naehas cd ../../bill2-dashboard/bin/
+  638  2015-01-07 18:03:31 billn pts/1 23:58 /home/naehas ./startup.sh ; tail -100f ../logs/catalina.out 
+  639  2015-01-07 18:06:01 billn pts/1 23:58 /home/naehas vi ../logs/catalina.out 
+  640  2015-01-07 18:07:38 billn pts/1 23:58 /home/naehas cd ../logs/
+  641  2015-01-07 18:07:38 billn pts/1 23:58 /home/naehas ll
+  642  2015-01-07 18:07:43 billn pts/1 23:58 /home/naehas ../bin/shutdown.sh 
+  643  2015-01-07 18:07:45 billn pts/1 23:58 /home/naehas ps aux | grep jav
+  644  2015-01-07 18:07:51 billn pts/1 23:58 /home/naehas ps aux | grep bill
+  645  2015-01-07 18:07:57 billn pts/1 23:58 /home/naehas rm -rf *
+  646  2015-01-07 18:07:58 billn pts/1 23:58 /home/naehas ll
+  647  2015-01-07 18:08:17 billn pts/1 23:58 /home/naehas ../bin/startup.sh
+  648  2015-01-07 18:08:18 billn pts/1 23:58 /home/naehas ll
+  649  2015-01-07 18:08:32 billn pts/1 23:58 /home/naehas cat catalina.out 
+  650  2015-01-07 18:22:57 billn pts/1 23:58 /home/naehas ll
+  651  2015-01-07 18:23:03 billn pts/1 23:58 /home/naehas rm -rf ajcore.20150107.1808*
+  652  2015-01-07 18:23:04 billn pts/1 23:58 /home/naehas ll
+  653  2015-01-07 18:23:20 billn pts/1 23:58 /home/naehas ../bin/shutdown.sh 
+  654  2015-01-07 18:23:25 billn pts/1 23:58 /home/naehas pwd
+  655  2015-01-07 18:23:42 billn pts/1 23:58 /home/naehas ../../bill-dashboard/bin/shutdown.sh 
+  656  2015-01-07 18:23:44 billn pts/1 23:58 /home/naehas ps aux | grep bill
+  657  2015-01-07 18:23:47 billn pts/1 23:58 /home/naehas ../../bill-dashboard/bin/shutdown.sh 
+  658  2015-01-07 18:23:50 billn pts/1 23:58 /home/naehas ps aux | grep bill
+  659  2015-01-07 18:24:01 billn pts/1 23:58 /home/naehas ../../bill-dashboard/bin/shutdown.sh 
+  660  2015-01-07 18:24:28 billn pts/1 23:58 /home/naehas kill -9 24944
+  661  2015-01-07 18:24:32 billn pts/1 23:58 /home/naehas ps aux | grep bill
+  662  2015-01-07 18:24:38 billn pts/1 23:58 /home/naehas pwd
+  663  2015-01-07 18:24:39 billn pts/1 23:58 /home/naehas ll
+  664  2015-01-07 18:24:46 billn pts/1 23:58 /home/naehas vi localhost.2015-01-07.log 
+  665  2015-01-07 18:27:24 billn pts/1 23:58 /home/naehas vi dashboard.log.2015-01-07 
+  666  2015-01-07 18:27:43 billn pts/1 23:58 /home/naehas pwd
+  667  2015-01-07 18:27:46 billn pts/1 23:58 /home/naehas cd ..
+  668  2015-01-07 18:27:46 billn pts/1 23:58 /home/naehas ll
+  669  2015-01-07 18:28:10 billn pts/1 23:58 /home/naehas myslq -uroot -p
+  670  2015-01-07 18:28:17 billn pts/1 23:58 /home/naehas mysql -uroot -p
+  671  2015-01-07 18:28:35 billn pts/1 23:58 /home/naehas mysql -u root -p
+  672  2015-01-07 18:28:57 billn pts/1 23:58 /home/naehas mysql -u root -pn3admin
+  673  2015-01-07 18:29:16 billn pts/1 23:58 /home/naehas pwd
+  674  2015-01-07 18:29:17 billn pts/1 23:58 /home/naehas ll
+  675  2015-01-07 18:29:22 billn pts/1 23:58 /home/naehas vi base-dashboard.properties 
+  676  2015-01-07 18:29:51 billn pts/1 23:58 /home/naehas pwd
+  677  2015-01-07 18:29:54 billn pts/1 23:58 /home/naehas l
+  678  2015-01-07 18:29:56 billn pts/1 23:58 /home/naehas ll
+  679  2015-01-07 18:30:41 billn pts/1 23:58 /home/naehas ./setup
+  680  2015-01-07 18:33:23 billn pts/1 23:58 /home/naehas pdw
+  681  2015-01-07 18:33:25 billn pts/1 23:58 /home/naehas pwd
+  682  2015-01-07 18:33:45 billn pts/1 23:58 /home/naehas cd bin && ./shutdown.sh
+  683  2015-01-07 18:33:49 billn pts/1 23:58 /home/naehas ps aux | grep bill
+  684  2015-01-07 18:33:52 billn pts/1 23:58 /home/naehas ps aux | grep java
+  685  2015-01-07 18:34:12 billn pts/1 23:58 /home/naehas ./startup.sh && cd .. 
+  686  2015-01-07 18:34:15 billn pts/1 23:58 /home/naehas pwd
+  687  2015-01-07 18:34:20 billn pts/1 23:58 /home/naehas tail -f logs/catalina.out 
+  688  2015-01-07 18:34:43 billn pts/1 23:58 /home/naehas pwd
+  689  2015-01-07 18:34:45 billn pts/1 23:58 /home/naehas cd logs/
+  690  2015-01-07 18:34:45 billn pts/1 23:58 /home/naehas ls
+  691  2015-01-07 18:34:46 billn pts/1 23:58 /home/naehas ll
+  692  2015-01-07 18:34:52 billn pts/1 23:58 /home/naehas vi catalina.out 
+  693  2015-01-07 18:35:33 billn pts/1 23:58 /home/naehas pwd
+  694  2015-01-07 18:35:35 billn pts/1 23:58 /home/naehas cd ../bin/
+  695  2015-01-07 18:35:35 billn pts/1 23:58 /home/naehas ls
+  696  2015-01-07 18:35:46 billn pts/1 23:58 /home/naehas rm -rf ajcore.20150107.18*
+  697  2015-01-07 18:35:48 billn pts/1 23:58 /home/naehas pwd
+  698  2015-01-07 18:35:50 billn pts/1 23:58 /home/naehas ls
+  699  2015-01-07 18:35:51 billn pts/1 23:58 /home/naehas ll
+  700  2015-01-07 18:36:01 billn pts/1 23:58 /home/naehas pwd
+  701  2015-01-07 18:36:08 billn pts/1 23:58 /home/naehas ./shutdown.sh 
+  702  2015-01-07 18:36:16 billn pts/1 23:58 /home/naehas ps aux | grep java
+  703  2015-01-07 18:37:31 billn pts/1 23:58 /home/naehas pwd
+  704  2015-01-07 18:37:32 billn pts/1 23:58 /home/naehas ll
+  705  2015-01-07 18:38:06 billn pts/1 23:58 /home/naehas pwd
+  706  2015-01-07 18:38:19 billn pts/1 23:58 /home/naehas cd ../../bill-dashboard/
+  707  2015-01-07 18:38:20 billn pts/1 23:58 /home/naehas ll
+  708  2015-01-07 18:38:21 billn pts/1 23:58 /home/naehas cd bin/
+  709  2015-01-07 18:38:28 billn pts/1 23:58 /home/naehas ./shutdown.sh 
+  710  2015-01-07 18:38:31 billn pts/1 23:58 /home/naehas ps aux | grep java
+  711  2015-01-07 18:38:47 billn pts/1 23:58 /home/naehas ./startup.sh; tail -f ../logs/catalina.out 
+  712  2015-01-07 18:40:01 billn pts/1 23:58 /home/naehas pwd
+  713  2015-01-07 18:40:06 billn pts/1 23:58 /home/naehas ./shutdown.sh 
+  714  2015-01-07 18:41:22 billn pts/1 23:58 /home/naehas pwd
+  715  2015-01-07 18:41:28 billn pts/1 23:58 /home/naehas cd ../../bill2-dashboard/
+  716  2015-01-07 18:41:29 billn pts/1 23:58 /home/naehas ll
+  717  2015-01-07 18:41:34 billn pts/1 23:58 /home/naehas ps aux | grep java
+  718  2015-01-07 18:41:39 billn pts/1 23:58 /home/naehas ps aux | grep bill
+  719  2015-01-07 18:41:45 billn pts/1 23:58 /home/naehas ps auxf | grep java
+  720  2015-01-07 18:41:53 billn pts/1 23:58 /home/naehas ps auxf | grep bill
+  721  2015-01-07 18:41:54 billn pts/1 23:58 /home/naehas ps aux
+  722  2015-01-07 18:42:03 billn pts/1 23:58 /home/naehas pwd
+  723  2015-01-07 18:42:10 billn pts/1 23:58 /home/naehas ls
+  724  2015-01-07 18:42:23 billn pts/1 23:58 /home/naehas vi test.js 
+  725  2015-01-07 18:42:31 billn pts/1 23:58 /home/naehas ll
+  726  2015-01-07 18:42:34 billn pts/1 23:58 /home/naehas pwd
+  727  2015-01-07 18:42:39 billn pts/1 23:58 /home/naehas cd bin/
+  728  2015-01-07 18:42:59 billn pts/1 23:58 /home/naehas . ../memOpts.env 
+  729  2015-01-07 18:43:04 billn pts/1 23:58 /home/naehas echo $JAVA_HOME
+  730  2015-01-07 18:43:35 billn pts/1 23:58 /home/naehas ./startup.sh; tail -f ../logs/catalina.out 
+  731  2015-01-07 18:45:09 billn pts/1 23:58 /home/naehas ls
+  732  2015-01-07 18:45:36 billn pts/1 23:58 /home/naehas cat ajcore.20150107.184337.292.txt 
+  733  2015-01-07 18:45:43 billn pts/1 23:58 /home/naehas ls
+  734  2015-01-07 18:45:47 billn pts/1 23:58 /home/naehas rm -rf ajcore.20150107.1843*
+  735  2015-01-07 18:45:52 billn pts/1 23:58 /home/naehas ./shutdown.sh 
+  736  2015-01-07 18:45:57 billn pts/1 23:58 /home/naehas cd ..
+  737  2015-01-07 18:45:57 billn pts/1 23:58 /home/naehas pwd
+  738  2015-01-07 18:45:58 billn pts/1 23:58 /home/naehas ll
+  739  2015-01-07 18:46:58 billn pts/1 23:58 /home/naehas pwd
+  740  2015-01-07 18:47:03 billn pts/1 23:58 /home/naehas history 
+  741  2015-01-07 18:47:27 billn pts/1 23:58 /home/naehas ssh-agent /bin/bash
+  742  2015-01-07 23:59:32 billn pts/1 23:58 /home/naehas ssh-add 
+  743  2015-01-07 23:59:53 billn pts/1 23:58 /home/naehas cd
+  744  2015-01-07 23:59:56 billn pts/1 23:58 /home/naehas cd .ssh/
+  745  2015-01-07 23:59:59 billn pts/1 23:58 /home/naehas ll
+  746  2015-01-08 00:00:00 billn pts/1 23:58 /home/naehas cd -
+  747  2015-01-08 00:00:13 billn pts/1 23:58 /home/naehas cd /usr/java/bill2-dashboard/
+  748  2015-01-08 00:00:15 billn pts/1 23:58 /home/naehas ll
+  749  2015-01-08 00:00:25 billn pts/1 23:58 /home/naehas SVNROOT="svn+ssh://svn.naehas.com/home/svn/repository"
+  750  2015-01-08 00:01:11 billn pts/1 23:58 /home/naehas RELEASE="$SVNROOT/base-dashboard/tags/Imp-Sprint120-Build1"
+  751  2015-01-08 00:01:23 billn pts/1 23:58 /home/naehas svn export $RELEASE . --force
+  752  2015-01-08 00:01:46 billn pts/1 23:58 /home/naehas svn info $RELEASE > SVN_INFO
+  753  2015-01-08 00:01:51 billn pts/1 23:58 /home/naehas cat SVN_INFO 
+  754  2015-01-08 00:02:05 billn pts/1 23:58 /home/naehas ./setup
+  755  2015-01-08 00:04:16 billn pts/1 23:58 /home/naehas cd bin && ./shutdown.sh
+  756  2015-01-08 00:04:18 billn pts/1 23:58 /home/naehas ps aux
+  757  2015-01-08 00:04:25 billn pts/1 23:58 /home/naehas ps aux | grep java
+  758  2015-01-08 00:04:28 billn pts/1 23:58 /home/naehas ps aux | grep bill
+  759  2015-01-08 00:04:52 billn pts/1 23:58 /home/naehas ./startup.sh && cd .. && tail -100 logs/catalina.out
+  760  2015-01-08 00:04:56 billn pts/1 23:58 /home/naehas pwd
+  761  2015-01-08 00:05:05 billn pts/1 23:58 /home/naehas tail -100f logs/catalina.out
+  762  2015-01-08 00:05:45 billn pts/1 23:58 /home/naehas pwd
+  763  2015-01-08 00:05:45 billn pts/1 23:58 /home/naehas ll
+  764  2015-01-08 00:05:49 billn pts/1 23:58 /home/naehas cd webapps/
+  765  2015-01-08 00:05:49 billn pts/1 23:58 /home/naehas ll
+  766  2015-01-08 00:06:00 billn pts/1 23:58 /home/naehas ln -s ../../www-static/www-static-elixir ./static
+  767  2015-01-08 00:06:01 billn pts/1 23:58 /home/naehas cd static
+  768  2015-01-08 00:06:02 billn pts/1 23:58 /home/naehas ll
+  769  2015-01-08 00:06:09 billn pts/1 23:58 /home/naehas cd ../../
+  770  2015-01-08 00:06:23 billn pts/1 23:58 /home/naehas grep http logs/catalina.out 
+  771  2015-01-08 00:10:11 billn pts/1 23:58 /home/naehas pwd
+  772  2015-01-08 00:10:12 billn pts/1 23:58 /home/naehas ll
+  773  2015-01-08 00:10:15 billn pts/1 23:58 /home/naehas cd webapps/
+  774  2015-01-08 00:10:15 billn pts/1 23:58 /home/naehas ll
+  775  2015-01-08 00:10:42 billn pts/1 23:58 /home/naehas cd dashboard/WEB-INF/messages/
+  776  2015-01-08 00:10:43 billn pts/1 23:58 /home/naehas ls
+  777  2015-01-08 00:10:44 billn pts/1 23:58 /home/naehas ll
+  778  2015-01-08 00:10:47 billn pts/1 23:58 /home/naehas vi messages.properties 
+  779  2015-01-08 00:11:38 billn pts/1 23:58 /home/naehas cd ../../../..
+  780  2015-01-08 00:11:40 billn pts/1 23:58 /home/naehas cd bin/
+  781  2015-01-08 00:11:40 billn pts/1 23:58 /home/naehas ls
+  782  2015-01-08 00:11:48 billn pts/1 23:58 /home/naehas ./shutdown.sh 
+  783  2015-01-08 00:11:55 billn pts/1 23:58 /home/naehas ps aux | grep bill
+  784  2015-01-08 00:12:02 billn pts/1 23:58 /home/naehas ps aux | grep java
+  785  2015-01-08 00:12:06 billn pts/1 23:58 /home/naehas ./startup.sh
+  786  2015-01-08 00:12:08 billn pts/1 23:58 /home/naehas cd ../logs/
+  787  2015-01-08 00:12:15 billn pts/1 23:58 /home/naehas tail -100f catalina.out 
+  788  2015-01-08 00:13:25 billn pts/1 23:58 /home/naehas cd ..
+  789  2015-01-08 00:13:39 billn pts/1 23:58 /home/naehas grep -R static *
+  790  2015-01-08 00:13:58 billn pts/1 23:58 /home/naehas cd webapps/
+  791  2015-01-08 00:13:59 billn pts/1 23:58 /home/naehas grep -R static *
+  792  2015-01-08 00:14:07 billn pts/1 23:58 /home/naehas grep -R static * | grep -v static
+  793  2015-01-08 00:19:51 billn pts/1 23:58 /home/naehas cd dashboard/
+  794  2015-01-08 00:19:56 billn pts/1 23:58 /home/naehas grep -R static * 
+  795  2015-01-08 00:20:05 billn pts/1 23:58 /home/naehas grep -R static * | grep -v styles
+  796  2015-01-08 00:20:14 billn pts/1 23:58 /home/naehas grep -R static * | grep -v styles | grep scripts
+  797  2015-01-08 00:20:19 billn pts/1 23:58 /home/naehas grep -R static * | grep -v styles | grep -v scripts
+  798  2015-01-08 00:20:24 billn pts/1 23:58 /home/naehas grep -R static * | grep -v styles | grep -v scripts | resources
+  799  2015-01-08 00:20:29 billn pts/1 23:58 /home/naehas grep -R static * | grep -v styles | grep -v scripts | grep -v resources
+  800  2015-01-08 00:20:39 billn pts/1 23:58 /home/naehas history | grep static
+  801  2015-01-08 00:22:30 billn pts/1 23:58 /home/naehas pwd
+  802  2015-01-08 00:22:30 billn pts/1 23:58 /home/naehas ll
+  803  2015-01-08 00:22:42 billn pts/1 23:58 /home/naehas pwd
+  804  2015-01-08 00:23:16 billn pts/1 23:58 /home/naehas cd
+  805  2015-01-08 00:23:17 billn pts/1 23:58 /home/naehas df -h 
+  806  2015-01-08 00:23:25 billn pts/1 23:58 /home/naehas cd /usr/java/
+  807  2015-01-08 00:23:25 billn pts/1 23:58 /home/naehas l
+  808  2015-01-08 00:23:26 billn pts/1 23:58 /home/naehas ll
+  809  2015-01-08 00:23:35 billn pts/1 23:58 /home/naehas cd bill2-dashboard/bin/
+  810  2015-01-08 00:23:38 billn pts/1 23:58 /home/naehas ./shutdown.sh 
+  811  2015-01-08 00:23:50 billn pts/1 23:58 /home/naehas pwd
+  812  2015-01-08 00:23:51 billn pts/1 23:58 /home/naehas ll
+  813  2015-01-08 00:23:53 billn pts/1 23:58 /home/naehas ps uax
+  814  2015-01-08 00:23:56 billn pts/1 23:58 /home/naehas ps aux
+  815  2015-01-08 00:23:57 billn pts/1 23:58 /home/naehas pwd
+  816  2015-01-08 00:24:32 billn pts/1 23:58 /home/naehas ll
+  817  2015-01-08 00:24:36 billn pts/1 23:58 /home/naehas cd 
+  818  2015-01-08 00:24:37 billn pts/1 23:58 /home/naehas pwd
+  819  2015-01-08 00:24:37 billn pts/1 23:58 /home/naehas ll
+  820  2015-01-08 00:24:41 billn pts/1 23:58 /home/naehas df -h 
+  821  2015-01-08 00:24:53 billn pts/1 23:58 /home/naehas exit
+  822  2015-01-07 23:58:40 billn pts/1 23:58 /home/naehas pwd
+  823  2015-01-07 23:58:41 billn pts/1 23:58 /home/naehas ll
+  824  2015-01-07 23:58:52 billn pts/1 23:58 /home/naehas cd /usr/java
+  825  2015-01-07 23:58:52 billn pts/1 23:58 /home/naehas ll
+  826  2015-01-07 23:58:56 billn pts/1 23:58 /home/naehas cd bill2-dashboard/
+  827  2015-01-07 23:58:57 billn pts/1 23:58 /home/naehas ll
+  828  2015-01-07 23:59:04 billn pts/1 23:58 /home/naehas rm -rf *
+  829  2015-01-07 23:59:29 billn pts/1 23:58 /home/naehas ssh-agent /bin/bash 
+  830  2015-01-08 00:24:54 billn pts/1 23:58 /home/naehas cd
+  831  2015-01-08 00:24:55 billn pts/1 23:58 /home/naehas exit
+  832  2015-01-08 01:10:29 billn pts/1 23:58 /home/naehas history 
+  833  2015-01-08 01:10:44 billn pts/1 23:58 /home/naehas history > /tmp/naehas.out

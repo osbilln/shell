@@ -1,0 +1,47 @@
+#! /bin/bash
+
+STATE_OK=0
+STATE_WARNING=1
+STATE_CRITICAL=2
+STATE_UNKNOWN=3
+STATE_DEPENDENT=4
+
+if test -x /usr/bin/printf; then
+	ECHO=/usr/bin/printf
+else
+	ECHO=echo
+fi
+
+wget "prodmerge.naehas.com:7070/master/services/action/server" -O /tmp/check_http_prodwkmerge_server.txt
+merge_fault_count=`grep -f /usr/lib/nagios/plugins/check_http_prodmerge_server_fault_pattern.txt -o /tmp/check_http_prodwkmerge_server.txt | wc -l`
+merge_working_count=`grep -f /usr/lib/nagios/plugins/check_http_prodmerge_server_working_pattern.txt -o /tmp/check_http_prodwkmerge_server.txt | wc -l`
+#merge_status=`/usr/lib/nagios/plugins/check_http -I prodmerge.naehas.com -u /master/services/action/server -p 8080 -t 30 -r "UNAVAILABLE|TIMED_OUT|LOCKED|ATTENTION_REQUIRED|UNSTABLE" --invert-regex | awk '{print $2}'`
+
+echo WKFAULTCOUNT: $merge_fault_count
+echo WKWORKINGCOUNT: $merge_working_count
+
+if [ $merge_fault_count -gt 6 ]; then
+	merge_status=CRITICAL
+else
+	merge_status=OK
+fi
+
+echo WKSTATUS: $merge_status
+
+if [ "$merge_status" = "CRITICAL" ]; then
+	exit $STATE_CRITICAL
+fi
+
+if [ $merge_working_count -lt 2 ]; then
+	merge_status=CRITICAL
+else
+	merge_status=OK
+fi
+
+echo WKSTATUS: $merge_status
+
+if [ "$merge_status" = "CRITICAL" ]; then
+	exit $STATE_CRITICAL
+else
+	exit $STATE_OK
+fi

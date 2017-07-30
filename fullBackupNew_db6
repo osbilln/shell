@@ -1,0 +1,33 @@
+#!/bin/bash
+# Backs up all naehas tables.
+# Excludes customer tables, and rendermap tables.
+
+PASSWORD=n3admin
+
+
+if [[ "$1" == "" ]] ; then
+        DB=citinew8
+else
+        DB=$1
+fi
+echo $DB
+
+
+LOOKUPS=`echo "select distinct tablename from N_DATA_LISTS where type not in ('DATA_FILE','TMP','STAGING','EXTENSION') and tablename in (select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = '${DB}_staging')" | mysql -uroot -p$PASSWORD ${DB}_staging --socket=/var/lib/mysql/db6.sock -A -s`
+NAEHAS_TABLES=`echo "show tables where tables_in_${DB} like 'N\_%' and tables_in_${DB} not like 'N\_%DATA\_MAPPINGS%';" | mysql -uroot -p$PASSWORD $DB --socket=/var/lib/mysql/db6.sock -A -s `
+echo Backing up $DB $NAEHAS_TABLES for $DB
+echo ""
+mysqldump -u root -p$PASSWORD --socket=/var/lib/mysql/db6.sock $DB $NAEHAS_TABLES                                 | gzip > $DB.sql.gz
+NAEHAS_TABLES=`echo "show tables where tables_in_${DB}_staging like 'N\_%' and tables_in_${DB}_staging not like 'N\_%DATA\_MAPPINGS%';" | mysql -uroot -p$PASSWORD ${DB}_staging --socket=/var/lib/mysql/db6.sock -A -s `
+NAEHAS_AUDIT_TABLES=`echo "show tables where tables_in_${DB}_staging like '%\_AUD' and tables_in_${DB}_staging not like 'N\_%';" | mysql -uroot -p$PASSWORD ${DB}_staging --socket=/var/lib/mysql/db6.sock -A -s `
+ACL_TABLES="acl_entry acl_object_identity"
+echo Backing up ${DB}_staging $NAEHAS_TABLES $LOOKUPS $NAEHAS_AUDIT_TABLES $ACL_TABLES for ${DB}_staging
+echo ""
+mysqldump -u root -p$PASSWORD ${DB}_staging --socket=/var/lib/mysql/db6.sock --single-transaction $NAEHAS_TABLES $LOOKUPS $NAEHAS_AUDIT_TABLES $ACL_TABLES | gzip > ${DB}_staging.sql.gz
+echo ""
+
+# You could install these onto a target db with:
+### zcat $DB.sql.gz | mysql -uroot -p -A [target]
+### zcat $DB_staging].sql.gz | mysql -uroot -p -A [target]_staging
+
+echo 'Done.'

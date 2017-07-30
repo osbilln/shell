@@ -1,0 +1,8 @@
+
+java -cp /Users/robertg/Downloads/fop-0.95/build/fop.jar:/Users/robertg/Downloads/fop-0.95/lib/serializer-2.7.0.jar:/Users/robertg/Downloads/fop-0.95/lib/commons-logging-1.0.4.jar:/Users/robertg/Downloads/fop-0.95/lib/commons-io-1.3.1.jar:/Users/robertg/Downloads/fop-0.95/lib/xmlgraphics-commons-1.3.1.jar org.apache.fop.fonts.apps.PFMReader /Users/robertg/Desktop/type1/AGR_____.pfm AGR_____.xml 
+
+java -cp /Users/robertg/Downloads/fop-0.95/build/fop.jar:/Users/robertg/Downloads/fop-0.95/lib/serializer-2.7.0.jar:/Users/robertg/Downloads/fop-0.95/lib/commons-logging-1.0.4.jar:/Users/robertg/Downloads/fop-0.95/lib/commons-io-1.3.1.jar:/Users/robertg/Downloads/fop-0.95/lib/xmlgraphics-commons-1.3.1.jar org.apache.fop.fonts.apps.PFMReader /Users/robertg/Desktop/type1/HelveticaNeueLTStd-ThCnO.pfm HelveticaNeueLTStd-ThCnO.xml 
+
+java -cp /Users/robertg/Downloads/fop-0.95/build/fop.jar:/Users/robertg/Downloads/fop-0.95/lib/serializer-2.7.0.jar:/Users/robertg/Downloads/fop-0.95/lib/commons-logging-1.0.4.jar:/Users/robertg/Downloads/fop-0.95/lib/commons-io-1.3.1.jar:/Users/robertg/Downloads/fop-0.95/lib/xmlgraphics-commons-1.3.1.jar org.apache.fop.fonts.apps.PFMReader /Users/robertg/Desktop/type1/HELVNTCO.pfm HELVNTCO.xml 
+
+java -cp /Users/robertg/Downloads/fop-0.95/build/fop.jar:/Users/robertg/Downloads/fop-0.95/lib/serializer-2.7.0.jar:/Users/robertg/Downloads/fop-0.95/lib/commons-logging-1.0.4.jar:/Users/robertg/Downloads/fop-0.95/lib/commons-io-1.3.1.jar:/Users/robertg/Downloads/fop-0.95/lib/xmlgraphics-commons-1.3.1.jar org.apache.fop.fonts.apps.PFMReader /Users/robertg/Desktop/type1/HelveticaLTStd-Roman.pfm HelveticaLTStd-Roman.xml 

@@ -1,0 +1,32 @@
+#! /bin/bash
+
+STATE_OK=0
+STATE_WARNING=1
+STATE_CRITICAL=2
+STATE_UNKNOWN=3
+STATE_DEPENDENT=4
+
+if test -x /usr/bin/printf; then
+        ECHO=/usr/bin/printf
+else
+        ECHO=echo
+fi
+
+wget --secure-protocol=auto --http-user admin --http-password admin "http://192.168.201.150:8080/welcomekit/rest/action/queue/info/get" -O /tmp/check_http_prodintg2_welcomekit_queue_size.txt
+welcomekit_queue=`awk -F\, '{print $2}' /tmp/check_http_prodintg2_welcomekit_queue_size.txt | awk -F\: '{print $2}'`
+
+echo Available_Queue: $welcomekit_queue
+
+if [ $welcomekit_queue -gt 30 ]; then
+        welcomekit_queue_status=OK
+else
+        welcomekit_queue_status=CRITICAL
+fi
+
+echo QUEUESTATUS: $welcomekit_queue_status
+
+if [ "$welcomekit_queue_status" = "CRITICAL" ]; then
+        exit $STATE_CRITICAL
+else
+        exit $STATE_OK
+fi

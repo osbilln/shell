@@ -1,0 +1,44 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`
+
+if [[ (-z $path) || (-z $instanceType) || (-z $VHOST_HOME) ]]; then
+    echo "ERROR: usage: $PROGRAM_NAME The following environment variables need to be set"
+    echo "              path            (you have \"${path}\")"
+    echo "              instanceType    (you have \"${instanceType}\")"
+    echo "              VHOST_HOME      (you have \"${VHOST_HOME}\")"
+    exit 1;
+fi
+
+path=`basename $path`
+instanceType=`basename $instanceType`
+
+if [[ `expr "${path}" : "[a-zA-Z0-9_-]\+$"` -eq 0 ]]; then
+    echo "ERROR: path variable invalid"
+    exit 1;
+fi
+if [[ "STAGING" != "${instanceType}" && "PROD" != "${instanceType}" && "TEST" != "${instanceType}" ]]; then
+    echo "ERROR: instanceType variable invalid"
+    exit 1;
+fi
+if [[ `expr "${VHOST_HOME}" : "[a-zA-Z0-9\/_-]\+$"` -eq 0 ]]; then
+    echo "ERROR: VHOST_HOME variable invalid"
+    exit 1;
+fi
+
+if [[ ! -e ${VHOST_HOME} || ! -d ${VHOST_HOME} ]]; then
+    echo "ERROR: ${VHOST_HOME} does not exist"
+    exit 1;
+fi
+
+vhostFile=${instanceType}.${path}.vhost
+
+echo "Nuking ${VHOST_HOME}/${vhostFile}"
+
+rm ${VHOST_HOME}/${vhostFile}
+
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: rm ${VHOST_HOME}/${vhostFile} failed"
+    exit 1;
+fi
+

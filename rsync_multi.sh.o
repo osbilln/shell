@@ -1,0 +1,18 @@
+/bin/bash
+ 
+# SETUP OPTIONS
+export SRCDIR="/folder/path"
+export DESTDIR="/folder2/path"
+export THREADS="8"
+ 
+# RSYNC DIRECTORY STRUCTURE
+rsync -zr -f"+ */" -f"- *" $SRCDIR/ $DESTDIR/ 
+# FOLLOWING MAYBE FASTER BUT NOT AS FLEXIBLE
+# cd $SRCDIR; find . -type d -print0 | cpio -0pdm $DESTDIR/
+# FIND ALL FILES AND PASS THEM TO MULTIPLE RSYNC PROCESSES
+cd $SRCDIR; find . ! -type d -print0 | xargs -0 -n1 -P$THREADS -I% rsync -azvt % $DESTDIR/% 
+ 
+ 
+# IF YOU WANT TO LIMIT THE IO PRIORITY, 
+# PREPEND THE FOLLOWING TO THE rsync & cd/find COMMANDS ABOVE:
+#   ionice -c2

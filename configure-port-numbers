@@ -1,0 +1,35 @@
+#!/bin/bash
+# runs from tomcat home
+# expects the first port number you want to use set to PORT
+# if the optional first arguement is given, will swap port + $1 with $port
+port=${PORT}
+if [[ (-z ${PORT}) ]]; then
+    echo "ERROR: PORT environment variable is not set";
+    exit 1;
+fi
+
+
+if [[ (-z $1) ]]; then
+    sed -i "s/x0x/${port}/" conf/server.xml
+    port=`expr $port + 1`
+    sed -i "s/x1x/${port}/" conf/server.xml 
+    port=`expr $port + 1`
+    sed -i "s/x2x/${port}/" conf/server.xml
+    port=`expr $port + 1`
+    sed -i "s/x3x/${port}/" conf/server.xml 
+else
+    offset=$1
+    altPort=`expr $port + $offset`
+
+    sed -i "s/${altPort}/${port}/" conf/server.xml
+    altPort=`expr $altPort + 1`
+    port=`expr $port + 1`
+    sed -i "s/${altPort}/${port}/" conf/server.xml 
+    altPort=`expr $altPort + 1`
+    port=`expr $port + 1`
+    sed -i "s/${altPort}/${port}/" conf/server.xml
+    altPort=`expr $altPort + 1`
+    port=`expr $port + 1`
+    sed -i "s/${altPort}/${port}/" conf/server.xml 
+fi
+

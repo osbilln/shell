@@ -1,0 +1,216 @@
+#!/bin/bash
+
+export scriptDir=`dirname $0`;
+PROGRAM_NAME=`basename $0`
+DEBUG=1
+
+usage() {
+    echo "usage: ${PROGRAM_NAME} <from> <source> <path> <instanceId> <instanceType> <dbHost>"
+    echo "      <from>:         The name of the box you are migrating from"
+    echo "      <source>:       The project of the instance, (base-dashboard|base-ilp)"
+    echo "      <path>:         The path of the project"
+    echo "      <instanceId>:   The ID of the instance being deployed"
+    echo "      <instanceType>: The type of instance (TEST|STAGING|PROD)"
+    echo "      <dbHost>:       The database host"
+    echo "      example: ${PROGRAM_NAME} test1 base-dashboard apple-dashboard 1230 STAGING prodcluster"
+    echo ""
+    exit 1;
+}
+
+debug() {
+    if [[ $DEBUG -eq 1 ]]; then
+        echo "`date +%Y/%m/%d_%H:%M:%S` | $1";
+    fi
+}
+
+if [[ (-z $1) || (-z $2) || (-z $3) || (-z $4) || (-z $5) || (-z $6) ]]; then
+    usage;
+fi
+
+fromBox=$1
+source=$2
+export path=$3
+instanceId=$4
+export instanceType=$5
+export DBHOST=$6
+
+srcParent=$fromBox:/usr/java
+destParent=/usr/java
+
+if [[ ("base-ilp" == "$source") ]]; then
+	srcParent=$srcParent/staging
+fi
+if [[ ( "STAGING" == "$instanceType" ) && ("base-ilp" == "$source") ]]; then
+	# does this ever happen? if not, can we get rid of this condition?
+	export machineDir="staging"
+	destParent=$destParent/staging
+fi 
+
+debug "Migrating $source instance '$path', from '$srcParent' to '$destParent'";
+
+srcDir=$srcParent/$path
+destDir=$destParent/$path
+
+preExistingFlag=0;
+export CATALINA_PID=catalina.pid
+
+if [[ -d "$destDir" ]]; then
+    debug "Found $path in $destParent";
+    preExistingFlag=1;
+
+    debug "Shutting down tomcat instance.";
+    cd $destDir/bin
+    ./shutdown.sh -force 
+
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: Error shutting down $path";
+        exit 1;
+    fi
+fi
+
+debug "Rsyncing from '$srcDir' to '$destParent'";
+rsync -avzb --exclude "logs/" --exclude "work/" --exclude "*.log" --exclude "catalina.pid" --backup-dir=/usr/java/backup $srcDir $destParent
+
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Error rsync'ing '$path'";
+    exit 1;
+fi
+
+cd $destDir
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: $destDir does not exist";
+    exit 1;
+fi
+
+if [[ -d $destDir/work ]]; then
+    rm -rf $destDir/work
+fi
+
+if [ ! -f "${source}.cfg" ]; then
+    echo "ERROR: ${source}.cfg does not exist.";
+    exit 1;
+fi
+debug "Sourcing ${source}.cfg"
+. ${source}.cfg
+
+
+if [[ ("base-dashboard" == "$source") ]]; then
+	export INSTANCE_ID=$instanceId
+	export INSTANCE_TYPE=$instanceType
+	${scriptDir}/update-base-dashboard
+	if [[ $? -ne 0 ]]; then
+		exit 1;
+	fi 
+fi
+
+if [[ ("base-ilp" == "$source") && (-d "$destDir/webapps/ilp/transformed/") ]]; then
+    cp $destDir/webapps/ilp/transformed/* $destDir/webapps/ilp/
+fi
+
+if [[ ("PROD" == "$instanceType") ]]; then
+    export PORT=`expr $PORT + 5`;
+    ${scriptDir}/configure-port-numbers -5
+    sed -i "s/${DATABASE}_staging/${DATABASE}/g" /usr/java/$path/conf/Catalina/localhost/ilp.xml
+else
+    ${scriptDir}/configure-port-numbers
+fi
+
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: configure-port-numbers failed."
+    exit 1;
+fi
+
+if [[ (preExistingFlag -eq 0) && ("base-dashboard" == "$source") ]]; then 
+    #new dashboard
+    debug "Running createschema_staging";
+    ant createschema_staging
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: Failed to run createschema_staging";
+        exit 1;
+    fi
+
+    debug "Run update packages_staging";
+    ant upgradedatabase_staging
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: Failed to run upgradedatabase_staging";
+        exit 1;
+    fi
+        
+    debug "Running createschema";
+    ant createschema
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: Failed to run createschema";
+        exit 1;
+    fi
+
+    debug "Run update packages";
+    ant upgradedatabase
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: Failed to run upgradedatabase";
+        exit 1;
+    fi
+
+elif [[ (preExistingFlag -ne 0) && ("base-dashboard" == "$source") ]]; then
+    #pre-exising dashboard
+    ${scriptDir}/process_scheduled_deletions -d $path
+
+    debug "updateschema";
+    ant updateschema
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: Failed to run updateschema";
+        exit 1;
+    fi
+
+    debug "update packages";
+    ant upgradedatabase
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: Failed to run upgradedatabase";
+        exit 1;
+    fi
+
+    debug "update packages on staging";
+    ant upgradedatabase_staging
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: Failed to run upgradedatabase_staging";
+        exit 1;
+    fi
+elif [[ (preExistingFlag -ne 0) && ("base-ilp" == "$source") ]]; then
+    #pre-existing ilp
+    ${scriptDir}/process_scheduled_deletions -d $path
+fi
+
+
+myBox=`hostname | sed "s/^.\+-\(.\+\).naehas.\+$/\1/"`
+if [[ -e $destDir/customize_${myBox}.sh ]]; then
+    debug "Running customize_${myBox}.sh";
+    cd $destDir
+    chmod a+x customize_${myBox}.sh
+    ./customize_${myBox}.sh
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: Failed to run customer_${myBox}.sh";
+        exit 1;
+    fi
+fi
+
+if [[ (-e $scriptDir/disable-notification-conversion) && ("base-dashboard" == "$source") ]]; then
+	debug "Disabling notifications and glp conversions."
+	$scriptDir/disable-notification-conversion
+fi
+
+if ! [[ -e $destDir/logs/ ]]; then
+    mkdir $destDir/logs
+fi
+
+if [[ "TEST" != "$instanceType" ]]; then
+	debug "Starting up instance.";
+	cd $destDir/bin
+	./startup.sh
+	if [[ $? -ne 0 ]]; then
+    	echo "ERROR: Error starting $path";
+    	exit 1;
+	fi
+else
+	debug "Skipping automatic-startup for TEST instance."
+fi
+
+exit 0;

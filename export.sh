@@ -1,0 +1,8 @@
+#!/bin/sh
+export EC2_PRIVATE_KEY=`pwd`/pk-XXXXXXXXXXXXXXXXXXXXXXXX.pem
+export EC2_CERT=`pwd`/cert-XXXXXXXXXXXXXXXXXXXXXXXX.pem
+export AWS_ELB_HOME=`pwd`/ELB
+export AWS_AUTO_SCALING_HOME=`pwd`/AutoScaling
+export AWS_CLOUDWATCH_HOME=`pwd`/CloudWatch
+export JAVA_HOME=/usr
+export PATH=$PATH:$AWS_ELB_HOME/bin:$AWS_AUTO_SCALING_HOME/bin:$AWS_CLOUDWATCH_HOME/bin

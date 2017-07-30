@@ -1,0 +1,32 @@
+#!/bin/bash
+# Backs up all naehas tables.
+# Excludes customer tables, and rendermap tables.
+
+PASSWORD=n3admin
+
+
+if [[ "$1" == "" ]] ; then
+        DB=comcastprod_staging
+else
+        DB=$1
+fi
+echo $DB
+
+#LOOKUPS=`echo "select distinct tablename from N_DATA_LISTS where type not in ('DATA_FILE','TMP','STAGING','EXTENSION') and tablename in (select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = '$DB')" | mysql -uroot -p$PASSWORD $DB --socket=/var/lib/mysql/db7.sock -A -s`
+#NAEHAS_TABLES=`echo "show tables where tables_in_$DB like 'N\_%';" | mysql -uroot -p$PASSWORD $DB --socket=/var/lib/mysql/db7.sock -A -s `
+#LOOKUPS=`echo "select distinct tablename from N_DATA_LISTS dl join N_DATA_FEEDS df on dl.datafeed_id=df.id where dl.type not in ('DATA_FILE') and df.purpose='LOOKUP_LIST' and tablename in (select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = '${DB}') UNION select distinct tablename from N_DATA_LISTS dl join N_DATA_FEEDS df on dl.datafeed_id=df.id where dl.type not in ('DATA_FILE','TMP','STAGING','EXTENSION') and df.purpose='DATA_LIST' and tablename in (select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = '${DB}')" | mysql -uroot -p$PASSWORD  --socket=/var/lib/mysql/db7.sock ${DB} -A -s`
+NAEHAS_TABLES=`echo "show tables where tables_in_${DB} like 'N\_%' and tables_in_${DB} not like 'N\_DATA\_MAPPINGS%';" | mysql -uroot -p$PASSWORD  --socket=/var/lib/mysql/db7.sock $DB -A -s `
+ACL_TABLES="acl_entry acl_object_identity"
+ENVERS_AUDIT_TABLES=`echo "show tables where tables_in_${DB} like '%\_aud' and tables_in_${DB} not like 'N\_%';" | mysql -uroot -p$PASSWORD  --socket=/var/lib/mysql/db7.sock $DB -A -s `
+NAEHAS_TABLES="$NAEHAS_TABLES $ACL_TABLES $ENVERS_AUDIT_TABLES"
+LOOKUPS=`echo "select distinct tablename from N_DATA_LISTS dl where dl.type not in ('DATA_FILE','TMP','STAGING','EXTENSION') and tablename in (select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = '${DB}')" | mysql -uroot -p$PASSWORD  --socket=/var/lib/mysql/db7.sock ${DB} -A -s`
+NAEHAS_AUDIT_TABLES=`echo "show tables where tables_in_$DB like '%\_AUD' and tables_in_$DB not like 'N\_%';" | mysql -uroot -p$PASSWORD $DB --socket=/var/lib/mysql/db7.sock -A -s `
+echo Backing up ${DB}_staging $NAEHAS_TABLES $LOOKUPS $NAEHAS_AUDIT_TABLES for $DB
+echo ""
+mysqldump -u root -p$PASSWORD $DB --socket=/var/lib/mysql/db7.sock --single-transaction $NAEHAS_TABLES $LOOKUPS $NAEHAS_AUDIT_TABLES | gzip > $DB.sql.gz
+echo ""
+
+# You could install these onto a target db with:
+### zcat $DB.sql.gz | mysql -uroot -p -A [target]
+
+echo 'Done.'

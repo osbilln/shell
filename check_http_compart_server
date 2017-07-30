@@ -1,0 +1,33 @@
+#! /bin/bash
+
+STATE_OK=0
+STATE_WARNING=1
+STATE_CRITICAL=2
+STATE_UNKNOWN=3
+STATE_DEPENDENT=4
+
+if test -x /usr/bin/printf; then
+        ECHO=/usr/bin/printf
+else
+        ECHO=echo
+fi
+
+wget "192.168.201.109:8080/DeltaServer/" -O /tmp/check_http_compart_server.txt
+compart_working=`grep -f /usr/lib/nagios/plugins/check_http_compart_server_working_pattern.txt -o /tmp/check_http_compart_server.txt | wc -l`
+
+echo COMPARTOK: $compart_working
+
+if [ $compart_working -gt 0 ]; then
+        compart_status=OK
+else
+        compart_status=CRITICAL
+fi
+
+echo COMPARTSTATUS: $compart_status
+
+if [ "$compart_status" = "CRITICAL" ]; then
+        exit $STATE_CRITICAL
+else
+        exit $STATE_OK
+fi
+

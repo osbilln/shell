@@ -1,0 +1,39 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`
+
+list_file=/home/naehas/conf/running_instances.cfg
+
+if [[ ! -e ${list_file} ]]; then
+    echo "ERROR: ${list_file} does not exist.";
+    exit 1;
+fi
+
+num_started=0
+num_total=0
+for instance in $(cat ${list_file})
+do
+    echo "DEBUG: starting up ${instance}"
+    ps aux | grep "${instance}" | grep -v grep
+    if [[ $? -eq 0 ]]; then
+        echo "WARN: ${instance} is already running."
+    elif [[ ! -e ${instance} ]]; then
+        echo "WARN: ${instance} does not exist."
+    elif [[ ! -d ${instance} ]]; then
+        echo "WARN: ${instance} not a directory."
+    else
+        # meat
+        cd ${instance}/bin/
+        if [[ $? -ne 0 ]]; then
+            echo "WARN: could not cd to ${instance}/bin/"
+        else 
+            ./startup.sh
+            num_started=`expr $num_started + 1`;
+        fi
+    fi 
+    num_total=`expr $num_total + 1`;
+done
+
+echo "Done starting up $num_started of $num_total instances."
+exit 0;
+

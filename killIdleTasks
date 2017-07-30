@@ -1,0 +1,7 @@
+#!/bin/sh
+
+FOO=( 'groupoqa' 'javelintraining' 'dieste' )
+for ((i=0;i<${#FOO[@]};i++)); do
+   echo ${FOO[${i}]}_staging
+   mysql -u root -pn3admin ${FOO[${i}]}_staging  -e "update N_TASKS t, N_TASK_SCHEDULES ts set t.status = 'FAILED' where unix_timestamp(now())-unix_timestamp(t.queued_date) > 600 and t.status = 'IN PROGRESS' and t.schedule_id = ts.id and ts.class_name = 'com.naehas.campaign.list.DataFeedExecutioner'";
+done

@@ -1,0 +1,36 @@
+#! /bin/bash
+
+STATE_OK=0
+STATE_WARNING=1
+STATE_CRITICAL=2
+STATE_UNKNOWN=3
+STATE_DEPENDENT=4
+
+if test -x /usr/bin/printf; then
+        ECHO=/usr/bin/printf
+else
+        ECHO=echo
+fi
+
+cp /home/naehas/mtr_share/gmc_page_count_devgmc.txt /tmp/gmc_page_count_devgmc.txt
+devgmc_page_count=`awk '/PDF;Shared/' /tmp/gmc_page_count_devgmc.txt | awk -F\; '{print $3}'`
+devgmc_previous_page_count=`awk '{print $1}' /tmp/devgmc_previous_page_count.txt`
+devgmc_next_page_count=`awk '/PDF;Shared/' /tmp/gmc_page_count_devgmc.txt | awk -F\; '{print $3}' > /tmp/devgmc_previous_page_count.txt`
+
+$devgmc_page_count-$devgmc_previous_page_count=count_increase
+
+echo Count_Increase: $count_increase
+
+if [ $count_increase -lt 1000 ]; then
+        welcomekit_queue_status=OK
+else
+        welcomekit_queue_status=CRITICAL
+fi
+
+echo COUNTSTATUS: $count_increase_status
+
+if [ "$count_increase_status" = "CRITICAL" ]; then
+        exit $STATE_CRITICAL
+else
+        exit $STATE_OK
+fi

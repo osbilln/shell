@@ -1,0 +1,10 @@
+#!/bin/bash
+
+timestamp=$(date +%Y%m%d%H%M%S);
+SSH_AUTH_SOCK=/tmp/ssh-FjkPE18598/agent.18598
+export SSH_AUTH_SOCK;
+SSH_AGENT_PID=18599
+export SSH_AGENT_PID;
+echo "$0 -- Starting script with SSH_AGENT_PID = ${SSH_AGENT_PID} @ ${timestamp}" >> /home/naehas/logs/backup_instances.svn.log 2>&1
+. /home/naehas/.bash_profile
+/home/naehas/bin/backup_instances.svn.sh >> /home/naehas/logs/backup_instances.svn.log 2>&1 

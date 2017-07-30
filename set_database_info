@@ -1,0 +1,52 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`
+
+if [[ (-z $DBHOST) || (-z $DATABASE) || (-z $SOURCE) || (-z $path) || (-z $instanceType) ]]; then
+    echo "usage: $PROGRAM_NAME requires the following set as environment variables"
+    echo "          DBHOST = address of database host, ie localhost, dev1, prod1"
+    echo "          DATABASE = base name of the database, ie prism, canon (not prism_staging)"
+    echo "          SOURCE = base-ilp | base-dashboard"
+    echo "          path = base path of the instance, ie ncdm2007-ilp"
+    echo "          instanceType = TEST|STAGING|PROD"
+    exit 1;
+fi
+
+sourceDir=/usr/java
+if [[ "base-ilp" == "${SOURCE}" && ("TEST" == "${instanceType}" || "STAGING" == "${instanceType}") ]]; then
+    sourceDir=/usr/java/staging
+    DATABASE="${DATABASE}_staging"
+fi
+
+if [[ ! -e ${sourceDir}/${path} ]]; then
+    echo "Cannot find ${sourceDir}/{$path}."
+    exit 1;
+fi
+
+if [[ "base-ilp" == "${SOURCE}" ]]; then
+    sed -i "s|<value>jdbc:mysql:.\+</value>|<value>jdbc:mysql://${DBHOST}/${DATABASE}</value>|" ${sourceDir}/${path}/conf/Catalina/localhost/ilp.xml
+	APP_PROPS=${sourceDir}/${path}/webapps/ilp/WEB-INF/application.properties
+
+elif [[ "base-dashboard" == "${SOURCE}" ]]; then
+    sed -i "s|<value>jdbc:mysql:.\+</value>|<value>jdbc:mysql://${DBHOST}/${DATABASE}</value>|" ${sourceDir}/${path}/conf/Catalina/localhost/dashboard.xml
+    sed -i "s|<property name=.connection.url.>jdbc:mysql:.\+</property>|<property name=\"connection.url\">jdbc:mysql://${DBHOST}/${DATABASE}</property>|" ${sourceDir}/${path}/webapps/dashboard/WEB-INF/naehas-hibernate-test.xml
+    sed -i "s|<property name=.connection.url.>jdbc:mysql:.\+</property>|<property name=\"connection.url\">jdbc:mysql://${DBHOST}/${DATABASE}_staging</property>|" ${sourceDir}/${path}/webapps/dashboard/WEB-INF/naehas-hibernate-staging.xml
+    sed -i "s|<value>jdbc:mysql:.\+</value>|<value>jdbc:mysql://${DBHOST}/${DATABASE}</value>|" ${sourceDir}/${path}/webapps/dashboard/META-INF/context.xml
+	APP_PROPS=${sourceDir}/${path}/webapps/dashboard/WEB-INF/application.properties
+
+else 
+    echo "SOURCE not handled: $SOURCE"
+    exit 1;
+fi
+
+
+# Todo instead of doing this here, it would be better to generate the file directly (like the .cfg file)
+# The first echo will overwrite the file:
+echo "instance.id=$INSTANCE_ID" > $APP_PROPS
+echo "jdbc.driver=$JDBC_DRIVER" >> $APP_PROPS
+echo "jdbc.logging.url=$LOGGING_URL" >> $APP_PROPS
+echo "jdbc.logging.username=$LOGGING_USERNAME" >> $APP_PROPS
+echo "jdbc.logging.password=$LOGGING_PASSWORD" >> $APP_PROPS 
+
+
+

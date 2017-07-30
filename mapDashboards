@@ -1,0 +1,41 @@
+#!/bin/bash
+
+if [[ "$USER" = "naehas" ]] ; then
+	SUDO=""
+else
+	SUDO="sudo -u naehas"
+fi
+TS=`date '+%Y-%m-%d.%H.%M.%S'`
+
+echo 'Dashboard Status Pid' | awk '{ printf "  %-39s  %8s   %8s \n", $1, $2, $3 }'
+PATTERN="/usr/java/$1*-dashboard*"
+for dashboard in $PATTERN ; do
+	if [ ! -f $dashboard/conf/Catalina/localhost/dashboard.xml ] ; then
+		echo '---------------------------------------- ---------- ----------' | awk '{ printf "+%-40s+%10s+%10s+\n", $1, $2, $3 }'
+		echo $dashboard N/A VHOSTS | awk '{ printf "| %-39s| %8s | %8s |\n", $1, $2, $3 }'
+		echo '---------------------------------------- ---------- ----------' | awk '{ printf "+%-40s+%10s+%10s+\n", $1, $2, $3 }'
+		continue
+	fi
+
+	running=`ps -ef | grep $dashboard | grep -v grep | awk '{ printf "%s", $2 }'`
+	if [ -z "$running" ] ; then
+		status='Inactive'
+	else
+		status="Running $running"
+	fi
+
+	echo '---------------------------------------- ---------- ----------' | awk '{ printf "+%-40s+%10s+%10s+\n", $1, $2, $3 }'
+	echo $dashboard $status | awk '{ printf "| %-39s| %8s | %8s |\n", $1, $2, $3 }'
+	echo '---------------------------------------- ---------- ----------' | awk '{ printf "+%-40s+%10s+%10s+\n", $1, $2, $3 }'
+	echo $dashboard | awk '{ printf "%10s cd %s\n", "", $1 }'
+	echo $dashboard | awk '{ printf "%10s tail -222F %s/logs/dashboard.log\n", "", $1 }'
+	grep jdbc:mysql $dashboard/conf/Catalina/localhost/dashboard.xml | \
+		sed -e 's#/usr/java/## ; s#/conf.*.xml:## ; s#<value.*mysql://## ; s#url.*mysql://## ; s#\?use.*## ; s#/# #' \
+		| awk '{ printf "%10s mysql -A -h %s %s \n", "", $1, $2 }' 
+	if [ ! -z "$running" ] ; then
+		echo $running | awk '{ printf "%8s ", "" }'
+	        echo "# $SUDO kill -QUIT $running    # generate stack dump"
+		echo $running | awk '{ printf "%8s ", "" }'
+	        echo "# $SUDO jmap -dump:file=/home/naehas/heapDump.$TS $running"
+	fi
+done

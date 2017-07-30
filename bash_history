@@ -1,0 +1,1 @@
+../chef-internap/bash_history

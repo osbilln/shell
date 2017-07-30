@@ -1,0 +1,18 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet static
+	address 192.168.201.186
+	netmask 255.255.254.0
+	broadcast 192.168.201.255
+	gateway 192.168.201.1
+	# dns-* options are implemented by the resolvconf package, if installed
+	dns-nameservers 192.168.201.140 192.168.201.141 192.168.209.165	
+	dns-search naehas.com
+

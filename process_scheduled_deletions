@@ -1,0 +1,36 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`
+path=""
+while getopts ":d:" Option
+do
+    case $Option in 
+        d ) echo "recieved dashboard path of $OPTARG"; path=$OPTARG;;
+    esac
+done
+
+if [[ "" = "$path" ]]; then
+    echo "usage: $PROGRAM_NAME -d <dashboard path>";
+    exit 1;
+fi
+
+if [[ ! -e /usr/java/$path || ! -d /usr/java/$path ]]; then
+    echo "ERROR: /usr/java/$path is not a directory.";
+    exit 1;
+fi
+
+if [[ -e /usr/java/$path/_scheduled_deletions.cfg ]]; then
+    echo "Processing scheduled deletions.";
+    for FILE in `cat /usr/java/$path/_scheduled_deletions.cfg`
+    do
+        if [[ -e /usr/java/$path/$FILE ]]; then
+            echo "deleting /usr/java/$path/$FILE";
+            rm /usr/java/$path/$FILE
+        else 
+            echo "file /usr/java/$path/$FILE doesn't exist anymore.";
+        fi
+    done
+    echo "Done processing.";
+else
+    echo "No _scheduled_deletions.cfg present.";
+fi

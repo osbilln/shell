@@ -1,0 +1,79 @@
+#!/bin/bash
+#
+# run_zf_script.sh.template
+# sets appropriate environment variables so that scripts will run in the Zend environment;
+# this file is meant as a template, to be renamed as run_zf_script.sh. Please see the section
+# below marked as "CHANGE THESE VARIABLES:" for the environment variables that should be
+# edited for the particular machine and config environment
+# 
+NOARGS=65
+NOTFOUND=66
+
+echo
+echo "run_zf_script.sh start..."
+
+#
+# make sure output log directory is available
+#
+if [ ! -d /var/log ]; then 
+    mkdir /var/log 
+fi
+if [ ! -d /var/log/tools ]; then 
+    mkdir /var/log/tools
+fi
+
+#
+# get php script to execute
+#
+php_script_file=$1
+if [ ! "$1" ]; then
+    echo No PHP script file to execute has been specified. Exiting.
+    exit $NOARGS
+fi
+
+echo PHP script file to execute: $php_script_file
+if [ ! -e $php_script_file ]; then
+    echo Script file: $php_script_file does not exist. Exiting.
+    exit $NOTFOUND
+fi 
+
+arg1=$2
+arg2=$3
+arg3=$4
+echo Input args to script: $arg1 $arg2 $arg3
+
+#
+# create the log subdir based on the script being run
+#
+script_basename=${php_script_file%.*}
+if [ ! -d /var/log/tools/$script_basename ]; then
+    mkdir /var/log/tools/$script_basename
+fi
+
+#
+# create corresponding output file name
+#
+output_log_file="/var/log/tools/${script_basename}/${script_basename}_"`eval date +%Y%m%d_%H%M%S`".log"
+echo Output log file: $output_log_file 
+
+#
+# CHANGES HERE FOR EACH DIFFERENT MACHINE
+# most importantly, create the environment variables needed to load the zend framework
+#
+export APPLICATION_ENV=staging
+echo "setting APPLICATION_ENV to: " $APPLICATION_ENV
+export ZEND_PATH=/home/spt/ZendFramework_1_9/library
+echo "setting ZEND_PATH to: " $ZEND_PATH
+
+#
+# now actually run the script; stdout and stderr to output log
+#
+echo 
+#php "$php_script_file" "$arg1" "$arg2" "$arg3" &> "$output_log_file"
+php "$php_script_file" "$arg1" "$arg2" "$arg3"
+echo
+#cat "$output_log_file"
+
+echo
+echo "run_zf_script.sh exit."
+exit 0

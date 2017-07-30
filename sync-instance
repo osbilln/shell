@@ -1,0 +1,38 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`
+if [[ (-z $1) || (-z $2) ]]; then
+    echo "Usage:  $PROGRAM_NAME <source> <path> [<original_request_flag>]";
+    echo "";
+    exit 1;
+fi
+
+source=`basename $1`
+path=`basename $2`
+original=$3
+
+scriptDir=`dirname $0`;
+
+eval `ssh-agent -s`
+echo "SSH_AGENT_PID = $SSH_AGENT_PID"
+ssh-add
+
+killAgentAndExit() {
+    kill -9 $SSH_AGENT_PID
+    exit $1;
+}
+
+
+if [[ "base-ilp" == "${source}" ]]; then
+    ${scriptDir}/sync-base-ilp ${source} ${path} ${original}
+else 
+    echo "ERROR: unhandled source - ${source}.";
+    killAgentAndExit 1;
+fi
+
+if [[ $? -ne 0 ]]; then
+    echo "Sync failed for ${scriptDir}/sync-base-ilp ${source} ${path} ${original}"
+    killAgentAndExit 1;
+fi
+
+killAgentAndExit 0;

@@ -1,0 +1,1 @@
+ls -ltr /tmp/inclusion_*.tmp | awk '{print "sudo rm "$9}'

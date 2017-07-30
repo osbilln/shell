@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "Usage: getlargestfiles 20 to get the 20 largest files under current directory"
+
+find . -type f -print0| xargs -0 ls -s | sort -rn | awk '{size=$1/1024; printf("%dMb %s\n", size,$2);}' | head -$1

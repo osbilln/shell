@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+
+./run_zf_script.sh copy_container_contents.php financing_uploads Production
+./run_zf_script.sh copy_container_contents.php deal_pricing_verification_files Production financing_product/by_name/
+./run_zf_script.sh copy_container_contents.php uploaded_docs Production
+./run_zf_script.sh copy_container_contents.php generated_docs Production
+
+    

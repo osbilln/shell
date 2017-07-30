@@ -1,0 +1,35 @@
+#!/bin/bash
+
+FOO=( '6096 - E Default (non FFC) v1' '6097 - E Default (non FFC) v2' '6098 - E Default (non FFC) v3' '6139 - E Default (non FFC) v4' '6099 - Fairfield County v1' '6100 - Fairfield County v2' '6101 - Fairfield County v3' '6140 - Fairfield County v4' );
+
+segs=$((${#FOO[@]}))
+startIdx=0;
+endIdx=${segs}
+j='CT';
+
+head -1 $1 > dataFile$j.csv
+
+echo ${j} $startIdx $endIdx
+
+for ((i=${startIdx};i<${endIdx};i++)); do
+   echo ${i} ${FOO[${i}]}
+   grep "${FOO[${i}]}" $1 >> dataFile$j.csv
+done
+
+segs=$((${#FOO[@]}))
+startIdx=0;
+endIdx=${segs}
+
+restOfFile=$1;
+
+for ((i=${startIdx};i<${endIdx};i++)); do
+   echo ${i} ${FOO[${i}]}
+   grep -v "${FOO[${i}]}" $restOfFile >> dataFile$i.csv
+   if [ $i -gt 0 ] ; then
+	echo "remove "$restOfFile
+   	rm $restOfFile
+   fi
+   restOfFile='dataFile'$i'.csv';
+   echo $restOfFile $i
+done
+

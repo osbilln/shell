@@ -1,0 +1,11 @@
+#!/bin/bash -e
+#
+# This script will rename all data directories to datafiles
+#
+set -x
+echo "Working dir is $1" > $1/exampleScriptRan
+echo "Delimiter is '$2'" >> $1/exampleScriptRan
+
+filePath=$1
+find $filePath -name 'data' -type d -exec bash -c 'mv $filePath/${1} $filePath/${1}files' -- {} \; 2> /dev/null
+exit 0

@@ -1,0 +1,13 @@
+#!/bin/bash
+if [[ $# -eq 0 ]]; then
+        echo "gotta give me a file to clean"
+        exit 1
+fi
+
+for file in "$@"; do
+#mv "${file}" "${file}".new
+mv $1 "$1".new
+
+head -101 "$1".new >"$1"
+rm "$1".new
+done

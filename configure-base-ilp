@@ -1,0 +1,20 @@
+#!/bin/bash
+configFile="base-ilp.cfg"
+if ! [[ -e ${configFile} ]]
+then 
+    echo "No configuration file! Expecting ${configFile} in working directory."
+    exit 1
+fi
+
+sourceDir=/usr/java
+if [[ "base-ilp" == "${SOURCE}" && ("TEST" == "${instanceType}" || "STAGING" == "${instanceType}") ]]; then
+    sourceDir=/usr/java/staging
+fi
+
+## DATABASE
+${scriptDir}/set_database_info
+
+APP_PROPS=${sourceDir}/${path}/webapps/ilp/WEB-INF/application.properties
+echo "client.name=$CLIENT" >> $APP_PROPS
+echo "campaign.name=$CAMPAIGN" >> $APP_PROPS
+echo "component.default.name=$COMPONENT" >> $APP_PROPS

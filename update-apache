@@ -1,0 +1,36 @@
+#!/bin/bash
+echo "Inside Apache Script..."
+if [[ ! -e /etc/httpd/conf/httpd.conf ]]; then
+    echo "ERROR: /etc/httpd/conf/httpd.conf does not exist!"
+    exit 1;
+fi
+if [[ -e /tmp/naehas-admin/httpd.conf ]]; then
+    echo "Copying the cached apache config file..."
+    sudo cp /tmp/naehas-admin/httpd.conf /etc/httpd/conf/httpd.conf
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: copy to httpd.conf failed";
+        exit 1;
+    fi
+fi
+echo "Restarting the apache server..."
+sudo /usr/sbin/apachectl -t
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: /usr/sbin/apachectl -t failed"
+    exit 1
+fi
+sudo /usr/sbin/apachectl graceful
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: /usr/sbin/apachectl graceful failed"
+    exit 1
+fi
+
+if [[ -e /tmp/naehas-admin/httpd.conf ]]; then
+    echo "Removing /tmp/naehas-admin/httpd.conf"
+    rm /tmp/naehas-admin/httpd.conf
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: rm /tmp/naehas-admin/httpd.conf failed"
+        exit 1;
+    fi
+fi
+exit 0
+

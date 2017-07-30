@@ -1,0 +1,14 @@
+6222310677
+kycerra - 9135263415
+htc - 
+
+
+curl -vvv  -k -d "user=4390&pass=Vc1^Db7@&smsfrom=28776&smsmsg=testsms&smsto=16505339937"  "https://text.mes.syniverse.com/SMSSend"
+
+
+curl -v -d http://192.168.150.137:8080/sequent-sms/sms?msisdn=19136172391&message=HelloTestFromBillschnell07 
+
+curl -k -d "user=sprinttouch&pass=sprintto&smsfrom=9409&smsmsg=Iamtextingyou&smsto=16222310677" https://192.168.150.137/sequent-sms/sms
+
+
+https://192.168.150.137:8443/sequent-sms/sms?msisdn=16222310677&message=HelloTestFromBillschnell07 

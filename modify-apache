@@ -1,0 +1,69 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`;
+
+if [[ (-z $1) || (-z $2) ]]; then
+    echo "usage: ${PROGRAM_NAME} <path> <source>";
+    echo "      path:   Path of the instance requesting httpd.conf be changed";
+    echo "      source: Project of the instance";
+    echo ""
+    echo "  Example: ${PROGRAM_NAME} sams-test-dashboard base-dashboard";
+    echo ""
+    exit 1;
+fi
+
+path=$1;
+source=$2;
+box=`hostname | sed "s/^.\+-\(.\+\).naehas.\+$/\1/"`
+
+if ! [[ -e /usr/java/${machineDir}/${path}/${source}.cfg ]]; then
+    echo "ERROR: ${source}.cfg not found";
+    exit 1;
+fi
+
+if [[ (-z $STAGING_DOMAIN_SUFFIX) ]]; then
+	echo "Defaulting STAGING_DOMAIN_SUFFIX to naehas.net (was the instance's .cfg file wrong?)"
+    STAGING_DOMAIN_SUFFIX="naehas.net"
+fi
+if [[ ("staging" == "$machineDir") && ("base-ilp" == "$source") ]]; then
+    URL="${path}.${STAGING_DOMAIN_SUFFIX}"
+fi
+
+if [[ -z $PORT ]]; then
+    echo "ERROR: PORT variable is null";
+    exit 1;
+fi
+if [[ -z $URL ]]; then
+    echo "ERROR: URL variables is null";
+    exit 1;
+fi
+port=`expr $PORT + 1`
+
+cp /etc/httpd/conf/httpd.conf /usr/java/${machineDir}/${path}/httpd.conf.${box}.before
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Cannot copy /etc/httpd/conf/httpd.conf to working dir";
+    exit 1;
+fi
+
+if [[ "base-dashboard" == "$source" ]]; then
+    sed "s|# INSERT NEW DASHBOARD HERE|ProxyPass /${URL} http://127.0.0.1:${port}/dashboard\nProxyPassReverse /${URL} http://127.0.0.1:${port}/dashboard\n\n# INSERT NEW DASHBOARD HERE|" /usr/java/${machineDir}/${path}/httpd.conf.${box}.before > /usr/java/${machineDir}/${path}/httpd.conf.${box}.after
+elif [[ "base-ilp" == "$source" ]]; then
+    sed "s|# INSERT NEW ILP HERE|<VirtualHost *:80>\n\nServerName ${URL}\nServerAlias *.${URL}\n\nRewriteEngine on\nRewriteCond %{REQUEST_URI} ^.*(jpg\|gif\|css\|js\|png)$ [NC]\nRewriteCond %{REQUEST_URI} !^/?([^/]+)$\nRewriteRule ^.*/([^/]+)\\\.([^/]+)$ http://${URL}/\$1.\$2 [R]\n\nProxyPass / http://127.0.0.1:${port}/ilp/\nProxyPassReverse / http://127.0.0.1:${port}/ilp/\n\n</VirtualHost>\n\n# INSERT NEW ILP HERE|" /usr/java/${machineDir}/${path}/httpd.conf.${box}.before > /usr/java/${machineDir}/${path}/httpd.conf.${box}.after
+else
+    echo "ERROR: Unhandled source, $source for $path";
+    exit 1;
+fi
+
+if ! [[ -e /tmp/naehas-admin ]]; then
+    mkdir /tmp/naehas-admin
+    chmod a+rwx /tmp/naehas-admin
+fi
+cp /usr/java/${machineDir}/${path}/httpd.conf.${box}.after /tmp/naehas-admin/httpd.conf
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Cannot copy to /tmp dir";
+    exit 1;
+fi
+
+exit 0;
+
+

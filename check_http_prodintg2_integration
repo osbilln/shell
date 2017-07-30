@@ -1,0 +1,34 @@
+#! /bin/bash
+
+STATE_OK=0
+STATE_WARNING=1
+STATE_CRITICAL=2
+STATE_UNKNOWN=3
+STATE_DEPENDENT=4
+
+if test -x /usr/bin/printf; then
+        ECHO=/usr/bin/printf
+else
+        ECHO=echo
+fi
+
+
+wget --secure-protocol=auto --http-user admin --http-password admin "http://192.168.201.150:8080/welcomekit/services/Document?wsdl" -O /tmp/check_http_prodintg2_service.txt
+http_working=`grep -f /usr/lib/nagios/plugins/check_http_integration_working_pattern.txt -o /tmp/check_http_prodintg2_service.txt | wc -l`
+
+echo HTTP_OK: $http_working
+
+if [ $http_working -gt 0 ]; then
+        http_status=OK
+else
+        http_status=CRITICAL
+fi
+
+echo HTTP_STATUS: $http_status
+
+if [ "$http_status" = "CRITICAL" ]; then
+        exit $STATE_CRITICAL
+else
+        exit $STATE_OK
+fi
+

@@ -1,0 +1,543 @@
+#!/usr/bin/perl -w
+use strict;
+use Getopt::Long;      # for std option handling: -h --yadda=badda, etc
+use Socket;
+use Env qw(HOME PATH);
+
+#TODOs:
+# - need to allow multiple chunk files - append a datestamp+PID stringto the end
+#     to allow different parsyncs to access multiple chunkfiles (like labeling
+#     the logfiles).  This will be different with fpart and kds
+# - need to be able to spec a different 'config' dir so that you can start multiple
+#   parsyncs at the same time.
+# - if user doesn't spec specific dirs, rsync them all
+# - allow regexs for specifying the paths to rsync. rsync allows them but
+#   kdirstat-cache-writer doesn't so have to expand them immediately and then
+#   use the expansion to fork multiple kds-c-w's
+# - autodetect what channel is being used by the rsync and change the output to
+#     display that rather than just the output of ifstat.
+# can use: ifs=`ip link show | grep UP | grep -v 'lo:' | cut -f2 -d:`
+# can detect an remote node and ask which one do you want to monitor
+# but that wouldn't detect the diffs between a remote rsync and a remote mounted fs
+# ie /nfs vs /usr
+#     ie: if it's a remote host, what interface will route to it and start ifstat on that interface
+#     and if it's local disk, detect which one and monitor that with iostat.
+# - fork multiple (up to NP) kdirstats to run over multiple dirs to decrease the time to run
+# when one finishes, start another on another subdir.
+
+use vars qw( $NP $rootdir $rem_user $rem_host $rem_path %FILES $Totlsiz $Filecnt $NP_chunk $fl
+$tmp  $ch  $fn $FOUT $cmd @DIRS2SYNC $RSYNCOPTS $CHECKPERIOD $MAXBW $MAXLOAD $EMAIL
+$NETIF $IF_SPEED $HELP $VERSION $DEBUG $NDIRS @DIRS $dirtmp $dcnt $BAREFILES $parsync_dir
+$remote $TARGET $ROOTDIR $DATE $NCPUs @SYSLOAD $LOAD1mratio %UTILS $loadavg $REUSECACHE
+$QUIET $allPIDs $NOWAIT $prev_cache $PARSYNCVER
+);
+
+&GetOptions(
+  "startdir=s"        =>  \$ROOTDIR,     # Have to be able to set rootdir -> SRC in rsync
+  "barefiles!"       =>   \$BAREFILES,   # set to allow rsync of individual files
+  "rsyncopts=s"     =>    \$RSYNCOPTS ,  # passthru to rsync as a string
+  "NP=i"             =>   \$NP ,         # number of rsync processes to start
+  "reusecache!"       =>  \$REUSECACHE,  # dont re-read dirs, re-use existing ones.
+  "checkperiod=i"    =>   \$CHECKPERIOD, # # of Min between system load checks
+  "maxbw=i"          =>   \$MAXBW,       # max bw to use (--bwlimit=KBPS passthru to rsync)
+  "maxload=f"        =>   \$MAXLOAD,     # max system load - if > this, sleep rsyncs
+  "email=s"          =>   \$EMAIL,       # email to notify when finished
+  "interface=s"      =>   \$NETIF,       # network interface to use if multiple ones
+  "nowait!"          =>   \$NOWAIT,      # sleep a few s rather than wait for a user ack
+  "help!"            =>   \$HELP,        # dump usage, tips
+#  "quiet!"           =>   \$QUIET,       # no more verbosity, please
+  "version!"         =>   \$VERSION,     # duh..
+  "debug!"           =>   \$DEBUG,       # requests more developer-level info
+);
+
+eval {require English}; die "[English] not found; required for the kdirstat-cache-writer.\n" if $@;
+eval {require Encode}; die "[Encode] not found; required for the kdirstat-cache-writer.\n" if $@;
+eval {require URI::Escape}; die "[URI::Escape qw(uri_escape)] not found; required for the kdirstat-cache-writer.\n" if $@;
+
+
+if (! defined $QUIET) {$QUIET = 0;}
+$PARSYNCVER =  << "VERSION";
+
+parsync version 1.2 (beta)
+04-27-2015
+by Harry Mangalam <hjmangalam\@gmail.com> || <harry.mangalam\@uci.edu>
+
+parsync is a Perl script that wraps Andrew Tridgells miraculous 'rsync' to
+provide some load balancing and parallel operation across network connections
+to increase the amount of bandwidth it can use.
+VERSION
+$parsync_dir = $HOME . "/.parsync";
+if (!-d $parsync_dir){ mkdir  $parsync_dir or die "FATAL: Can't mkdir [$parsync_dir]\n";}
+
+if (defined $VERSION) { print $PARSYNCVER; exit;}
+if (!defined $RSYNCOPTS) {$RSYNCOPTS = "";}
+if (defined $HELP) {usage();}
+
+%UTILS = (  # required utils to help this run correctly
+  "ethtool"   => "",
+  "iwconfig"  => "",
+  "ifstat"    => "",
+  "stats"     => "",
+  "kdirstat-cache-writer"  => "",
+);
+my $utilsz = keys %UTILS;
+foreach my $util (keys %UTILS){
+  my $utilpath = `which $util | tr -d '\n'`;
+  if ($utilpath !~ /$util/){
+    print "!!WARN: [$util] not found.  you can find 'stats' and 'kdirstat-cache-writer'
+    here: <http://moo.nac.uci.edu/~hjm/parsync/utils> and the rest via yum, apt-get,
+    or google.\n";
+    die "\n\nFATAL: [$util] isn't on your PATH [$PATH]; Please install it or correct your PATH variable to include it.\nTry ''module load perl'' or use cpan to install it.\n\n"
+  } else {$UTILS{$util} = $utilpath;
+    if ($DEBUG){print "\tEVAL: Found [$util] at [$utilpath].\n"}
+  }
+}
+$DATE=`date +"%T_%F" | sed 's/:/./g' `; chomp $DATE;
+### get the current system stats:  #CPUs, load, bandwidth, etc
+# CPUs
+$NCPUs = `cat /proc/cpuinfo | grep processor | wc -l`; chomp $NCPUs;
+$loadavg = `cat /proc/loadavg | tr -d '\n'`;
+@SYSLOAD = split (/\s+/, $loadavg); # 1st 3 fields are 1, 5, 15m loads
+# so as long as the 1m load / NCPUs < 1, we're fine; if > 1, we may want to start throttling..
+$LOAD1mratio = $SYSLOAD[0] / $NCPUs;
+
+
+if (! defined $NETIF) {$NETIF = `/sbin/route -n | grep "^0.0.0.0" | rev | cut -d' ' -f1 | rev`; chomp $NETIF}
+if (! defined $NP){$NP = int(sqrt($NCPUs)+ 0.5);} # round sqrt(NCPUs) (hyperthreaded if Intel) 8 -> 3
+if (! defined $MAXBW) {$MAXBW = 1000000;} # essentially unlimited
+else {$MAXBW = $MAXBW / $NP;} # users expect total maxbw; so have to divide by NP.
+if (! defined $MAXLOAD){$MAXLOAD = $NP + 2 ;} #  + 1 for IO load
+if (! defined $ROOTDIR){$ROOTDIR = `pwd`; chomp $ROOTDIR;}  # where all dirs must be rooted.
+
+
+# get some network info
+if ($NETIF =~ /eth/) {
+  $IF_SPEED = `ethtool eth0 2> /dev/null | grep Speed | cut -f2 -d:`;}
+elsif ($NETIF =~ /wlan/) {
+  $IF_SPEED = `iwconfig wlan0 | grep -i quality`;
+} elsif ($NETIF =~ /ib/) {
+  $IF_SPEED = `ibstat | grep Rate | head -1 | sed -e 's/^[ \t]*//'`;
+  $IF_SPEED = "IB:" . $IF_SPEED;
+}
+chomp $IF_SPEED;
+if ($DEBUG){print "\tEVAL: Using network interface [$NETIF] with connection quality [$IF_SPEED]\n\n";}
+
+
+
+if ($SYSLOAD[0] < $MAXLOAD){
+  if ($DEBUG){print "\n\tEVAL: 1m load is [$SYSLOAD[0]] and the 1m Load:#CPU ratio is [$LOAD1mratio] ( [$NCPUs] CPU cores).
+	    OK to continue.\n "}
+} else {
+  print "\n!!WARN: 1m System load is > [$SYSLOAD[0]].  The 1m Load:#CPU ratio is [$LOAD1mratio].\n Continue? [Cntrl+C to interrupt; Enter to continue]\n ";
+  pause();
+}
+
+if (-d $parsync_dir) {
+  my $ls = `ls -l $parsync_dir`;
+  print <<LS;
+
+WARN: The parsync cache dir [$parsync_dir]
+already exists and may contains old cache and log files.
+The complete list of the dir is:
+--------------------------------------------------------------------
+$ls
+--------------------------------------------------------------------
+If you want to clear or modify the cache files, please [Ctrl+C],
+delete the appropriate files and start again.  Otherwise..
+LS
+  if ($NOWAIT){ sleep 5;}
+  else {pause();}
+} elsif (!-d $parsync_dir) {
+  mkdir  $parsync_dir or die "FATAL: Can't mkdir [$parsync_dir]\n";
+}
+
+#$dcnt = 0;
+#$dirtmp = shift; # should only be dir/files left once getopt finishes
+
+
+$TARGET = $ARGV[$#ARGV]; # remote rsync target
+if (!defined $TARGET ){die "\n\nXX FATAL XX: No target defined! Where you gonna put this stuff??!?\nTry $0 --help for the built-in help.\n"}
+$#ARGV--;
+
+# now process the dirs
+$dcnt = 0;
+$dirtmp = shift; # should only be dir/files left once getopt finishes
+#if (!defined $dirtmp) { # If there are no files or dirs defined, take them all
+#
+#}
+
+while (defined $dirtmp) {
+  my $firstchar = substr ($dirtmp,0,1);
+  if ($firstchar ne '/' || substr($dirtmp,0) eq '~'){ # then it's a relative path, so fix it first
+    my $firstchar = substr ($dirtmp,0,1);
+    $dirtmp = $ROOTDIR . '/' . $dirtmp;
+  }
+
+  if (! -r $dirtmp){ # then it's not readable
+    print "WARN: [$dirtmp] isn't readable; either it's not where you think it is or you need to escalate your privs.  Regardless, it won't be transferred in this run.\n";
+    sleep 1;
+  } elsif (-d $dirtmp) {
+    # just make sure it ends with a '/' to indicate that it's a dir.
+    if (substr ($dirtmp, -1) ne '/') { $dirtmp .= '/';}
+    $DIRS2SYNC[$dcnt++] = $dirtmp; # its a readable dir, so add it
+  } elsif (-f $dirtmp && defined $BAREFILES) { # then it's a readable file that's wanted
+    $DIRS2SYNC[$dcnt++] = $dirtmp;
+  } elsif (-f $dirtmp && !defined $BAREFILES) {
+    die "FATAL: [$dirtmp] is a file, not a dir.\nThis is OK, but you have to specify that
+    you want this by using the option '--barefiles'.\n";
+  }
+  $dirtmp = shift; # Read the next one in
+}
+# now have all the dirs/files read in, so now generate the kdirstat caches for dirs, not barefiles.
+# ... altho, if there are lots of barefiles, may have to reconsider this..
+my @cachefiles = (); # will populate with list of cachefiles to process together.
+
+my $bffile = $parsync_dir . '/' . "barefiles";
+open(BAREFILES, ">$bffile") or die "Can't open [$bffile] for writing.\n\n";
+
+my $rsls = `ls -1 $parsync_dir`;
+if ($rsls =~ /\.gz/) {$prev_cache = `ls -1 $parsync_dir/*.gz`; }
+elsif (defined $REUSECACHE){
+  print "!!WARN: You chose '--reusecache', but there's no files for it. Unsetting that option\n\n.";
+  undef $REUSECACHE; sleep 1;
+}
+
+## This is the big REUSECACHE SECTION.  ONlY enter if wnat to REUSECACHE
+if (defined $REUSECACHE && -d $parsync_dir){
+  print "!!WARN: NOT GENERATING NEW CACHE; RE-USING ALL OF PREVIOUS CACHE.
+This includes the following cache files from [$parsync_dir]:
+--------------------------------------------------------------------
+$prev_cache
+--------------------------------------------------------------------
+If you want to ignore some of these cachefiles, delete them or move them out of the way.
+Hit [CTRL + C] to cancel or .. ";
+  if ($NOWAIT){
+    print " Actually... Not waiting.  You have 5 sec to cancel.\n";
+    sleep 5;
+  } else{ pause(); }
+
+  # now have to populate the @cachefiles array from the existing cachefiles
+  print "\n\tINFO: Calculating file chunks; this could take several sec..\n\n";
+  my $nn = @cachefiles = split(/\n/,$prev_cache);
+
+}  # Have to generate the cache fresh. This can take hours on a big transfer.
+else{
+  my $x = 0;
+  for (my $r=0; $r<=$#DIRS2SYNC; $r++) {
+    my $tt = substr ($DIRS2SYNC[$r],-1);
+    if (substr($DIRS2SYNC[$r],-1)  eq '/' ) {
+      print "\tPREP: Forking kdirstat to generate list of files on: [$DIRS2SYNC[$r]]\n";
+      my $cachename = $DIRS2SYNC[$r];
+      $cachename =~ s!/!-!g; chop $cachename; $cachename = substr ($cachename, 1);
+      my $cache = $parsync_dir . '/' . $cachename . ".gz";
+      $cachefiles[$x++] = $cache; # add it to the list
+      my $cmd = "kdirstat-cache-writer -l $DIRS2SYNC[$r] $cache";
+      # for multiple dirs this should be forked for each dir, PIDs captured,
+      # and then loop until all the PIDs are done.
+      system("kdirstat-cache-writer -l $DIRS2SYNC[$r] $cache");  # serially for now
+    } else {
+      print "\tINFO: file, not dir [$DIRS2SYNC[$r]]\n";
+      # so we have to generate a compatible file for the files to merge with the others; req full path name and size in bytes
+      (my $dev, my $ino, my $mode, my $nlink, my $uid, my $gid, my $rdev, my $fsize, my $atime, my $mtime, my $ctime, my $blksize, my $blocks) = stat($DIRS2SYNC[$r]);
+      if ($DIRS2SYNC[$r] =~ / /) {$DIRS2SYNC[$r] =~ s! !%20!g;}
+      print BAREFILES "F $DIRS2SYNC[$r] $fsize 0x4ce2c3e6\n";
+      }
+  }
+  close BAREFILES;
+  if (-f $bffile) {system("gzip -f $bffile");}
+  $cachefiles[$x] = "$bffile" . ".gz";
+}
+
+%FILES = ();
+$Totlsiz = 0;
+$Filecnt = 0;
+
+# if generating cache fresh, have to do all this again.
+if (!defined $REUSECACHE && -d $parsync_dir){
+  for (my $r=0; $r<=$#cachefiles; $r++) {
+    open(KCACHE, "gunzip -c  $cachefiles[$r] |") or die "FATAL: Can't open the kdirstat cachefile [$cachefiles[$r]]\n";
+    while (<KCACHE>) {
+      if ($_ =~ /^F/){ # if it's a file, suck it into the hash
+	my $N = my @L = split /\s+/;
+	#print "before: $L[1]\n";
+	$L[1] =~ s!//!/!g;     # removes '//'s
+	my $delit = $ROOTDIR . '/'; # for next line to delete it
+	$L[1] =~ s/$delit//; # deletes the pwd plus trailing /
+	# following few tests correct odd char substitution from kdirstat
+	if ($L[1] =~ /%20/ ) { $L[1] =~ s!%20! !g; }
+	if ($L[1] =~ /%25/ ) { $L[1] =~ s!%25!\%!g;}
+	$FILES{$L[1]} = $L[2];
+	$Totlsiz += $L[2];
+	$Filecnt++;
+      } # if file
+    } # while(<KCACHE>) ..
+    # implied close then open the next.
+  } # for (my $r=0; ...
+
+  print "\n\tINFO: Total files found: [$Filecnt]; Total bytes: [$Totlsiz]\n";
+  $NP_chunk = $Totlsiz / $NP;
+  print "\tINFO: Ideal Chunk size for [$NP] procs: [$NP_chunk] bytes\n\n";
+  sleep 1;
+  #  if ($NOWAIT){sleep 5}
+#  else {pause();}
+
+  $tmp = $ch = $fn = 0;
+  $FOUT = $parsync_dir . '/' . "kds-chunk-" . "$ch";
+  open (OUT, ">$FOUT") or die "Can't open [$FOUT] for writing\n";
+
+  foreach $fl (keys %FILES){  ## We don't need to sort them - killer for huge file lists
+  $fn++;
+    $tmp += $FILES{$fl};
+    print OUT "$fl\n";
+    if ($tmp >= $NP_chunk) {
+      close OUT;
+      $ch++;
+      print "\tINFO: Chunk[$ch] = [$tmp] bytes : [$fn] files\n";
+      $tmp = $fn = 0;
+      $FOUT = $parsync_dir . '/' . "kds-chunk-" . "$ch";
+      open (OUT, ">$FOUT") or die "Can't open [$FOUT] for writing\n";
+    }
+  }
+} else{
+  print "\tINFO: Re-using existing chunkfiles..\n";
+}
+# and handle the last details of the above loop.
+close OUT;
+if (!defined $REUSECACHE && -d $parsync_dir){
+  $ch++;
+  print "\tINFO: Chunk[$ch] = [$tmp] bytes : [$fn] files\n";
+}
+# now start the NP parallel rsyncs using the kds-chunks as file sources
+print "\n\tINFO: Starting the [$NP] rsyncs in parallel.\n";
+
+my $PIDFILE = $parsync_dir . '/' . "rsync-PIDs" . '-' . $DATE;
+for (my $r=0; $r<$NP; $r++){ # so as not to overwrite previous logs.
+  my $logfile = $parsync_dir . '/' ."rsync-logfile-" . $DATE . "_" . "$r";
+  $fn = $parsync_dir . '/' . "kds-chunk-" . "$r";
+
+  $cmd = "rsync --bwlimit=$MAXBW  $RSYNCOPTS -a --files-from=$fn  $ROOTDIR  $TARGET 2> $logfile";
+
+  print "\n\tINFO:rsync command[$r]:\n[$cmd]\n";
+  sleep 1;
+#    if ($NOWAIT){ sleep 1; }
+#    else { pause(); }
+  # and finally, execute the command
+  system("$cmd & echo \"\${!}\" >> $PIDFILE ");
+}
+
+$| =1; # uncomment to force flushing
+
+open (PIDFILE, "<$PIDFILE") or die "\nFATAL: Can't open PIDFILE [$PIDFILE]'.\n";
+my $rPIDs = ""; # running PIDs
+my $sPIDs = ""; # suspended PIDs
+
+while (<PIDFILE>){  chomp;  $rPIDs = $rPIDs . " " . "$_"; }
+print "\n\tINFO: Total Active rsync PIDs = [$rPIDs]\n";
+
+my $ORIG_PIDs = $allPIDs = $rPIDs; # Fresh copy
+
+# print the header
+print "     Timestamp       |  1m Load  | BW [$NETIF]   |   Running PIDs   ||   Suspended PIDs\n";
+while ($allPIDs =~ /\d+/){
+  #print "\tPIDs running: [$PIDs]\n";
+  # check the sysload
+  $loadavg = `cat /proc/loadavg | tr -d '\n'`;
+  @SYSLOAD = split (/\s+/, $loadavg); # 1st 3 fields are 1, 5, 15m loads
+  $LOAD1mratio = $SYSLOAD[0] / $NCPUs;
+  # following contributes 5s to periodicity of updates
+  my $meanbw = `ifstat -i $NETIF 1 5 | tail -5 | cut -c9-19 | stats --quiet | grep Mean | cut -c 7-19`;
+  chomp $meanbw;
+  # trim leading & trailing whitespace
+  $rPIDs =~ s/^\s+|\s+$//g ; $sPIDs =~ s/^\s+|\s+$//g ;
+  # print it out with the date
+  my $rDATE=`date +"%T_%F" | sed 's/:/./g' `; chomp $rDATE;
+  printf "$rDATE     %5.2f   %12.2f     [%s]   ||    [%s]\n",
+   $SYSLOAD[0],   $meanbw ,   $rPIDs,  $sPIDs;
+
+  if ($SYSLOAD[0] > $MAXLOAD){
+    if ($DEBUG) {print "\nDEBUG: System load [$SYSLOAD[0]] is > MAXLOAD [$MAXLOAD].  Will try to suspend a running rsync to shed load.\n";}
+    # reassign a new list from ONLY RUNNING PIDs to $rPIDs
+    if ($rPIDs =~ /\d+/) {$rPIDs = `ps -p $rPIDs | grep -v PID| cut -c 1-5 | tr '\n' ' '`;}
+    # and the new result has to have something in it as well.
+    if ($rPIDs =~ /\d+/){ # if any still left
+      my $N = my @raPIDs = split(/\s+/, $rPIDs); my $e = 0;
+      while ($e <= $N && $raPIDs[$e] !~ /\d+/){$e++};
+      if ($DEBUG) {print "\t\tDEBUG:got one: [$raPIDs[$e]]; will now suspend it\n";}
+      kill 'STOP', $raPIDs[$e];
+      $sPIDs = "$sPIDs" . ' ' . "$raPIDs[$e]"; # transfer rPID to sPID.
+      $rPIDs =~ s/$raPIDs[$e]//g; # delete that PID fr the rPID string
+    } else { # there aren't any more PIDs left - all done or killed off.'
+      print "\tINFO: No more running rsync PIDs left.  All rsyncs are suspended [$sPIDs].\n";
+    }
+  } elsif ($sPIDs =~ /\d+/) { # if there are sPIDs, unsuspend them one by one
+    # split em
+    my $N = my @saPIDs = split(/\s+/, $sPIDs); my $e = 0;
+    while ($e <= $N && $saPIDs[$e] !~ /\d+/){$e++};
+    if ($DEBUG) { print "\t\tDEBUG:got one: [$saPIDs[$e]]; will now UNsuspend it\n";}
+    kill 'CONT', $saPIDs[$e];
+    $rPIDs = "$rPIDs" . ' ' . "$saPIDs[$e]"; # transfer sPID to rPID.
+    $sPIDs =~ s/$saPIDs[$e]//g; # delete that PID fr the sPID string
+  }
+  sleep 5;  # And another 5s
+  # recheck all rsync-related PIDs
+  $allPIDs = `ps -p $ORIG_PIDs | grep -v PID| cut -c 1-5 | tr '\n' ' '`;
+}
+my $host = `hostname`; chomp $host;
+if (defined $EMAIL){system("echo 'all rsyncs done' | mail -s 'parsync on host [$host] completed' $EMAIL");}
+
+# finally, remind user how much storage the cache takes and to clear the cache files 
+my $du_cache = `du -sh $parsync_dir`; chomp $du_cache;
+print "\nWARN: The parsync cache dir takes up [$du_cache]
+Don't forget to delete it, but wait until you are sure that your job
+completed correctly, so that you can re-use it if necessary.\n";
+
+unlink $PIDFILE;
+exit;
+
+# ================= subroutines =================
+
+sub pause {
+    print "press [ENTER] to continue.\n";
+    my $tmp = <STDIN>;
+}
+
+sub usage {
+  my $helpfile = "$HOME/.parsync/parsync-help.tmp";
+  open HLP, ">$helpfile" or die "Can't open the temp help file\n";
+  my $helptxt = <<HELP;
+$PARSYNCVER
+parsync needs to be installed only on the SOURCE end of the transfer. It
+uses whatever rsync is available on the TARGET.  It uses a number of Linux-
+specific utilities so if you're transferring between Linux and a FreeBSD
+host, install parsync on the Linux side.
+
+The only native rsync option that parsync uses is '-a (archive).  If you
+need more, then it's up to you to provide them via '--rsyncopts'.
+parsync checks to see if the current system load is too heavy and tries
+to throttle the rsyncs during the run by monitoring and suspending
+/ continuing them as needed.
+
+It uses the very efficient (also Perl-based) kdirstat-cache-writer
+from kdirstat to generate lists of files which are summed and then
+crudely divided into NP jobs by size.
+
+It appropriates rsync's bandwidth throttle mechanism, using '--maxbw'
+as a passthru to rsync's 'bwlimit' option, but divides it by NP so
+as to keep the total bw the same as the stated limit.  It monitors and
+shows network bandwidth, but can't change the bw allocation mid-job.
+It can only suspend rsyncs until the load decreases below the cutoff.
+If you suspend parsync (^Z), all rsync children will suspend as well,
+regardless of current state.
+
+Unless changed by '--interface', it tried to figure out how to set the 
+interface to monitor.  The transfer will use whatever interface routing 
+provides, normally set by the name of the target.  It can also be used for 
+non-host-based transfers (between mounted filesystems) but the network 
+bandwidth continues to be (pointlessly) shown.
+
+[[NB: Between mounted filesystems, parsync sometimes works very poorly for
+reasons still mysterious.  In such cases (monitor with 'ifstat'), use 'cp'
+for the initial data movement and a single rsync to finalize.  I believe
+the multiple rsync chatter is interfering with the transfer.]]
+
+It only works on dirs and files that originate from the current dir (or
+specified via "--rootdir").  You cannot include dirs and files from
+discontinuous or higher-level dirs.
+
+** the ~/.parsync files **
+The ~/.parsync dir contains the cache (*.gz), the chunk files (kds*), and the
+time-stamped log files. The cache files can be re-used with '--reusecache'
+(which will re-use ALL the cache and chunk files.  The log files are
+datestamped and are not NOT overwritten.
+
+** Odd characters in names **
+parsync will refuse to transfer some oddly named files.  Filenames with
+embedded newlines, DOS EOLs, and some other odd chars will be recorded in
+the log files in the ~/.parsync dir.
+
+OPTIONS
+=======
+[i] = integer number
+[f] = floating point number
+[s] = "quoted string"
+( ) = the default if any
+
+--NP [i] (sqrt(#CPUs)) ................  number of rsync processes to start
+    optimal NP depends on many vars.  Try the default and incr as needed
+--startdir [s] (`pwd`)  ................  the directory it works relative to
+--maxbw [i] (unlimited) ..........  in KB/s max bandwidth to use (--bwlimit
+       passthru to rsync).  maxbw is the total BW to be used, NOT per rsync.
+--maxload [f] (NP+2)  ........ max total system load - if sysload > maxload,
+                                               sleeps an rsync proc for 10s
+--rsyncopts [s]  ...  options passed to rsync as a quoted string (CAREFUL!)
+	   this opt triggers a pause before executing to verify the command.
+--interface [s]  .............  network interface to /monitor/, not nec use.
+      default: `/sbin/route -n | grep "^0.0.0.0" | rev | cut -d' ' -f1 | rev`
+      above works on most simple hosts, but complex routes will confuse it.
+--reusecache  ..........  don't re-read the dirs; re-use the existing caches
+--email [s]  .....................  email address to send completion message
+				      (requires working mail system on host)
+--barefiles   .....  set to allow rsync of individual files, as oppo to dirs
+--nowait  ................  for scripting, sleep for a few s instead of wait
+--version  .................................  dumps version string and exits
+--help  .........................................................  this help
+
+Examples
+========
+(Good example)
+% parsync  --maxload=5.5 --NP=4 --startdir='/home/hjm' dir1 dir2 dir3  \
+hjm\@remotehost:~/backups
+
+where
+  = "--startdir='/home/hjm'" sets the working dir of this operation to
+      '/home/hjm' and dir1 dir2 dir3 are subdirs from '/home/hjm'
+  = the target "hjm\@remotehost:~/backups" is the same target rsync would use
+  = "--NP=4" forks 4 instances of rsync
+  = -"-maxload=5.5" will start suspending rsync instances when the 5m system
+      load gets to 5.5 and then unsuspending them when it goes below it.
+
+  It uses 4 instances to rsync dir1 dir2 dir3 to hjm\@remotehost:~/backups
+
+(Good example)
+% parsync --rsyncopts="--ignore-existing" --reusecache  --NP=3 \
+  --barefiles  *.txt   /mount/backups/txt
+
+where
+  =  "--rsyncopts='--ignore-existing'" is an option passed thru to rsync
+     telling it not to disturb any existing files in the target directory.
+  = "--reusecache" indicates that the filecache shouldn't be re-generated,
+    uses the previous filecache in ~/.parsync
+  = "--NP=3" for 3 copies of rsync (with no "--maxload", the default is 4)
+  = "--barefiles" indicates that it's OK to transfer barefiles instead of
+    recursing thru dirs.
+  = "/mount/backups/txt" is the target - a local disk mount instead of a network host.
+
+  It uses 3 instances to rsync *.txt from the current dir to "/mount/backups/txt".
+
+
+(Error Example)
+% pwd
+/home/hjm  # executing parsync from here
+
+% parsync --NP4  /usr/local  /media/backupdisk
+
+why this is an error:
+  = '--NP4' is not an option (parsync will say "Unknown option: np4"
+    It should be '--NP=4'
+  = if you were trying to rsync '/usr/local' to '/media/backupdisk', it will
+    fail since there is no /home/hjm/usr/local dir to use as a source.
+    This will be shown in the log files in ~/.parsync/rsync-logfile-<datestamp>_#
+    as a spew of "No such file or directory (2)" errors
+
+The correct version of the above command is:
+
+% parsync --NP=4  --startdir=/usr  local  /media/backupdisk
+
+HELP
+
+  print HLP $helptxt;
+  close HLP;
+  system("less -S $helpfile");
+  unlink $helpfile;
+  die "Did that help?\n";
+}

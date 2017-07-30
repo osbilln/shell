@@ -1,0 +1,28 @@
+#!/bin/bash
+# This should be run for dashboards on machines other than web1
+
+PROGRAM_NAME=`basename $0`
+
+if [[ (-z $path) ]]; then
+    echo "usage: $PROGRAM_NAME path"
+    echo "          where path = base path of the instance, ie canon-dashboard"
+    exit 1;
+fi
+
+sourceDir=/usr/java
+if [[ ! -e ${sourceDir}/${path} ]]; then
+    echo "Cannot find ${sourceDir}/{$path}."
+    exit 1;
+fi
+
+configFile=${sourceDir}/${path}/webapps/dashboard/WEB-INF/global-beans.xml
+if [[ ! -e ${configFile} ]]; then
+    echo "Cannot find ${configFile}."
+    exit 1;
+fi
+
+sed -i "s|<ref bean=\"notificationServiceTrigger\"/>||" ${configFile}
+sed -i "s|<ref local=\"glpConversionTrigger\"/>||" ${configFile}
+sed -i "s|<ref local=\"glpConversionTriggerStaging\"/>||" ${configFile}
+sed -i "s|NaehasServer\" init-method=\"init\">|NaehasServer\">|" ${configFile}
+

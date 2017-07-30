@@ -1,0 +1,222 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`
+DEBUG=1
+
+usage() {
+    echo "usage: $PROGRAM_NAME <svn_url> <source> <path> <lastRevision> <dbHost>"
+    echo "      <svn_url>       full URL of subversion repository"
+    echo "      <source>        base project of instance being updated"
+    echo "      <path>          name of instance"
+    echo "      <lastRevision>  last merged/in-sync revision number"
+    echo "      <dbHost>        The database host"    
+    echo ""
+    echo "  example: ${PROGRAM_NAME} file:///home/naehas/svn/repository base-dashboard apple-dashboard 1131 prodcluster"
+    echo ""
+    exit 1;
+}
+
+debug() {
+    if [[ $DEBUG -eq 1 ]]; then
+        echo "`date +%Y/%m/%d_%H:%M:%S` | $1";
+    fi
+}
+
+error() {
+    echo "ERROR: $1";
+}
+
+if [[ (-z $1) || (-z $2) || (-z $3) || (-z $4) || (-z 5) ]]; then
+    usage;
+fi
+
+export scriptDir=`dirname $0`;
+svnUrl=$1
+source=$2
+baseSource=`echo ${source} | sed "s/base-\(.\+\)$/\1/"`;
+export path=$3
+lastRevision=$4
+export DBHOST=$5
+fullpath=/usr/java/$path
+
+eval `ssh-agent -s`
+echo "SSH_AGENT_PID = $SSH_AGENT_PID"
+ssh-add
+
+killAgentAndExit() {
+    kill -9 $SSH_AGENT_PID
+    exit $1
+}
+
+if [[ "$source" == "base-dashboard" ]]; then
+	export instanceType=TEST
+else
+	export instanceType=STAGING
+fi
+
+fail() {
+    debug "Removing ${path} from auto-checking cfg";
+    grep -v ${path} > /home/naehas/conf/subversion_instances.cfg
+    killAgentAndExit 1;
+}
+
+if ! [[ -e /usr/java/$path && -d /usr/java/$path ]]; then
+    error "$path not found.";
+    killAgentAndExit 1;
+fi
+
+# export CATALINA_PID=catalina.pid # this was put in the shutdown.sh script
+
+cd /usr/java/$path
+
+debug "Shutting down $path tomcat instance";
+cd bin/
+./shutdown.sh 
+if [[ $? -ne 0 ]]; then
+    error "Tomcat instance shutdown err'd out.";
+    killAgentAndExit 1;
+fi
+cd ..
+
+debug "Getting lastest ${source}.cfg"
+svn update ${source}.cfg
+
+if ! [[ -e ${source}.cfg ]]; then
+    error "${source}.cfg not present.";
+    killAgentAndExit 1;
+fi
+debug "Sourcing ${source}.cfg";
+. ${source}.cfg
+
+
+# TODO: this needs to be paramterized on revision number
+appzip=/home/naehas/apps/dashboard.zip
+if ! [[ -e $appzip ]]; then
+	error "Application zip file '$appzip' not found!";
+	killAgentAndExit 1;
+fi
+
+# This cd $fullpath is redundant, but in case the script above this changes, 
+# we need to make sure we are in the root of the webapp directory before proceeding:
+cd $fullpath
+
+debug "Starting file upgrade, creating _upgrade.lock"
+touch _upgrade.lock
+
+debug "Removing .java and .jar files"
+find $fullpath/src -name "*.java" | xargs -r rm
+find $fullpath -name "*.jar" | xargs -r rm
+# cleanup previous merge conflicts:
+# rm $fullpath/webapps/$baseSource/WEB-INF/lib/NaehasCore.jar*
+# rm $fullpath/webapps/$baseSource/WEB-INF/lib/NaehasCampaign.jar*
+
+
+debug "Unpacking the new files"
+unzip -qo $appzip
+
+if [[ -e $fullpath/_customizations.cfg ]]; then
+  debug "Restoring customized files.";
+  for FILE in `cat $fullpath/_customizations.cfg`
+    do    	
+    	custfile=$fullpath/$FILE
+        debug "Restoring customized file '$custfile'";
+        rm $custfile
+        svn update $custfile        
+    done
+    debug "Done processing."
+else
+    debug "No customized files to restore (no _customizations.cfg present).";
+fi
+
+debug "Configuring.";
+${scriptDir}/configure-${source}
+if [[ $? -ne 0 ]]; then
+    debug "configure-${source} failed";
+    killAgentAndExit 1;
+fi
+
+debug "Cofiguring port numbers.";
+${scriptDir}/configure-port-numbers
+if [[ $? -ne 0 ]]; then
+    error "configure-port-numbers failed";
+    killAgentAndExit 1;
+fi
+
+
+debug "Processing deleted files."
+# If we upgrade multiple times without migrating, we will append duplicates to the schedule_deletions file.
+# Then process_scheduled_deletions script will dump out a lot of "file doesn't exist anymore" messages
+# This is harmless and prevents missing some deletions, which could happen if we overwrite this file:
+
+svn status | grep "^\!" | sed "s/\!\\s*[+]*\s*\(.*\)/\1/" >> _scheduled_deletions.cfg
+
+svn status | grep "^\!" | sed "s/\!\\s*[+]*\s*\(.*\)/\1/" | xargs -r svn delete
+
+# the above sed regexes looks for files with svn status that start with ! (deleted) and optionally have a '+' character in the second column
+
+
+rm _upgrade.lock
+debug "Finished file upgrade, deleted _upgrade.lock"
+
+# do the svn add after the rm _upgrade.lock because we don't want to checkin nonexistant files
+debug "Adding new files to svn."
+svn add . --force
+
+debug "Recompiling";
+ant clean compile
+if [[ $? -ne 0 ]]; then
+    error "Recompile failed";
+    killAgentAndExit 1;
+fi
+
+debug "Running upgradedatabase";
+ant upgradedatabase
+if [[ $? -ne 0 ]]; then
+    error "Running upgradedatabase failed.";
+    killAgentAndExit 1;
+fi
+
+debug "Running upgradedatabase_staging";
+ant upgradedatabase_staging
+if [[ $? -ne 0 ]]; then
+    error "Running upgradedatabase_staging failed.";
+    killAgentAndExit 1;
+fi
+
+myBox=`hostname | sed "s/^.\+-\(.\+\).naehas.\+$/\1/"`
+if [[ -e /usr/java/$path/customize_${myBox}.sh ]]; then
+    debug "Running customize_${myBox}.sh"
+    cd /usr/java/$path
+    chmod a+x customize_${myBox}.sh
+    ./customize_${myBox}.sh
+    if [[ $? -ne 0 ]]; then
+        error "Running customize_${myBox}.sh failed";
+        killAgentAndExit 1;
+    fi
+fi
+
+
+debug "Committing changes to SVN"
+svn commit -m "upgraded dashboard"
+#backup plan if normal commit fails:
+#svn commit src -m "upgraded dashboard"
+#svn commit webapps/$baseSource/WEB-INF/lib -m "upgraded dashboard"
+#svn commit common/lib -m "upgraded dashboard"
+#svn commit server/lib -m "upgraded dashboard"
+
+
+cd /usr/java/$path/bin
+chmod a+x *.sh
+
+if [[ "TEST" != "$instanceType" ]]; then
+	debug "Starting up tomcat instance."
+	./startup.sh
+	if [[ $? -ne 0 ]]; then
+   	 error "Starting up the tomcat server failed."
+    	killAgentAndExit 1;
+	fi
+else
+	debug "Skipping automatic-startup for TEST instance."
+fi
+
+killAgentAndExit 0;

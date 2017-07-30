@@ -1,0 +1,141 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use English;
+
+use File::Basename;
+
+my $bvDebug = 1;
+
+my $gsvProgramName = basename($PROGRAM_NAME);
+
+my $svFirstFlag = "<<<<<<< .working";
+my $svSecondFlag = "=======";
+my $svThirdFlag = ">>>>>>> .merge-right";
+
+sub naehasLog($) {
+    if ($bvDebug == 1) {
+        my $logmessage = shift;
+        print "$logmessage\n";
+    }
+}
+
+sub findMarkers($) {
+    my $file = shift;
+    my @markers = (-1, -1, -1, -1);
+    open(FILE, $file) or die "Cannot open $file: $1";
+    my $lineNum = 0;
+    while(<FILE>) {
+        my $line = $_;
+        if ($line =~ /^$svFirstFlag/) {
+            $markers[0] = $lineNum;
+        } elsif ($markers[0] > -1 && $line =~ /^$svSecondFlag/) {
+            $markers[1] = $lineNum;
+        } elsif ($markers[1] > -1 && $line =~ /^$svThirdFlag/) {
+            $markers[2] = $lineNum;
+        }
+
+        $lineNum++;
+    }
+    $markers[3] = $lineNum-1;
+    close(FILE);
+    return @markers;
+}
+    
+if ($#ARGV != 3) {
+    print "Usage: $gsvProgramName <svn_url> <project> <working_dir> <last_stable_revision>\n";
+    print "    ie,   $gsvProgramName file:///home/naehas/svn/repository base-dashboard /usr/java/prism-dashboard 1120\n";
+    exit 1; 
+}
+
+my $svSvnUrl = $ARGV[0];
+my $svProject = $ARGV[1];
+my $svWorkingDir = $ARGV[2];
+my $svLastStableRevision = $ARGV[3];
+
+naehasLog("Merging stable tag $svLastStableRevision of $svProject into $svWorkingDir");
+
+die "ERROR: Cannot change dir to $svWorkingDir: $!\n" unless chdir $svWorkingDir;
+
+my $svnMergeCommand = "svn merge -r${svLastStableRevision}:HEAD ${svSvnUrl}/${svProject}/tags/stable";
+naehasLog($svnMergeCommand);
+
+my @avMergeResults = `$svnMergeCommand`;
+if ($bvDebug) {
+    foreach my $debugLine (@avMergeResults) {
+        chomp($debugLine);
+        naehasLog($debugLine);
+    }
+}
+open(DELETION, ">_scheduled_deletions.cfg") or die "Cannot open scheduled deletions file: $1";
+foreach my $result (@avMergeResults) {
+    my $svCommand = "";
+    chomp($result);
+    if ($result =~ /^C/) {
+        my ($svStatus, $svFile) = split(/ +/, $result);
+        if ($svFile =~ /java$/ || $svFile =~ /xml$/ || $svFile =~ /tld$/) {
+            naehasLog("Resolving conflict in $svFile");
+            for( my ($svTop, $svMiddle, $svBottom, $svEnd) = findMarkers($svFile); $svBottom > -1; ($svTop, $svMiddle, $svBottom, $svEnd) = findMarkers($svFile) ) {
+                naehasLog("Found markers at $svTop, $svMiddle, $svBottom, and $svEnd");
+                my $svTempFile = $svFile . "." . $gsvProgramName . ".temp";
+
+                $svCommand = "cat $svFile | head -${svTop} > $svTempFile";
+                naehasLog("$svCommand");
+                `$svCommand`;
+
+                $svCommand = "cat $svFile | head -${svBottom} | tail -" . ($svBottom - $svMiddle - 1) . " >> $svTempFile";
+                naehasLog("$svCommand");
+                `$svCommand`;
+
+                $svCommand = "cat $svFile | tail -" . ($svEnd - $svBottom) . " >> $svTempFile";
+                naehasLog($svCommand);
+                `$svCommand`;
+
+                $svCommand = "mv $svTempFile $svFile";
+                naehasLog($svCommand);
+                `$svCommand`;
+            }
+        } elsif ($svFile =~ /jar$/) {
+            naehasLog("Completely override working copy of $svFile");
+            $svCommand = "cp $svFile.merge-right* $svFile";
+            naehasLog($svCommand);
+            `$svCommand`;
+        } else {
+            naehasLog("Keeping working copy of $svFile");
+            $svCommand = "cp $svFile.working $svFile";
+            naehasLog($svCommand);
+            `$svCommand`;
+        }
+
+        $svCommand = "rm $svFile.merge*";
+        naehasLog($svCommand);
+        `$svCommand`;
+        $svCommand = "rm $svFile.working";
+        naehasLog($svCommand);
+        `$svCommand`;
+
+        $svCommand = "svn resolved $svFile";
+        naehasLog($svCommand);
+        `$svCommand`;
+    }
+    if ($result =~ /^D/) {
+        my ($svStatus, $svFile) = split(/ +/, $result);
+        print DELETION "$svFile\n";
+        # print file name to deletion list
+    }
+}
+close(DELETION);
+
+
+
+
+
+
+
+
+
+
+
+
+

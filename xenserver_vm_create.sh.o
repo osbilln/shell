@@ -1,0 +1,9 @@
+knife xenserver vm create 	--xenserver-host $1 \
+                              	--xenserver-username billn \
+                              	--xenserver-password Aq2Pbs5R \
+			      	--vm-template 01b504fc-5217-4d32-1424-b5d37d35392d \  
+				--vm-ip 172.20.1.25 \
+				--vm-netmask 255.255.0.0 \
+				--vm-gateway 172.20.0.1 \
+				--vm-dns 172.20.0.3 \
+			      	--vm-name billtest4

@@ -1,0 +1,1000 @@
+   16  2014-12-30 22:32:12 billn pts/1 23:58 /root ll
+   17  2014-12-30 22:32:15 billn pts/1 23:58 /root cat my.cnf 
+   18  2014-12-30 22:32:17 billn pts/1 23:58 /root pwd
+   19  2014-12-30 22:32:18 billn pts/1 23:58 /root cd
+   20  2014-12-30 22:36:02 billn pts/1 23:58 /root chef-client 
+   21  2014-12-30 22:36:28 billn pts/1 23:58 /root pwd
+   22  2014-12-30 22:37:23 billn pts/1 23:58 /root chef-client 
+   23  2014-12-30 22:41:54 billn pts/1 23:58 /root pwd
+   24  2014-12-30 22:41:55 billn pts/1 23:58 /root ll
+   25  2014-12-30 22:41:57 billn pts/1 23:58 /root pwd
+   26  2014-12-30 22:42:06 billn pts/1 23:58 /root mysql -u root -p
+   27  2014-12-30 22:42:36 billn pts/1 23:58 /root mysql -u root -P
+   28  2014-12-30 22:42:40 billn pts/1 23:58 /root mysql -u root -p
+   29  2014-12-30 22:43:00 billn pts/1 23:58 /root cd /etc/mysql/
+   30  2014-12-30 22:43:00 billn pts/1 23:58 /root ls
+   31  2014-12-30 22:43:02 billn pts/1 23:58 /root ll
+   32  2014-12-30 22:43:04 billn pts/1 23:58 /root vi my.cnf 
+   33  2014-12-30 22:43:42 billn pts/1 23:58 /root cd /var/lib/mysql/
+   34  2014-12-30 22:43:42 billn pts/1 23:58 /root ll
+   35  2014-12-30 22:43:53 billn pts/1 23:58 /root df -h 
+   36  2014-12-30 22:44:48 billn pts/1 23:58 /root ps uax | grep mysql
+   37  2014-12-30 22:44:55 billn pts/1 23:58 /root ps aux
+   38  2014-12-30 22:44:57 billn pts/1 23:58 /root ps auxf
+   39  2014-12-30 22:45:17 billn pts/1 23:58 /root ps auxf | grep mysql
+   40  2014-12-30 22:45:23 billn pts/1 23:58 /root mysql -u root -p
+   41  2014-12-30 22:45:47 billn pts/1 23:58 /root dpkg -l| grep mysql
+   42  2014-12-30 22:45:58 billn pts/1 23:58 /root service mysql stop
+   43  2014-12-30 22:46:18 billn pts/1 23:58 /root apt-get remove mysql-server*
+   44  2014-12-30 22:46:29 billn pts/1 23:58 /root service mysql stop
+   45  2014-12-30 22:46:31 billn pts/1 23:58 /root apt-get remove mysql-server*
+   46  2014-12-30 22:46:38 billn pts/1 23:58 /root apt-get purge mysql-server*
+   47  2014-12-30 22:46:53 billn pts/1 23:58 /root cd 
+   48  2014-12-30 22:46:54 billn pts/1 23:58 /root cd -
+   49  2014-12-30 22:46:59 billn pts/1 23:58 /root cd /var/lib/
+   50  2014-12-30 22:47:00 billn pts/1 23:58 /root ll
+   51  2014-12-30 22:47:05 billn pts/1 23:58 /root cd
+   52  2014-12-30 22:47:05 billn pts/1 23:58 /root pwd
+   53  2014-12-30 22:54:13 billn pts/1 23:58 /root dpkg -l| grep mysql
+   54  2014-12-30 22:54:31 billn pts/1 23:58 /root apt-get purge mysql-common
+   55  2014-12-30 22:54:55 billn pts/1 23:58 /root cd /etc/
+   56  2014-12-30 22:55:02 billn pts/1 23:58 /root ll -d mysql/grants.sql 
+   57  2014-12-30 22:55:07 billn pts/1 23:58 /root ll -d mysql/*
+   58  2014-12-30 22:55:10 billn pts/1 23:58 /root cd
+   59  2014-12-30 22:55:16 billn pts/1 23:58 /root chef-client 
+   60  2014-12-30 22:56:37 billn pts/1 23:58 /root cd /etc/mysql/
+   61  2014-12-30 22:56:38 billn pts/1 23:58 /root ll
+   62  2014-12-30 22:56:40 billn pts/1 23:58 /root cat my.cnf 
+   63  2014-12-30 22:57:02 billn pts/1 23:58 /root ps auxf | grep mysql
+   64  2014-12-30 22:57:18 billn pts/1 23:58 /root sudo su - mysql
+   65  2014-12-30 22:57:21 billn pts/1 23:58 /root exit
+   66  2014-12-30 20:56:24 billn pts/1 23:58 /root cd /data/download/
+   67  2014-12-30 20:56:24 billn pts/1 23:58 /root ll
+   68  2014-12-30 20:56:26 billn pts/1 23:58 /root cd ../java/
+   69  2014-12-30 20:56:27 billn pts/1 23:58 /root ll
+   70  2014-12-30 20:56:33 billn pts/1 23:58 /root cd /home/naehas/
+   71  2014-12-30 20:56:33 billn pts/1 23:58 /root ll
+   72  2014-12-30 20:57:02 billn pts/1 23:58 /root rm -rf ttf/ type1/
+   73  2014-12-30 20:57:03 billn pts/1 23:58 /root ll
+   74  2014-12-30 20:57:05 billn pts/1 23:58 /root cd -
+   75  2014-12-30 20:57:09 billn pts/1 23:58 /root cd ../download/
+   76  2014-12-30 20:57:10 billn pts/1 23:58 /root ll
+   77  2014-12-30 20:57:11 billn pts/1 23:58 /root rm -rf *
+   78  2014-12-30 20:57:12 billn pts/1 23:58 /root ll
+   79  2014-12-30 20:57:21 billn pts/1 23:58 /root cd /usr/share/
+   80  2014-12-30 20:57:21 billn pts/1 23:58 /root ll
+   81  2014-12-30 20:57:23 billn pts/1 23:58 /root ll -d fonts/
+   82  2014-12-30 20:57:28 billn pts/1 23:58 /root mv fonts/ fonts.o
+   83  2014-12-30 20:57:28 billn pts/1 23:58 /root pwd
+   84  2014-12-30 20:58:00 billn pts/1 23:58 /root cd /data/
+   85  2014-12-30 20:58:01 billn pts/1 23:58 /root ll
+   86  2014-12-30 20:58:05 billn pts/1 23:58 /root cd java/
+   87  2014-12-30 20:58:06 billn pts/1 23:58 /root ll
+   88  2014-12-30 20:58:09 billn pts/1 23:58 /root rm -rf *
+   89  2014-12-30 20:58:10 billn pts/1 23:58 /root ll
+   90  2014-12-30 20:58:15 billn pts/1 23:58 /root chef-client 
+   91  2014-12-30 20:58:35 billn pts/1 23:58 /root ll
+   92  2014-12-30 20:58:45 billn pts/1 23:58 /root cd ../download/
+   93  2014-12-30 20:58:45 billn pts/1 23:58 /root ll
+   94  2014-12-30 20:58:51 billn pts/1 23:58 /root cd /home/naehas/
+   95  2014-12-30 20:58:52 billn pts/1 23:58 /root ll
+   96  2014-12-30 20:59:07 billn pts/1 23:58 /root cd /usr/share/
+   97  2014-12-30 21:05:51 billn pts/1 23:58 /root cd /data/download/
+   98  2014-12-30 21:05:52 billn pts/1 23:58 /root ll
+   99  2014-12-30 21:05:56 billn pts/1 23:58 /root cd ../java/
+  100  2014-12-30 21:05:56 billn pts/1 23:58 /root ll
+  101  2014-12-30 21:07:04 billn pts/1 23:58 /root cd ..
+  102  2014-12-30 21:07:05 billn pts/1 23:58 /root ll
+  103  2014-12-30 21:08:33 billn pts/1 23:58 /root chef-client 
+  104  2014-12-30 21:08:48 billn pts/1 23:58 /root cd java/
+  105  2014-12-30 21:08:49 billn pts/1 23:58 /root ll
+  106  2014-12-30 22:57:34 billn pts/1 23:58 /root mysql -u root -p
+  107  2014-12-30 22:58:07 billn pts/1 23:58 /root mysql 
+  108  2014-12-30 22:58:13 billn pts/1 23:58 /root mysql -u mysql
+  109  2014-12-30 22:58:16 billn pts/1 23:58 /root mysql -u root
+  110  2014-12-30 22:58:22 billn pts/1 23:58 /root mysql -u root -p
+  111  2014-12-31 13:06:31 billn pts/1 23:58 /root ps aux 
+  112  2014-12-31 13:06:37 billn pts/1 23:58 /root ps aux
+  113  2014-12-31 13:06:40 billn pts/1 23:58 /root ps auxf
+  114  2014-12-31 13:06:45 billn pts/1 23:58 /root ps auxf | grpe mysql 
+  115  2014-12-31 13:06:49 billn pts/1 23:58 /root ps auxf | grep mysql 
+  116  2014-12-31 13:07:00 billn pts/1 23:58 /root mysql -u root -p
+  117  2014-12-31 13:07:15 billn pts/1 23:58 /root netstat -tunelp | grep mysql
+  118  2014-12-31 13:13:26 billn pts/1 23:58 /root mysqladmin -u root -p'ilikerandompasswords' password 'n3admin'
+  119  2014-12-31 13:13:37 billn pts/1 23:58 /root mysqladmin -u root -p 'ilikerandompasswords' password 'n3admin'
+  120  2014-12-31 13:14:21 billn pts/1 23:58 /root mysql -uroot
+  121  2014-12-31 13:15:18 billn pts/1 23:58 /root mysql 
+  122  2014-12-31 13:15:22 billn pts/1 23:58 /root cd /etc/mysql/
+  123  2014-12-31 13:15:22 billn pts/1 23:58 /root ll
+  124  2014-12-31 13:15:24 billn pts/1 23:58 /root vi my.cnf 
+  125  2014-12-31 13:15:45 billn pts/1 23:58 /root service mysql stop
+  126  2014-12-31 13:15:52 billn pts/1 23:58 /root service mysql start
+  127  2014-12-31 13:16:01 billn pts/1 23:58 /root netstat -tunelp | grep mysql
+  128  2014-12-31 13:16:08 billn pts/1 23:58 /root mysql -uroot
+  129  2014-12-31 13:16:10 billn pts/1 23:58 /root mysql -uroot -p
+  130  2014-12-31 13:17:03 billn pts/1 23:58 /root ll
+  131  2014-12-31 13:17:08 billn pts/1 23:58 /root cd conf.d/
+  132  2014-12-31 13:17:09 billn pts/1 23:58 /root ll
+  133  2014-12-31 13:17:32 billn pts/1 23:58 /root vi mysqld_safe_syslog.cnf 
+  134  2014-12-31 13:17:48 billn pts/1 23:58 /root ll
+  135  2014-12-31 13:17:51 billn pts/1 23:58 /root vi mysqld_safe_syslog.cnf 
+  136  2014-12-31 13:17:53 billn pts/1 23:58 /root ll
+  137  2014-12-31 13:17:54 billn pts/1 23:58 /root cd ..
+  138  2014-12-31 13:17:55 billn pts/1 23:58 /root ll
+  139  2014-12-31 13:17:57 billn pts/1 23:58 /root vi my.cnf 
+  140  2014-12-31 13:18:34 billn pts/1 23:58 /root ll
+  141  2014-12-31 13:18:36 billn pts/1 23:58 /root vi grants.sql 
+  142  2014-12-31 13:19:04 billn pts/1 23:58 /root cat grants.sql 
+  143  2014-12-31 13:19:13 billn pts/1 23:58 /root mysql -uroot -p
+  144  2014-12-31 13:19:40 billn pts/1 23:58 /root mv grants.sql grants.sql.o
+  145  2014-12-31 13:19:41 billn pts/1 23:58 /root ll
+  146  2014-12-31 13:24:30 billn pts/1 23:58 /root pwd
+  147  2014-12-31 13:24:31 billn pts/1 23:58 /root ll
+  148  2014-12-31 13:24:42 billn pts/1 23:58 /root mv grants.sql.o grants.sql
+  149  2014-12-31 13:24:43 billn pts/1 23:58 /root vi grants.sql 
+  150  2014-12-31 15:20:09 billn pts/1 23:58 /root pwd
+  151  2014-12-31 15:20:10 billn pts/1 23:58 /root ll
+  152  2014-12-31 15:20:11 billn pts/1 23:58 /root df -h 
+  153  2014-12-31 15:20:19 billn pts/1 23:58 /root ll
+  154  2014-12-31 15:20:43 billn pts/1 23:58 /root chef-client 
+  155  2014-12-31 15:21:11 billn pts/1 23:58 /root cd /etc/mysql/
+  156  2014-12-31 15:21:12 billn pts/1 23:58 /root ll
+  157  2014-12-31 15:21:14 billn pts/1 23:58 /root cat grants.sql 
+  158  2014-12-31 15:21:31 billn pts/1 23:58 /root mysql -uroot -p
+  159  2014-12-31 16:34:16 billn pts/1 23:58 /root cd /etc/mysql/
+  160  2014-12-31 16:34:16 billn pts/1 23:58 /root ll
+  161  2014-12-31 16:34:29 billn pts/1 23:58 /root cat grants.sql 
+  162  2014-12-31 16:35:52 billn pts/1 23:58 /root mysql -u root -p
+  163  2014-12-31 16:36:05 billn pts/1 23:58 /root pwdcd
+  164  2014-12-31 16:36:06 billn pts/1 23:58 /root cd
+  165  2014-12-31 16:36:06 billn pts/1 23:58 /root pwd
+  166  2014-12-31 16:45:14 billn pts/1 23:58 /root cd /etc/mysql/
+  167  2014-12-31 16:45:14 billn pts/1 23:58 /root ll
+  168  2014-12-31 16:45:31 billn pts/1 23:58 /root mv grants.sql grants.sql.o
+  169  2014-12-31 16:45:31 billn pts/1 23:58 /root ll
+  170  2014-12-31 16:45:32 billn pts/1 23:58 /root pwd
+  171  2014-12-31 16:45:33 billn pts/1 23:58 /root ll
+  172  2014-12-31 16:45:38 billn pts/1 23:58 /root cat debian.cnf 
+  173  2014-12-31 16:45:42 billn pts/1 23:58 /root chef-client 
+  174  2014-12-31 16:48:03 billn pts/1 23:58 /root ll
+  175  2014-12-31 16:48:09 billn pts/1 23:58 /root cat grants.sql
+  176  2014-12-31 16:49:12 billn pts/1 23:58 /root cd conf.d/
+  177  2014-12-31 16:49:12 billn pts/1 23:58 /root ll
+  178  2014-12-31 16:49:15 billn pts/1 23:58 /root vi mysqld_safe_syslog.cnf 
+  179  2014-12-31 16:49:18 billn pts/1 23:58 /root cd ..
+  180  2014-12-31 16:51:33 billn pts/1 23:58 /root cd
+  181  2014-12-31 16:51:50 billn pts/1 23:58 /root dpkg -l | grep mysql-server
+  182  2014-12-31 16:51:59 billn pts/1 23:58 /root apt-get purge mysql-server
+  183  2014-12-31 16:52:07 billn pts/1 23:58 /root dpkg -l | grep mysql-server
+  184  2014-12-31 16:52:12 billn pts/1 23:58 /root apt-get purge mysql-server*
+  185  2014-12-31 16:52:28 billn pts/1 23:58 /root dpkg -l | grep mysql-server
+  186  2014-12-31 16:52:33 billn pts/1 23:58 /root ps aux| grep mysql
+  187  2014-12-31 16:52:46 billn pts/1 23:58 /root kill 5151
+  188  2014-12-31 16:52:49 billn pts/1 23:58 /root ps aux| grep mysql
+  189  2014-12-31 16:31:34 billn pts/1 23:58 /root pwd
+  190  2014-12-31 16:31:41 billn pts/1 23:58 /root cd /etc/mysql/
+  191  2014-12-31 16:31:42 billn pts/1 23:58 /root ll
+  192  2014-12-31 16:31:44 billn pts/1 23:58 /root cat grants.sql 
+  193  2014-12-31 16:32:10 billn pts/1 23:58 /root mysql -uroot -p
+  194  2014-12-31 16:52:56 billn pts/1 23:58 /root pwd
+  195  2014-12-31 16:53:06 billn pts/1 23:58 /root chef-client 
+  196  2014-12-31 16:56:12 billn pts/1 23:58 /root ll
+  197  2014-12-31 16:56:43 billn pts/1 23:58 /root mysql -u root -p 
+  198  2014-12-31 16:56:50 billn pts/1 23:58 /root cat grants.sql
+  199  2014-12-31 16:56:52 billn pts/1 23:58 /root mysql -u root -p 
+  200  2014-12-31 16:57:05 billn pts/1 23:58 /root service mysql stop
+  201  2014-12-31 16:57:08 billn pts/1 23:58 /root ll
+  202  2014-12-31 16:57:14 billn pts/1 23:58 /root rm -rf grants.sql
+  203  2014-12-31 16:57:15 billn pts/1 23:58 /root ll
+  204  2014-12-31 16:57:28 billn pts/1 23:58 /root apt-get purge mysql*
+  205  2014-12-31 16:57:50 billn pts/1 23:58 /root ll
+  206  2014-12-31 16:57:52 billn pts/1 23:58 /root cd ..
+  207  2014-12-31 16:58:03 billn pts/1 23:58 /root dpkg -l| grep mysql
+  208  2014-12-31 16:58:08 billn pts/1 23:58 /root cd mysql/
+  209  2014-12-31 16:58:09 billn pts/1 23:58 /root ll
+  210  2014-12-31 16:58:13 billn pts/1 23:58 /root chef-client 
+  211  2014-12-31 16:59:24 billn pts/1 23:58 /root ll
+  212  2014-12-31 16:59:31 billn pts/1 23:58 /root cat debian.cnf 
+  213  2014-12-31 16:59:44 billn pts/1 23:58 /root mysql -u root -p
+  214  2014-12-31 17:00:09 billn pts/1 23:58 /root ll
+  215  2014-12-31 17:00:16 billn pts/1 23:58 /root cat conf.d/
+  216  2014-12-31 17:00:22 billn pts/1 23:58 /root ls conf.d/
+  217  2014-12-31 17:00:26 billn pts/1 23:58 /root cat my.cnf 
+  218  2014-12-31 17:00:32 billn pts/1 23:58 /root pwd
+  219  2014-12-31 17:00:32 billn pts/1 23:58 /root ll
+  220  2014-12-31 17:00:36 billn pts/1 23:58 /root vi debian.cnf 
+  221  2014-12-31 17:00:57 billn pts/1 23:58 /root mysql -u root -p
+  222  2014-12-31 17:01:14 billn pts/1 23:58 /root ll
+  223  2014-12-31 17:01:29 billn pts/1 23:58 /root cd ../console-setup/
+  224  2014-12-31 17:01:29 billn pts/1 23:58 /root ll
+  225  2014-12-31 17:01:33 billn pts/1 23:58 /root pwd
+  226  2014-12-31 17:01:34 billn pts/1 23:58 /root cd ..
+  227  2014-12-31 17:01:34 billn pts/1 23:58 /root ls
+  228  2014-12-31 17:01:38 billn pts/1 23:58 /root ll -d nsswitch.conf 
+  229  2014-12-31 17:01:49 billn pts/1 23:58 /root vi sysctl.conf
+  230  2014-12-31 21:01:18 billn pts/1 23:58 /root ll
+  231  2014-12-31 21:01:23 billn pts/1 23:58 /root cd /etc/mysql/
+  232  2014-12-31 21:01:24 billn pts/1 23:58 /root ll
+  233  2014-12-31 21:01:26 billn pts/1 23:58 /root cat grants.sql.o 
+  234  2014-12-31 21:01:39 billn pts/1 23:58 /root mysql -u root -p
+  235  2014-12-31 21:01:44 billn pts/1 23:58 /root ll
+  236  2014-12-31 21:01:48 billn pts/1 23:58 /root cat debian.cnf 
+  237  2014-12-31 21:02:24 billn pts/1 23:58 /root cd
+  238  2014-12-31 21:02:34 billn pts/1 23:58 /root service mysql stop
+  239  2014-12-31 21:02:48 billn pts/1 23:58 /root history | grep apt-get
+  240  2014-12-31 21:03:03 billn pts/1 23:58 /root apt-get purge mysql-server*
+  241  2014-12-31 21:03:19 billn pts/1 23:58 /root dpkg -l| grep mysql
+  242  2014-12-31 21:03:30 billn pts/1 23:58 /root cd /etc/mysql/
+  243  2014-12-31 21:03:30 billn pts/1 23:58 /root ll
+  244  2014-12-31 21:03:52 billn pts/1 23:58 /root cd /var/lib/
+  245  2014-12-31 21:03:52 billn pts/1 23:58 /root ls
+  246  2014-12-31 21:03:59 billn pts/1 23:58 /root cd mysql/
+  247  2014-12-31 21:03:59 billn pts/1 23:58 /root ll
+  248  2014-12-31 21:04:01 billn pts/1 23:58 /root cd ..
+  249  2014-12-31 21:04:12 billn pts/1 23:58 /root apt-get purge mysql-server*
+  250  2014-12-31 21:04:21 billn pts/1 23:58 /root apt-get purge mysql-common*
+  251  2014-12-31 21:04:33 billn pts/1 23:58 /root ll
+  252  2014-12-31 21:04:40 billn pts/1 23:58 /root ll -d mysql/*
+  253  2014-12-31 21:04:54 billn pts/1 23:58 /root apt-get 
+  254  2014-12-31 21:05:02 billn pts/1 23:58 /root apt-get autoclean
+  255  2014-12-31 21:05:14 billn pts/1 23:58 /root ls
+  256  2014-12-31 21:05:31 billn pts/1 23:58 /root dpkg -l| grep mysql
+  257  2014-12-31 21:05:46 billn pts/1 23:58 /root rm -rf mysql/
+  258  2014-12-31 21:05:47 billn pts/1 23:58 /root ll
+  259  2014-12-31 21:05:54 billn pts/1 23:58 /root cd
+  260  2014-12-31 21:06:00 billn pts/1 23:58 /root chef-client 
+  261  2014-12-31 21:07:05 billn pts/1 23:58 /root cd /var/lib/mysql/
+  262  2014-12-31 21:07:05 billn pts/1 23:58 /root ll
+  263  2014-12-31 21:07:15 billn pts/1 23:58 /root cd /etc/mysql/
+  264  2014-12-31 21:07:16 billn pts/1 23:58 /root ll
+  265  2014-12-31 21:07:23 billn pts/1 23:58 /root cat my.cnf 
+  266  2014-12-31 21:07:26 billn pts/1 23:58 /root cd ..
+  267  2014-12-31 21:07:32 billn pts/1 23:58 /root cd mysql/
+  268  2014-12-31 21:07:33 billn pts/1 23:58 /root ll
+  269  2014-12-31 21:07:37 billn pts/1 23:58 /root cat debian.cnf 
+  270  2014-12-31 21:07:50 billn pts/1 23:58 /root mysql -uroot -p
+  271  2014-12-31 21:08:00 billn pts/1 23:58 /root cat grants.sql.o 
+  272  2014-12-31 21:08:02 billn pts/1 23:58 /root mysql -uroot -p
+  273  2014-12-31 21:18:50 billn pts/1 23:58 /root cd ..
+  274  2014-12-31 21:20:36 billn pts/1 23:58 /root cd /var/cache/local/preseeding/
+  275  2014-12-31 21:20:37 billn pts/1 23:58 /root ll
+  276  2014-12-31 21:20:40 billn pts/1 23:58 /root cat mysql-server.seed 
+  277  2014-12-31 21:20:54 billn pts/1 23:58 /root ll
+  278  2014-12-31 21:20:56 billn pts/1 23:58 /root rm -rf *
+  279  2014-12-31 21:20:57 billn pts/1 23:58 /root ll
+  280  2014-12-31 21:22:07 billn pts/1 23:58 /root cd
+  281  2014-12-31 21:22:08 billn pts/1 23:58 /root cd -
+  282  2014-12-31 21:22:09 billn pts/1 23:58 /root cd ..
+  283  2014-12-31 21:22:10 billn pts/1 23:58 /root ll
+  284  2014-12-31 21:22:11 billn pts/1 23:58 /root cd ..
+  285  2014-12-31 21:22:12 billn pts/1 23:58 /root l
+  286  2014-12-31 21:22:13 billn pts/1 23:58 /root ll
+  287  2014-12-31 21:22:18 billn pts/1 23:58 /root pwd
+  288  2014-12-31 21:23:01 billn pts/1 23:58 /root dpkg -l| grep mysql
+  289  2014-12-31 21:23:06 billn pts/1 23:58 /root apt-get autoclean
+  290  2014-12-31 21:23:16 billn pts/1 23:58 /root history | grep apt
+  291  2014-12-31 21:23:25 billn pts/1 23:58 /root apt-get purge mysql-server*
+  292  2014-12-31 21:23:44 billn pts/1 23:58 /root apt-get purge mysql-common*
+  293  2014-12-31 21:25:41 billn pts/1 23:58 /root chef-client 
+  294  2014-12-31 21:26:45 billn pts/1 23:58 /root cd /etc/mysql/
+  295  2014-12-31 21:26:46 billn pts/1 23:58 /root ll
+  296  2014-12-31 21:26:57 billn pts/1 23:58 /root mysql -uroot -p
+  297  2014-12-31 21:27:04 billn pts/1 23:58 /root ll
+  298  2014-12-31 21:27:17 billn pts/1 23:58 /root cd /var/cache/local/preseeding/
+  299  2014-12-31 21:27:18 billn pts/1 23:58 /root l
+  300  2014-12-31 21:27:19 billn pts/1 23:58 /root ll
+  301  2014-12-31 21:27:21 billn pts/1 23:58 /root cat mysql-server.seed 
+  302  2014-12-31 21:32:22 billn pts/1 23:58 /root cd
+  303  2014-12-31 21:32:26 billn pts/1 23:58 /root cd /etc
+  304  2014-12-31 21:32:29 billn pts/1 23:58 /root ll -d .mysql_root 
+  305  2014-12-31 21:32:31 billn pts/1 23:58 /root cat .mysql_root 
+  306  2014-12-31 21:32:37 billn pts/1 23:58 /root rm -rf .mysql_root 
+  307  2014-12-31 21:33:07 billn pts/1 23:58 /root cd
+  308  2014-12-31 21:33:08 billn pts/1 23:58 /root history 
+  309  2014-12-31 21:33:41 billn pts/1 23:58 /root apt-get purge mysql-server* mysql-common*
+  310  2014-12-31 21:34:02 billn pts/1 23:58 /root service mysql stop
+  311  2014-12-31 21:34:09 billn pts/1 23:58 /root cd /var/lib/
+  312  2014-12-31 21:34:10 billn pts/1 23:58 /root ls
+  313  2014-12-31 21:34:16 billn pts/1 23:58 /root ll -d mysql/
+  314  2014-12-31 21:34:20 billn pts/1 23:58 /root cd mysql/
+  315  2014-12-31 21:34:21 billn pts/1 23:58 /root ll
+  316  2014-12-31 21:34:23 billn pts/1 23:58 /root cd ..
+  317  2014-12-31 21:34:26 billn pts/1 23:58 /root rm -rf mysql/
+  318  2014-12-31 21:34:32 billn pts/1 23:58 /root cd /etc
+  319  2014-12-31 21:34:38 billn pts/1 23:58 /root ll -d mysql*
+  320  2014-12-31 21:34:43 billn pts/1 23:58 /root cat mysql_grants.sql 
+  321  2014-12-31 21:34:51 billn pts/1 23:58 /root rm -rf mysql_grants.sql 
+  322  2014-12-31 21:35:02 billn pts/1 23:58 /root mv mysql/ mysql.o
+  323  2014-12-31 21:35:03 billn pts/1 23:58 /root cd
+  324  2014-12-31 21:35:09 billn pts/1 23:58 /root dpkg -l| grep mysql
+  325  2014-12-31 21:35:14 billn pts/1 23:58 /root cd
+  326  2014-12-31 21:35:18 billn pts/1 23:58 /root chef-client 
+  327  2014-12-31 21:36:43 billn pts/1 23:58 /root ps aux | grep mysql
+  328  2014-12-31 21:36:48 billn pts/1 23:58 /root cd /etc/
+  329  2014-12-31 21:36:54 billn pts/1 23:58 /root cat .mysql_root 
+  330  2014-12-31 21:37:07 billn pts/1 23:58 /root cd etc
+  331  2014-12-31 21:37:09 billn pts/1 23:58 /root cd mysql
+  332  2014-12-31 21:37:09 billn pts/1 23:58 /root ls
+  333  2014-12-31 21:37:10 billn pts/1 23:58 /root ll
+  334  2014-12-31 21:37:19 billn pts/1 23:58 /root cat debian.cnf 
+  335  2014-12-31 21:40:55 billn pts/1 23:58 /root cd ..
+  336  2014-12-31 21:40:59 billn pts/1 23:58 /root cat mysql_grants.sql 
+  337  2014-12-31 21:54:18 billn pts/1 23:58 /root cd mysql
+  338  2014-12-31 21:54:18 billn pts/1 23:58 /root ll
+  339  2014-12-31 21:54:46 billn pts/1 23:58 /root cd ../mysql.o/
+  340  2014-12-31 21:54:46 billn pts/1 23:58 /root ll
+  341  2014-12-31 21:54:49 billn pts/1 23:58 /root cat grants.sql.o 
+  342  2014-12-31 22:08:12 billn pts/1 23:58 /root cd
+  343  2014-12-31 22:08:19 billn pts/1 23:58 /root history | grep apt-get 
+  344  2014-12-31 22:08:23 billn pts/1 23:58 /root apt-get purge mysql-server* mysql-common*
+  345  2014-12-31 22:12:43 billn pts/1 23:58 /root cd /etc
+  346  2014-12-31 22:12:47 billn pts/1 23:58 /root ll -d .mysql_root 
+  347  2014-12-31 22:12:54 billn pts/1 23:58 /root rm -rf .mysql_root 
+  348  2014-12-31 22:13:04 billn pts/1 23:58 /root cd /var/lib/
+  349  2014-12-31 22:13:05 billn pts/1 23:58 /root ll
+  350  2014-12-31 22:13:14 billn pts/1 23:58 /root rm -rf mysql/
+  351  2014-12-31 22:13:23 billn pts/1 23:58 /root ps aux | grep mysql
+  352  2014-12-31 22:13:32 billn pts/1 23:58 /root service mysql stop
+  353  2014-12-31 22:13:37 billn pts/1 23:58 /root ps aux | grep mysql
+  354  2014-12-31 22:13:42 billn pts/1 23:58 /root pkill mysql
+  355  2014-12-31 22:13:44 billn pts/1 23:58 /root ps aux | grep mysql
+  356  2014-12-31 22:13:52 billn pts/1 23:58 /root kill -9 27328
+  357  2014-12-31 22:13:57 billn pts/1 23:58 /root ps aux | grep mysql
+  358  2014-12-31 22:14:07 billn pts/1 23:58 /root ps aux
+  359  2014-12-31 22:16:42 billn pts/1 23:58 /root cd
+  360  2014-12-31 22:16:44 billn pts/1 23:58 /root chef-client 
+  361  2014-12-31 22:19:32 billn pts/1 23:58 /root ps aux
+  362  2014-12-31 22:19:37 billn pts/1 23:58 /root ps aux | grep mysql
+  363  2014-12-31 22:19:40 billn pts/1 23:58 /root cd /etc
+  364  2014-12-31 22:19:48 billn pts/1 23:58 /root cd mysql
+  365  2014-12-31 22:19:49 billn pts/1 23:58 /root ls
+  366  2014-12-31 22:19:51 billn pts/1 23:58 /root ll
+  367  2014-12-31 22:19:54 billn pts/1 23:58 /root cd /var/lib/
+  368  2014-12-31 22:19:54 billn pts/1 23:58 /root ls
+  369  2014-12-31 22:19:57 billn pts/1 23:58 /root cd mysql/
+  370  2014-12-31 22:19:58 billn pts/1 23:58 /root ls
+  371  2014-12-31 22:19:59 billn pts/1 23:58 /root ll
+  372  2014-12-31 22:20:00 billn pts/1 23:58 /root cd /etc
+  373  2014-12-31 22:20:07 billn pts/1 23:58 /root cd
+  374  2014-12-31 22:20:14 billn pts/1 23:58 /root mysql -u root -p
+  375  2014-12-31 22:23:58 billn pts/1 23:58 /root chef-client 
+  376  2014-12-31 22:24:35 billn pts/1 23:58 /root cd /etc
+  377  2014-12-31 22:24:40 billn pts/1 23:58 /root cat mysql_grants.sql 
+  378  2014-12-31 22:24:59 billn pts/1 23:58 /root chef-client 
+  379  2014-12-31 22:25:21 billn pts/1 23:58 /root cat mysql_grants.sql 
+  380  2014-12-31 22:25:41 billn pts/1 23:58 /root chef-client 
+  381  2014-12-31 22:26:10 billn pts/1 23:58 /root cat mysql_grants.sql 
+  382  2014-12-31 22:26:20 billn pts/1 23:58 /root chef-client 
+  383  2014-12-31 22:27:02 billn pts/1 23:58 /root cat mysql_grants.sql 
+  384  2014-12-31 22:27:07 billn pts/1 23:58 /root mysql -uroot -p
+  385  2015-01-01 03:16:09 billn pts/1 23:58 /root chef-client 
+  386  2015-01-01 03:16:33 billn pts/1 23:58 /root mysql -uroot -p
+  387  2015-01-01 03:17:30 billn pts/1 23:58 /root apt-get purge mysql-server* mysql-common*
+  388  2015-01-01 03:17:43 billn pts/1 23:58 /root cd /tmp
+  389  2015-01-01 03:20:02 billn pts/1 23:58 /root cd /var/lib/
+  390  2015-01-01 03:20:06 billn pts/1 23:58 /root rm -rf mysql/
+  391  2015-01-01 03:20:08 billn pts/1 23:58 /root cd /tetc
+  392  2015-01-01 03:20:10 billn pts/1 23:58 /root cd /etc
+  393  2015-01-01 03:20:16 billn pts/1 23:58 /root rm -rf mysql*
+  394  2015-01-01 03:20:17 billn pts/1 23:58 /root cd
+  395  2015-01-01 03:20:20 billn pts/1 23:58 /root chef-client 
+  396  2015-01-01 03:21:41 billn pts/1 23:58 /root mysql -uroot -p
+  397  2015-01-01 03:21:50 billn pts/1 23:58 /root mysql -uroot -p n3admin
+  398  2015-01-01 03:22:04 billn pts/1 23:58 /root mysql -uroot -pn3admin
+  399  2015-01-01 03:22:15 billn pts/1 23:58 /root cat /etc/mysql_grants.sql 
+  400  2015-01-01 03:22:23 billn pts/1 23:58 /root mysql -uroot -p fY2r33YFM6iSrpSnfhvU
+  401  2015-01-01 03:22:34 billn pts/1 23:58 /root mysql -uroot -p "fY2r33YFM6iSrpSnfhvU"
+  402  2015-01-01 03:22:58 billn pts/1 23:58 /root cat .mysql_history 
+  403  2015-01-01 03:23:20 billn pts/1 23:58 /root mysql -uroot
+  404  2015-01-01 03:25:29 billn pts/1 23:58 /root mysqladmin -uroot -p fY2r33YFM6iSrpSnfhvU
+  405  2015-01-01 03:25:39 billn pts/1 23:58 /root mysqladmin -uroot
+  406  2015-01-01 03:26:36 billn pts/1 23:58 /root mysqladmin -u root -p fY2r33YFM6iSrpSnfhvU
+  407  2015-01-01 03:29:06 billn pts/1 23:58 /root mysql -uroot -p
+  408  2015-01-01 03:29:13 billn pts/1 23:58 /root mysql -uroot -pfY2r33YFM6iSrpSnfhvU
+  409  2015-01-01 03:29:22 billn pts/1 23:58 /root mysql -uroot -p fY2r33YFM6iSrpSnfhvU
+  410  2015-01-01 03:30:00 billn pts/1 23:58 /root chef-client 
+  411  2015-01-01 03:31:41 billn pts/1 23:58 /root rm -rf /var/chef/cache/cookbooks/*
+  412  2015-01-01 03:31:49 billn pts/1 23:58 /root apt-get purge mysql-server* mysql-common*
+  413  2015-01-01 03:32:11 billn pts/1 23:58 /root rm -rf /var/lib/mysql/
+  414  2015-01-01 03:32:13 billn pts/1 23:58 /root cd /etc
+  415  2015-01-01 03:32:16 billn pts/1 23:58 /root rm -rf mysql*
+  416  2015-01-01 03:32:17 billn pts/1 23:58 /root cd
+  417  2015-01-01 03:32:19 billn pts/1 23:58 /root chef-client 
+  418  2015-01-01 03:34:10 billn pts/1 23:58 /root mysql -uroot -pfY2r33YFM6iSrpSnfhvU
+  419  2015-01-01 03:43:43 billn pts/1 23:58 /root chef-client 
+  420  2015-01-01 03:46:35 billn pts/1 23:58 /root mysql -uroot -pfY2r33YFM6iSrpSnfhvU
+  421  2015-01-01 03:47:05 billn pts/1 23:58 /root mysql -uroot -pfY2r33YFM6iSrpSnfhvU -e 'show databases;exit'
+  422  2015-01-01 03:47:15 billn pts/1 23:58 /root mysql -uroot -pfY2r33YFM6iSrpSnfhvU -e 'show databases;end'
+  423  2015-01-01 03:48:12 billn pts/1 23:58 /root mysql -uroot -pfY2r33YFM6iSrpSnfhvU -e 'show databases;exit;'
+  424  2015-01-01 03:48:25 billn pts/1 23:58 /root mysql -uroot -pfY2r33YFM6iSrpSnfhvU -e 'show databases;'
+  425  2015-01-01 03:50:33 billn pts/1 23:58 /root chef-client 
+  426  2015-01-01 04:00:10 billn pts/1 23:58 /root mysql -uroot -pn3admin
+  427  2015-01-01 04:00:59 billn pts/1 23:58 /root apt-get purge mysql-server* mysql-common*
+  428  2015-01-01 04:01:21 billn pts/1 23:58 /root rm -rf /var/lib/mysql
+  429  2015-01-01 04:01:25 billn pts/1 23:58 /root chef-client 
+  430  2015-01-01 04:02:41 billn pts/1 23:58 /root mysql -uroot -pn3admin
+  431  2015-01-01 04:02:50 billn pts/1 23:58 /root exit
+  432  2015-01-01 02:33:14 billn pts/1 23:58 /root cd /etc/
+  433  2015-01-01 02:33:20 billn pts/1 23:58 /root cat mysql_grants.sql 
+  434  2015-01-01 02:33:57 billn pts/1 23:58 /root mysqladmin -u root -p'fY2r33YFM6iSrpSnfhvU' password 'n3admin'
+  435  2015-01-01 02:33:59 billn pts/1 23:58 /root cd
+  436  2015-01-01 02:34:04 billn pts/1 23:58 /root mysql -uroot -p
+  437  2015-01-01 02:44:18 billn pts/1 23:58 /root cd /etc/mysql
+  438  2015-01-01 02:44:19 billn pts/1 23:58 /root ll
+  439  2015-01-01 02:46:30 billn pts/1 23:58 /root cd ..
+  440  2015-01-01 02:46:40 billn pts/1 23:58 /root cat mysql_grants.sql 
+  441  2015-01-01 03:00:35 billn pts/1 23:58 /root cd
+  442  2015-01-01 03:00:39 billn pts/1 23:58 /root apt-get purge mysql-server* mysql-common*
+  443  2015-01-01 03:01:06 billn pts/1 23:58 /root history |grep rm
+  444  2015-01-01 03:01:15 billn pts/1 23:58 /root rm -rf /var/lib/mysql/
+  445  2015-01-01 03:01:26 billn pts/1 23:58 /root ps aux | grep mysq
+  446  2015-01-01 03:01:33 billn pts/1 23:58 /root cd /etc/
+  447  2015-01-01 03:01:36 billn pts/1 23:58 /root ll -d mysql*
+  448  2015-01-01 03:01:42 billn pts/1 23:58 /root rm -rf mysql 
+  449  2015-01-01 03:01:48 billn pts/1 23:58 /root rm -rf mysql_grants.sql 
+  450  2015-01-01 03:01:48 billn pts/1 23:58 /root cd
+  451  2015-01-01 03:01:50 billn pts/1 23:58 /root cd 
+  452  2015-01-01 03:01:54 billn pts/1 23:58 /root chef-client 
+  453  2015-01-01 03:03:09 billn pts/1 23:58 /root cd /etc/
+  454  2015-01-01 03:03:13 billn pts/1 23:58 /root ll -d mysql*
+  455  2015-01-01 03:03:18 billn pts/1 23:58 /root cat mysql_grants.sql 
+  456  2015-01-01 03:03:28 billn pts/1 23:58 /root cd mysql
+  457  2015-01-01 03:03:29 billn pts/1 23:58 /root ll
+  458  2015-01-01 03:05:37 billn pts/1 23:58 /root mysql -u root -e 'show databases;'
+  459  2015-01-01 03:05:44 billn pts/1 23:58 /root mysql -u root -p -e 'show databases;'
+  460  2015-01-01 03:07:00 billn pts/1 23:58 /root cd
+  461  2015-01-01 03:07:01 billn pts/1 23:58 /root history 
+  462  2015-01-01 03:07:07 billn pts/1 23:58 /root apt-get purge mysql-server* mysql-common*
+  463  2015-01-01 03:07:45 billn pts/1 23:58 /root cd /etc
+  464  2015-01-01 03:07:48 billn pts/1 23:58 /root rm -rf mysql*
+  465  2015-01-01 03:07:50 billn pts/1 23:58 /root cd
+  466  2015-01-01 03:07:57 billn pts/1 23:58 /root cd /var/lib/
+  467  2015-01-01 03:07:58 billn pts/1 23:58 /root ls
+  468  2015-01-01 03:08:08 billn pts/1 23:58 /root rm -rf mysql*
+  469  2015-01-01 03:08:10 billn pts/1 23:58 /root ll
+  470  2015-01-01 03:08:14 billn pts/1 23:58 /root ll -d my
+  471  2015-01-01 03:08:15 billn pts/1 23:58 /root cd
+  472  2015-01-01 03:08:30 billn pts/1 23:58 /root chef-client 
+  473  2015-01-01 03:09:46 billn pts/1 23:58 /root cat /etc/mysql_grants.sql 
+  474  2015-01-01 03:09:52 billn pts/1 23:58 /root mysql -uroot -p
+  475  2015-01-06 16:49:04 billn pts/1 23:58 /root pwd
+  476  2015-01-06 16:49:04 billn pts/1 23:58 /root ll
+  477  2015-01-06 16:53:47 billn pts/1 23:58 /root chef-client 
+  478  2015-01-06 18:36:21 billn pts/1 23:58 /root vi /etc/hosts
+  479  2015-01-06 18:37:09 billn pts/1 23:58 /root pwd
+  480  2015-01-06 17:08:47 billn pts/1 23:58 /root chef-client 
+  481  2015-01-06 17:09:29 billn pts/1 23:58 /root pwd
+  482  2015-01-06 17:11:39 billn pts/1 23:58 /root chef-client 
+  483  2015-01-06 17:13:44 billn pts/1 23:58 /root pwd
+  484  2015-01-06 17:13:44 billn pts/1 23:58 /root ll
+  485  2015-01-06 17:14:15 billn pts/1 23:58 /root history 
+  486  2015-01-06 17:14:33 billn pts/1 23:58 /root chef-client 
+  487  2015-01-06 17:14:58 billn pts/1 23:58 /root cd /data/download/
+  488  2015-01-06 17:14:58 billn pts/1 23:58 /root ll
+  489  2015-01-06 17:21:02 billn pts/1 23:58 /root chef-client 
+  490  2015-01-06 17:21:22 billn pts/1 23:58 /root ll
+  491  2015-01-06 17:21:25 billn pts/1 23:58 /root cd /usr/java/
+  492  2015-01-06 17:21:26 billn pts/1 23:58 /root ll
+  493  2015-01-06 17:21:46 billn pts/1 23:58 /root rm -rf jdk1.8.0_40*
+  494  2015-01-06 17:21:46 billn pts/1 23:58 /root ll
+  495  2015-01-06 17:21:49 billn pts/1 23:58 /root rm -rf jdk*
+  496  2015-01-06 17:21:51 billn pts/1 23:58 /root ll
+  497  2015-01-06 17:22:25 billn pts/1 23:58 /root chef-client 
+  498  2015-01-06 17:22:51 billn pts/1 23:58 /root ll
+  499  2015-01-06 17:23:21 billn pts/1 23:58 /root cd ..
+  500  2015-01-06 17:23:24 billn pts/1 23:58 /root ll  -d java
+  501  2015-01-06 17:23:27 billn pts/1 23:58 /root cd java
+  502  2015-01-06 17:23:28 billn pts/1 23:58 /root ll
+  503  2015-01-06 17:32:19 billn pts/1 23:58 /root pdw
+  504  2015-01-06 17:32:22 billn pts/1 23:58 /root cd /etc/alternatives/
+  505  2015-01-06 17:32:25 billn pts/1 23:58 /root pwd
+  506  2015-01-06 17:40:28 billn pts/1 23:58 /root ll -d java 
+  507  2015-01-06 17:40:31 billn pts/1 23:58 /root rm -rf java 
+  508  2015-01-06 17:40:52 billn pts/1 23:58 /root ln -s /usr/java/jdk1.8.0_40/bin/java ./
+  509  2015-01-06 17:40:56 billn pts/1 23:58 /root chef-client 
+  510  2015-01-06 17:41:12 billn pts/1 23:58 /root ll -d java*
+  511  2015-01-06 17:43:09 billn pts/1 23:58 /root chef-client 
+  512  2015-01-06 17:43:30 billn pts/1 23:58 /root ll -d java*
+  513  2015-01-06 17:43:32 billn pts/1 23:58 /root ls -alrt
+  514  2015-01-06 17:44:36 billn pts/1 23:58 /root chef-client 
+  515  2015-01-06 17:45:11 billn pts/1 23:58 /root ll -d /usr/java/jdk1.8.0_40/bin/java*
+  516  2015-01-06 17:46:23 billn pts/1 23:58 /root cd /usr/java/jdk1.8.0_40/bin/
+  517  2015-01-06 17:46:27 billn pts/1 23:58 /root ll -d jav*
+  518  2015-01-06 17:46:36 billn pts/1 23:58 /root rm -rf java
+  519  2015-01-06 17:46:37 billn pts/1 23:58 /root ll
+  520  2015-01-06 17:46:42 billn pts/1 23:58 /root ll -d java*
+  521  2015-01-06 17:46:46 billn pts/1 23:58 /root cd ..
+  522  2015-01-06 17:46:47 billn pts/1 23:58 /root ll
+  523  2015-01-06 17:46:51 billn pts/1 23:58 /root rm -rf jdk*
+  524  2015-01-06 17:46:52 billn pts/1 23:58 /root ll
+  525  2015-01-06 17:47:13 billn pts/1 23:58 /root chef-client 
+  526  2015-01-06 17:47:53 billn pts/1 23:58 /root cd -
+  527  2015-01-06 17:47:58 billn pts/1 23:58 /root cd /etc/alternatives/
+  528  2015-01-06 17:48:00 billn pts/1 23:58 /root ll -d java 
+  529  2015-01-06 17:48:03 billn pts/1 23:58 /root java -version 
+  530  2015-01-06 17:48:27 billn pts/1 23:58 /root cd
+  531  2015-01-06 17:48:29 billn pts/1 23:58 /root pwd
+  532  2015-01-06 17:48:29 billn pts/1 23:58 /root ll
+  533  2015-01-06 17:48:55 billn pts/1 23:58 /root ps aux | grep chef
+  534  2015-01-06 17:49:01 billn pts/1 23:58 /root ps aux | grep mysql 
+  535  2015-01-06 17:49:15 billn pts/1 23:58 /root mysql -u root -p
+  536  2015-01-06 17:50:26 billn pts/1 23:58 /root su - naehas
+  537  2015-01-06 19:14:16 billn pts/1 23:58 /root pwd
+  538  2015-01-06 19:14:18 billn pts/1 23:58 /root exit
+  539  2015-01-06 19:14:24 billn pts/1 23:58 /root cd /etc/alternatives/
+  540  2015-01-06 19:14:29 billn pts/1 23:58 /root rm -rf java 
+  541  2015-01-06 19:14:41 billn pts/1 23:58 /root ln -s /usr/java/jdk1.8.0_40/bin/java ./
+  542  2015-01-06 19:14:43 billn pts/1 23:58 /root ll -d java 
+  543  2015-01-06 19:14:44 billn pts/1 23:58 /root pwd
+  544  2015-01-06 19:14:48 billn pts/1 23:58 /root rm -rf java 
+  545  2015-01-06 19:15:00 billn pts/1 23:58 /root ln -s /usr/java/jdk1.6.0_26/bin/java ./
+  546  2015-01-06 19:15:04 billn pts/1 23:58 /root ./java -version 
+  547  2015-01-06 19:15:08 billn pts/1 23:58 /root which java
+  548  2015-01-06 19:15:09 billn pts/1 23:58 /root pwd
+  549  2015-01-06 19:15:16 billn pts/1 23:58 /root su - neahas
+  550  2015-01-06 19:15:22 billn pts/1 23:58 /root su - naehas
+  551  2015-01-06 19:47:31 billn pts/1 23:58 /root su - naehas
+  552  2015-01-06 19:52:19 billn pts/1 23:58 /root cd /etc/mysql/
+  553  2015-01-06 19:52:19 billn pts/1 23:58 /root ll
+  554  2015-01-06 19:52:21 billn pts/1 23:58 /root cat grants.sql 
+  555  2015-01-06 19:58:52 billn pts/1 23:58 /root mysql -uroot -p
+  556  2015-01-06 20:07:59 billn pts/1 23:58 /root clear
+  557  2015-01-06 20:08:00 billn pts/1 23:58 /root ll
+  558  2015-01-06 20:08:01 billn pts/1 23:58 /root cd
+  559  2015-01-06 20:08:05 billn pts/1 23:58 /root mysql -uroot -p
+  560  2015-01-06 20:10:25 billn pts/1 23:58 /root su - naehas
+  561  2015-01-06 23:29:11 billn pts/1 23:58 /root mv mysql-5.1.65.tar.gz /tmp/.
+  562  2015-01-06 23:29:12 billn pts/1 23:58 /root ll
+  563  2015-01-06 23:29:16 billn pts/1 23:58 /root exit
+  564  2015-01-06 23:33:04 billn pts/1 23:58 /root history | grep apt-get 
+  565  2015-01-06 23:56:23 billn pts/1 23:58 /root exit
+  566  2015-01-06 23:05:45 billn pts/1 23:58 /root pwd
+  567  2015-01-06 23:05:51 billn pts/1 23:58 /root service mysql stop
+  568  2015-01-06 23:06:00 billn pts/1 23:58 /root history | grep mysql
+  569  2015-01-06 23:06:12 billn pts/1 23:58 /root dpkg -l | grep mysql
+  570  2015-01-06 23:07:05 billn pts/1 23:58 /root dpkg -l | grep mysql >  mysql55
+  571  2015-01-06 23:07:32 billn pts/1 23:58 /root vi mysql_install_5_1.sh
+  572  2015-01-06 23:08:15 billn pts/1 23:58 /root apt-get purge mysql-server* mysql-common*
+  573  2015-01-06 23:08:32 billn pts/1 23:58 /root dpkg -l | grep mysql
+  574  2015-01-06 23:08:47 billn pts/1 23:58 /root apt-get purge mysql-server* mysql-common* mysql-client-core-5.5
+  575  2015-01-06 23:08:55 billn pts/1 23:58 /root mysql
+  576  2015-01-06 23:09:07 billn pts/1 23:58 /root bash mysql_install_5_1.sh 
+  577  2015-01-06 23:11:09 billn pts/1 23:58 /root apt-get install libncurses5-dev
+  578  2015-01-06 23:11:24 billn pts/1 23:58 /root cat mysql_install_5_1.sh 
+  579  2015-01-06 23:11:34 billn pts/1 23:58 /root ./configure  '--prefix=/usr' '--exec-prefix=/usr' '--libexecdir=/usr/sbin' '--datadir=/usr/share' '--localstatedir=/var/lib/mysql' '--includedir=/usr/include' '--infodir=/usr/share/info' '--mandir=/usr/share/man' '--with-system-type=debian-linux-gnu' '--enable-shared' '--enable-static' '--enable-thread-safe-client' '--enable-assembler' '--enable-local-infile' '--with-fast-mutexes' '--with-big-tables' '--with-unix-socket-path=/var/run/mysqld/mysqld.sock' '--with-mysqld-user=mysql' '--with-libwrap' '--without-readline' '--with-ssl' '--without-docs' '--with-extra-charsets=all' '--with-plugins=max' '--with-embedded-server' '--with-embedded-privilege-control'
+  580  2015-01-06 23:11:37 billn pts/1 23:58 /root cd -
+  581  2015-01-06 23:11:43 billn pts/1 23:58 /root cd mysql-5.1.65/
+  582  2015-01-06 23:11:46 billn pts/1 23:58 /root ./configure  '--prefix=/usr' '--exec-prefix=/usr' '--libexecdir=/usr/sbin' '--datadir=/usr/share' '--localstatedir=/var/lib/mysql' '--includedir=/usr/include' '--infodir=/usr/share/info' '--mandir=/usr/share/man' '--with-system-type=debian-linux-gnu' '--enable-shared' '--enable-static' '--enable-thread-safe-client' '--enable-assembler' '--enable-local-infile' '--with-fast-mutexes' '--with-big-tables' '--with-unix-socket-path=/var/run/mysqld/mysqld.sock' '--with-mysqld-user=mysql' '--with-libwrap' '--without-readline' '--with-ssl' '--without-docs' '--with-extra-charsets=all' '--with-plugins=max' '--with-embedded-server' '--with-embedded-privilege-control'
+  583  2015-01-06 23:14:44 billn pts/1 23:58 /root cd
+  584  2015-01-06 23:14:50 billn pts/1 23:58 /root vi mysql_install_5_1.sh 
+  585  2015-01-06 23:18:17 billn pts/1 23:58 /root cat mysql_install_5_1.sh 
+  586  2015-01-06 23:18:24 billn pts/1 23:58 /root cd mysql-5.1.65/
+  587  2015-01-06 23:18:25 billn pts/1 23:58 /root ./configure  '--prefix=/usr' '--exec-prefix=/usr' '--libexecdir=/usr/sbin' '--datadir=/usr/share' '--localstatedir=/var/lib/mysql' '--includedir=/usr/include' '--infodir=/usr/share/info' '--mandir=/usr/share/man' '--with-system-type=debian-linux-gnu' '--enable-shared' '--enable-static' '--enable-thread-safe-client' '--enable-assembler' '--enable-local-infile' '--with-fast-mutexes' '--with-big-tables' '--with-unix-socket-path=/var/run/mysqld/mysqld.sock' '--with-mysqld-user=mysql' '--with-libwrap' '--with-readline' '--with-ssl' '--without-docs' '--with-extra-charsets=all' '--with-plugins=max' '--with-embedded-server' '--with-embedded-privilege-control'
+  588  2015-01-06 23:22:54 billn pts/1 23:58 /root cat ../mysql_install_5_1.sh 
+  589  2015-01-06 23:23:07 billn pts/1 23:58 /root maek && make install 
+  590  2015-01-06 23:23:14 billn pts/1 23:58 /root make && make install 
+  591  2015-01-06 23:23:56 billn pts/1 23:58 /root apt-get install g++
+  592  2015-01-06 23:24:09 billn pts/1 23:58 /root make && make install 
+  593  2015-01-06 23:25:15 billn pts/1 23:58 /root apt-get install g++ gcc
+  594  2015-01-06 23:25:31 billn pts/1 23:58 /root apt-get autoremove
+  595  2015-01-06 23:25:53 billn pts/1 23:58 /root make 
+  596  2015-01-06 23:26:26 billn pts/1 23:58 /root cd
+  597  2015-01-06 23:26:28 billn pts/1 23:58 /root cd -
+  598  2015-01-06 23:26:32 billn pts/1 23:58 /root history 
+  599  2015-01-06 23:26:37 billn pts/1 23:58 /root ./configure  '--prefix=/usr' '--exec-prefix=/usr' '--libexecdir=/usr/sbin' '--datadir=/usr/share' '--localstatedir=/var/lib/mysql' '--includedir=/usr/include' '--infodir=/usr/share/info' '--mandir=/usr/share/man' '--with-system-type=debian-linux-gnu' '--enable-shared' '--enable-static' '--enable-thread-safe-client' '--enable-assembler' '--enable-local-infile' '--with-fast-mutexes' '--with-big-tables' '--with-unix-socket-path=/var/run/mysqld/mysqld.sock' '--with-mysqld-user=mysql' '--with-libwrap' '--with-readline' '--with-ssl' '--without-docs' '--with-extra-charsets=all' '--with-plugins=max' '--with-embedded-server' '--with-embedded-privilege-control'
+  600  2015-01-06 23:27:54 billn pts/1 23:58 /root make 
+  601  2015-01-06 23:53:09 billn pts/1 23:58 /root make install 
+  602  2015-01-06 23:54:49 billn pts/1 23:58 /root service mysql
+  603  2015-01-06 23:55:00 billn pts/1 23:58 /root cd bin
+  604  2015-01-06 23:55:11 billn pts/1 23:58 /root mysql_config 
+  605  2015-01-06 23:55:34 billn pts/1 23:58 /root cd /etc/mysql/
+  606  2015-01-06 23:55:35 billn pts/1 23:58 /root ll
+  607  2015-01-06 23:55:46 billn pts/1 23:58 /root mysqld
+  608  2015-01-06 23:57:03 billn pts/1 23:58 /root cd /lib/init/
+  609  2015-01-06 23:57:03 billn pts/1 23:58 /root ls
+  610  2015-01-06 23:57:12 billn pts/1 23:58 /root cd /etc/init.d/
+  611  2015-01-06 23:57:24 billn pts/1 23:58 /root ln -s /lib/init/upstart-job ./mysql
+  612  2015-01-06 23:57:26 billn pts/1 23:58 /root mysql
+  613  2015-01-06 23:57:39 billn pts/1 23:58 /root service mysql status
+  614  2015-01-06 23:57:43 billn pts/1 23:58 /root service mysql start
+  615  2015-01-06 23:58:57 billn pts/1 23:58 /root mysql_install_db 
+  616  2015-01-06 23:59:31 billn pts/1 23:58 /root cd
+  617  2015-01-06 23:59:37 billn pts/1 23:58 /root ps aux
+  618  2015-01-06 23:59:40 billn pts/1 23:58 /root ps aux | grep mysql
+  619  2015-01-06 23:59:43 billn pts/1 23:58 /root cd mysql-5.1.65/
+  620  2015-01-06 23:59:54 billn pts/1 23:58 /root make install all
+  621  2015-01-07 00:01:18 billn pts/1 23:58 /root mysqladmin version
+  622  2015-01-07 00:01:24 billn pts/1 23:58 /root mysqladmin -version 
+  623  2015-01-07 00:01:28 billn pts/1 23:58 /root mysqladmin --version 
+  624  2015-01-07 00:03:38 billn pts/1 23:58 /root cd
+  625  2015-01-07 00:03:39 billn pts/1 23:58 /root exit
+  626  2015-01-07 12:35:58 billn pts/1 23:58 /root su - naehas 
+  627  2015-01-07 12:06:53 billn pts/1 23:58 /root pwd
+  628  2015-01-07 12:07:16 billn pts/1 23:58 /root dpkg-reconfigure mysql-server-5.1
+  629  2015-01-07 12:07:27 billn pts/1 23:58 /root cd mysql-5.1.65/
+  630  2015-01-07 12:07:27 billn pts/1 23:58 /root ll
+  631  2015-01-07 12:07:28 billn pts/1 23:58 /root ls
+  632  2015-01-07 12:07:34 billn pts/1 23:58 /root cd scripts/l
+  633  2015-01-07 12:07:36 billn pts/1 23:58 /root cd scripts/
+  634  2015-01-07 12:07:37 billn pts/1 23:58 /root ls
+  635  2015-01-07 12:09:22 billn pts/1 23:58 /root ps aux | grep mysql
+  636  2015-01-07 12:13:51 billn pts/1 23:58 /root cd /etc/apt/
+  637  2015-01-07 12:13:53 billn pts/1 23:58 /root cd sources.list.d/
+  638  2015-01-07 12:13:53 billn pts/1 23:58 /root ll
+  639  2015-01-07 12:13:56 billn pts/1 23:58 /root cat nh.list 
+  640  2015-01-07 12:13:58 billn pts/1 23:58 /root cd ..
+  641  2015-01-07 12:13:59 billn pts/1 23:58 /root ll
+  642  2015-01-07 12:14:02 billn pts/1 23:58 /root vi sources.list
+  643  2015-01-07 12:15:15 billn pts/1 23:58 /root cd /usr/local/
+  644  2015-01-07 12:15:16 billn pts/1 23:58 /root ls
+  645  2015-01-07 12:15:29 billn pts/1 23:58 /root cd /ot
+  646  2015-01-07 12:15:31 billn pts/1 23:58 /root cd /opt/
+  647  2015-01-07 12:15:32 billn pts/1 23:58 /root ls
+  648  2015-01-07 12:15:33 billn pts/1 23:58 /root ll
+  649  2015-01-07 12:15:34 billn pts/1 23:58 /root cd
+  650  2015-01-07 12:15:36 billn pts/1 23:58 /root cd /
+  651  2015-01-07 12:15:39 billn pts/1 23:58 /root cd /var/lib/
+  652  2015-01-07 12:15:41 billn pts/1 23:58 /root cd mysql/
+  653  2015-01-07 12:15:42 billn pts/1 23:58 /root ll
+  654  2015-01-07 12:16:17 billn pts/1 23:58 /root which mysql_install_db
+  655  2015-01-07 12:16:21 billn pts/1 23:58 /root cd /usr/bin/
+  656  2015-01-07 12:16:27 billn pts/1 23:58 /root ll -d mysql*
+  657  2015-01-07 12:16:40 billn pts/1 23:58 /root file mysql_install_db 
+  658  2015-01-07 12:16:46 billn pts/1 23:58 /root vi mysql_install_db 
+  659  2015-01-07 12:17:14 billn pts/1 23:58 /root cd /var/lib/
+  660  2015-01-07 12:17:15 billn pts/1 23:58 /root ll -d mysql/
+  661  2015-01-07 12:17:59 billn pts/1 23:58 /root mysql_install_db --user=mysql
+  662  2015-01-07 12:18:28 billn pts/1 23:58 /root /usr/bin/mysql -u root mysql
+  663  2015-01-07 12:18:39 billn pts/1 23:58 /root mv mysql/ mysql.o
+  664  2015-01-07 12:18:42 billn pts/1 23:58 /root mysql_install_db --user=mysql
+  665  2015-01-07 12:20:16 billn pts/1 23:58 /root mysql -uroot -p
+  666  2015-01-07 12:20:26 billn pts/1 23:58 /root ps aux | grep mysql
+  667  2015-01-07 12:20:50 billn pts/1 23:58 /root ll -d mysql
+  668  2015-01-07 12:20:52 billn pts/1 23:58 /root cd mysql
+  669  2015-01-07 12:20:53 billn pts/1 23:58 /root ll
+  670  2015-01-07 12:21:19 billn pts/1 23:58 /root service mysql 
+  671  2015-01-07 12:21:23 billn pts/1 23:58 /root service mysql start
+  672  2015-01-07 12:22:55 billn pts/1 23:58 /root mysqld_safe --user=mysql &
+  673  2015-01-07 12:23:00 billn pts/1 23:58 /root ps aux | grep mysql
+  674  2015-01-07 12:23:09 billn pts/1 23:58 /root service mysql status
+  675  2015-01-07 12:23:14 billn pts/1 23:58 /root ll
+  676  2015-01-07 12:23:15 billn pts/1 23:58 /root pwd
+  677  2015-01-07 12:23:15 billn pts/1 23:58 /root ll
+  678  2015-01-07 12:23:16 billn pts/1 23:58 /root cd
+  679  2015-01-07 12:23:17 billn pts/1 23:58 /root pwd
+  680  2015-01-07 12:23:18 billn pts/1 23:58 /root cd -
+  681  2015-01-07 12:23:18 billn pts/1 23:58 /root ll
+  682  2015-01-07 12:23:21 billn pts/1 23:58 /root cd
+  683  2015-01-07 12:23:31 billn pts/1 23:58 /root mysql -uroot -p
+  684  2015-01-07 12:25:24 billn pts/1 23:58 /root /usr/bin/mysqladmin -u root -urootn3admin'password 
+  685  2015-01-07 12:26:38 billn pts/1 23:58 /root /usr/bin/mysqladmin -u root password 'n3admin'
+  686  2015-01-07 12:26:48 billn pts/1 23:58 /root mysql -uroot -p
+  687  2015-01-07 12:27:35 billn pts/1 23:58 /root bin/mysqladmin version
+  688  2015-01-07 12:27:39 billn pts/1 23:58 /root mysqladmin version
+  689  2015-01-07 12:28:09 billn pts/1 23:58 /root mysqladmin 
+  690  2015-01-07 12:28:17 billn pts/1 23:58 /root mysqladmin version
+  691  2015-01-07 12:28:22 billn pts/1 23:58 /root pwd
+  692  2015-01-07 12:28:22 billn pts/1 23:58 /root ll
+  693  2015-01-07 12:29:07 billn pts/1 23:58 /root ps aux | grep mysql
+  694  2015-01-07 12:29:17 billn pts/1 23:58 /root su - naehas
+  695  2015-01-07 14:46:57 billn pts/1 23:58 /root su - naehas
+  696  2015-01-07 15:05:38 billn pts/1 23:58 /root cd /etc/apache2/sites-available/
+  697  2015-01-07 15:05:39 billn pts/1 23:58 /root ll
+  698  2015-01-07 15:05:42 billn pts/1 23:58 /root vi default-ssl 
+  699  2015-01-07 15:05:47 billn pts/1 23:58 /root vi default*
+  700  2015-01-07 15:06:12 billn pts/1 23:58 /root pwd
+  701  2015-01-07 15:06:23 billn pts/1 23:58 /root ll
+  702  2015-01-07 15:06:28 billn pts/1 23:58 /root cd ..
+  703  2015-01-07 15:06:29 billn pts/1 23:58 /root ll
+  704  2015-01-07 15:06:35 billn pts/1 23:58 /root cd sites-enabled/
+  705  2015-01-07 15:06:35 billn pts/1 23:58 /root ll
+  706  2015-01-07 15:06:38 billn pts/1 23:58 /root vi default
+  707  2015-01-07 15:10:52 billn pts/1 23:58 /root service apache2 stop
+  708  2015-01-07 15:11:00 billn pts/1 23:58 /root service apache2 start
+  709  2015-01-07 15:11:13 billn pts/1 23:58 /root tail -f /var/log/mysql.log
+  710  2015-01-07 15:11:31 billn pts/1 23:58 /root tail -f /var/log/apache2/www.new.naehas.com_access.log
+  711  2015-01-07 15:12:37 billn pts/1 23:58 /root ll
+  712  2015-01-07 15:12:42 billn pts/1 23:58 /root pwd
+  713  2015-01-07 15:12:47 billn pts/1 23:58 /root cat default
+  714  2015-01-07 15:13:03 billn pts/1 23:58 /root vi default-ssl 
+  715  2015-01-07 15:14:20 billn pts/1 23:58 /root vi default
+  716  2015-01-07 15:14:52 billn pts/1 23:58 /root service apache2 stop
+  717  2015-01-07 15:14:59 billn pts/1 23:58 /root service apache2 start
+  718  2015-01-07 15:15:12 billn pts/1 23:58 /root cd /var/log/apache2/
+  719  2015-01-07 15:15:14 billn pts/1 23:58 /root ls -slart
+  720  2015-01-07 15:15:24 billn pts/1 23:58 /root tail -f www.new.naehas.com_ssl_access.log
+  721  2015-01-07 15:15:47 billn pts/1 23:58 /root vi /etc/apache2/sites-enabled/default-ssl 
+  722  2015-01-07 15:16:06 billn pts/1 23:58 /root ll -d /usr/java/www-static/*
+  723  2015-01-07 15:17:08 billn pts/1 23:58 /root ls -lart
+  724  2015-01-07 15:17:12 billn pts/1 23:58 /root tail -f error.log
+  725  2015-01-07 15:17:25 billn pts/1 23:58 /root ll
+  726  2015-01-07 15:17:43 billn pts/1 23:58 /root ls -slart
+  727  2015-01-07 15:17:59 billn pts/1 23:58 /root tail -f www.new.naehas.com_ssl_error.log
+  728  2015-01-07 15:19:29 billn pts/1 23:58 /root cd /usr/java/bill-dashboard/
+  729  2015-01-07 15:19:29 billn pts/1 23:58 /root ll
+  730  2015-01-07 15:19:35 billn pts/1 23:58 /root vi base-dashboard.properties 
+  731  2015-01-07 15:20:47 billn pts/1 23:58 /root ls
+  732  2015-01-07 15:21:01 billn pts/1 23:58 /root cd webapps/dashboard/WEB-INF/messages/
+  733  2015-01-07 15:21:02 billn pts/1 23:58 /root ll
+  734  2015-01-07 15:21:05 billn pts/1 23:58 /root vi messages.properties 
+  735  2015-01-07 15:21:23 billn pts/1 23:58 /root cd /etc/apache2/
+  736  2015-01-07 15:21:24 billn pts/1 23:58 /root ll
+  737  2015-01-07 15:22:06 billn pts/1 23:58 /root vi httpd.conf 
+  738  2015-01-07 15:22:53 billn pts/1 23:58 /root cd sites-enabled/
+  739  2015-01-07 15:22:54 billn pts/1 23:58 /root ll
+  740  2015-01-07 15:23:01 billn pts/1 23:58 /root cat default | grep ssl
+  741  2015-01-07 15:23:08 billn pts/1 23:58 /root cat default-ssl | grep ssl
+  742  2015-01-07 15:23:22 billn pts/1 23:58 /root cd ..
+  743  2015-01-07 15:23:26 billn pts/1 23:58 /root vi httpd.conf 
+  744  2015-01-07 15:24:00 billn pts/1 23:58 /root cd sites-enabled/
+  745  2015-01-07 15:24:02 billn pts/1 23:58 /root ll
+  746  2015-01-07 15:24:06 billn pts/1 23:58 /root rm -rf default
+  747  2015-01-07 15:24:10 billn pts/1 23:58 /root rm -rf default-ssl 
+  748  2015-01-07 15:24:38 billn pts/1 23:58 /root cd /var/www/
+  749  2015-01-07 15:24:38 billn pts/1 23:58 /root ll
+  750  2015-01-07 15:24:45 billn pts/1 23:58 /root rm -rf cloudpass/
+  751  2015-01-07 15:24:46 billn pts/1 23:58 /root ll
+  752  2015-01-07 15:24:51 billn pts/1 23:58 /root vi index.html 
+  753  2015-01-07 15:25:06 billn pts/1 23:58 /root cd
+  754  2015-01-07 15:25:12 billn pts/1 23:58 /root service apache2 stop
+  755  2015-01-07 15:25:23 billn pts/1 23:58 /root cd /etc/apache2/
+  756  2015-01-07 15:25:23 billn pts/1 23:58 /root ll
+  757  2015-01-07 15:25:28 billn pts/1 23:58 /root vi apache2.conf 
+  758  2015-01-07 15:25:41 billn pts/1 23:58 /root ll
+  759  2015-01-07 15:25:58 billn pts/1 23:58 /root service apache2 stop
+  760  2015-01-07 15:26:02 billn pts/1 23:58 /root service apache2 start
+  761  2015-01-07 15:26:12 billn pts/1 23:58 /root vi httpd.conf 
+  762  2015-01-07 15:26:44 billn pts/1 23:58 /root service apache2 stop
+  763  2015-01-07 15:26:50 billn pts/1 23:58 /root service apache2 start
+  764  2015-01-07 15:27:05 billn pts/1 23:58 /root tail -f /var/log/apache2/www.new.naehas.com_error.log 
+  765  2015-01-07 15:27:13 billn pts/1 23:58 /root cd /var/log/apache2/
+  766  2015-01-07 15:27:14 billn pts/1 23:58 /root l
+  767  2015-01-07 15:27:16 billn pts/1 23:58 /root ls -alrt
+  768  2015-01-07 15:27:21 billn pts/1 23:58 /root tail -f error.log
+  769  2015-01-07 15:28:06 billn pts/1 23:58 /root ll
+  770  2015-01-07 15:28:07 billn pts/1 23:58 /root cd -
+  771  2015-01-07 15:28:08 billn pts/1 23:58 /root ll
+  772  2015-01-07 15:28:16 billn pts/1 23:58 /root cp apache2.conf apache2.conf.o
+  773  2015-01-07 15:28:18 billn pts/1 23:58 /root vi apache2.conf 
+  774  2015-01-07 15:28:29 billn pts/1 23:58 /root pwd
+  775  2015-01-07 15:28:30 billn pts/1 23:58 /root ll
+  776  2015-01-07 15:28:34 billn pts/1 23:58 /root cd sites-enabled/
+  777  2015-01-07 15:28:34 billn pts/1 23:58 /root ll
+  778  2015-01-07 15:28:51 billn pts/1 23:58 /root cd ../
+  779  2015-01-07 15:28:53 billn pts/1 23:58 /root vi httpd.conf 
+  780  2015-01-07 15:29:58 billn pts/1 23:58 /root cd sites-enabled/
+  781  2015-01-07 15:29:59 billn pts/1 23:58 /root ll
+  782  2015-01-07 15:30:10 billn pts/1 23:58 /root ln -s ../sites-available/default ./
+  783  2015-01-07 15:30:14 billn pts/1 23:58 /root cd ../sites-available/
+  784  2015-01-07 15:30:15 billn pts/1 23:58 /root ll
+  785  2015-01-07 15:30:17 billn pts/1 23:58 /root vi default
+  786  2015-01-07 15:30:27 billn pts/1 23:58 /root ll
+  787  2015-01-07 15:30:31 billn pts/1 23:58 /root cp default default.o
+  788  2015-01-07 15:30:33 billn pts/1 23:58 /root vi default
+  789  2015-01-07 15:30:59 billn pts/1 23:58 /root cd ..
+  790  2015-01-07 15:31:02 billn pts/1 23:58 /root cd sites-enabled/
+  791  2015-01-07 15:31:03 billn pts/1 23:58 /root ll
+  792  2015-01-07 15:31:05 billn pts/1 23:58 /root cat default 
+  793  2015-01-07 15:31:11 billn pts/1 23:58 /root service apache2 stop
+  794  2015-01-07 15:31:14 billn pts/1 23:58 /root ps aux | grep 
+  795  2015-01-07 15:31:20 billn pts/1 23:58 /root service apache2 start
+  796  2015-01-07 15:31:27 billn pts/1 23:58 /root cd ..
+  797  2015-01-07 15:32:02 billn pts/1 23:58 /root cd mods-enabled/
+  798  2015-01-07 15:32:03 billn pts/1 23:58 /root ll
+  799  2015-01-07 15:32:13 billn pts/1 23:58 /root ln -s ../mods-available/headers.load ./
+  800  2015-01-07 15:32:14 billn pts/1 23:58 /root ll
+  801  2015-01-07 15:32:47 billn pts/1 23:58 /root service apache2 start
+  802  2015-01-07 15:33:01 billn pts/1 23:58 /root netstat -tunelp | grep apache
+  803  2015-01-07 15:33:40 billn pts/1 23:58 /root cd ..
+  804  2015-01-07 15:33:43 billn pts/1 23:58 /root vi httpd.conf 
+  805  2015-01-07 15:35:00 billn pts/1 23:58 /root cd sites-enabled/
+  806  2015-01-07 15:35:00 billn pts/1 23:58 /root ll
+  807  2015-01-07 15:35:02 billn pts/1 23:58 /root vi default 
+  808  2015-01-07 15:37:48 billn pts/1 23:58 /root service apache2 restart 
+  809  2015-01-07 15:37:57 billn pts/1 23:58 /root vi default 
+  810  2015-01-07 15:38:38 billn pts/1 23:58 /root apachectl -k graceful
+  811  2015-01-07 15:39:33 billn pts/1 23:58 /root apachectl -version 
+  812  2015-01-07 15:39:59 billn pts/1 23:58 /root ll
+  813  2015-01-07 15:40:00 billn pts/1 23:58 /root vi default 
+  814  2015-01-07 15:40:15 billn pts/1 23:58 /root service apache2 stop
+  815  2015-01-07 15:40:21 billn pts/1 23:58 /root cd /var/log/apache2/
+  816  2015-01-07 15:40:22 billn pts/1 23:58 /root ll
+  817  2015-01-07 15:40:25 billn pts/1 23:58 /root rm -rf *
+  818  2015-01-07 15:40:25 billn pts/1 23:58 /root ll
+  819  2015-01-07 15:40:29 billn pts/1 23:58 /root cd -
+  820  2015-01-07 15:40:36 billn pts/1 23:58 /root service apache2 start
+  821  2015-01-07 15:41:21 billn pts/1 23:58 /root cd -
+  822  2015-01-07 15:41:22 billn pts/1 23:58 /root ll
+  823  2015-01-07 15:41:30 billn pts/1 23:58 /root cd -
+  824  2015-01-07 15:42:11 billn pts/1 23:58 /root pwd
+  825  2015-01-07 15:42:22 billn pts/1 23:58 /root cd ../mods-enabled/
+  826  2015-01-07 15:42:31 billn pts/1 23:58 /root ln -s ../mods-available/expires.load ./
+  827  2015-01-07 15:42:40 billn pts/1 23:58 /root ll -d expires.load 
+  828  2015-01-07 15:42:52 billn pts/1 23:58 /root vi deflate.
+  829  2015-01-07 15:42:57 billn pts/1 23:58 /root cd ../sites-enabled/
+  830  2015-01-07 15:42:59 billn pts/1 23:58 /root vi default 
+  831  2015-01-07 15:43:14 billn pts/1 23:58 /root service apache2 stop
+  832  2015-01-07 15:43:20 billn pts/1 23:58 /root service apache2 start
+  833  2015-01-07 15:45:05 billn pts/1 23:58 /root cd ..
+  834  2015-01-07 15:45:07 billn pts/1 23:58 /root cd 0
+  835  2015-01-07 15:45:10 billn pts/1 23:58 /root cd -
+  836  2015-01-07 15:45:13 billn pts/1 23:58 /root vi default 
+  837  2015-01-07 15:45:41 billn pts/1 23:58 /root cd /var/log/apache2/
+  838  2015-01-07 15:45:42 billn pts/1 23:58 /root ll
+  839  2015-01-07 15:45:49 billn pts/1 23:58 /root vi error.log 
+  840  2015-01-07 15:46:21 billn pts/1 23:58 /root cd -
+  841  2015-01-07 15:46:22 billn pts/1 23:58 /root cd ..
+  842  2015-01-07 15:46:26 billn pts/1 23:58 /root grep -R bill * 
+  843  2015-01-07 15:46:39 billn pts/1 23:58 /root cd -
+  844  2015-01-07 15:46:54 billn pts/1 23:58 /root vi /etc/hosts
+  845  2015-01-07 15:47:36 billn pts/1 23:58 /root cd /usr/java/bill-dashboard/
+  846  2015-01-07 15:47:50 billn pts/1 23:58 /root cd webapps/dashboard/WEB-INF/
+  847  2015-01-07 15:47:51 billn pts/1 23:58 /root ll
+  848  2015-01-07 15:47:55 billn pts/1 23:58 /root vi global-beans.xml
+  849  2015-01-07 15:48:03 billn pts/1 23:58 /root grep -R bill *
+  850  2015-01-07 15:48:27 billn pts/1 23:58 /root vi campaign.properties
+  851  2015-01-07 15:48:54 billn pts/1 23:58 /root cd ..
+  852  2015-01-07 15:49:42 billn pts/1 23:58 /root cd ../../bin/
+  853  2015-01-07 15:49:49 billn pts/1 23:58 /root ./shutdown.sh 
+  854  2015-01-07 15:50:02 billn pts/1 23:58 /root su - naehas 
+  855  2015-01-07 15:53:15 billn pts/1 23:58 /root vi /etc/hosts
+  856  2015-01-07 15:53:20 billn pts/1 23:58 /root su - naehas 
+  857  2015-01-07 16:00:51 billn pts/1 23:58 /root cd
+  858  2015-01-07 16:00:52 billn pts/1 23:58 /root pwd
+  859  2015-01-07 16:01:09 billn pts/1 23:58 /root cd /etc/apache2/
+  860  2015-01-07 16:01:10 billn pts/1 23:58 /root ll
+  861  2015-01-07 16:01:18 billn pts/1 23:58 /root vi httpd.conf 
+  862  2015-01-07 16:03:47 billn pts/1 23:58 /root cp httpd.conf httpd.conf.o
+  863  2015-01-07 16:03:50 billn pts/1 23:58 /root vi httpd.conf
+  864  2015-01-07 16:04:08 billn pts/1 23:58 /root grep  Cert httpd.conf.o 
+  865  2015-01-07 16:04:21 billn pts/1 23:58 /root vi httpd.conf 
+  866  2015-01-07 16:05:26 billn pts/1 23:58 /root grep 201.194 httpd.conf.o 
+  867  2015-01-07 16:05:38 billn pts/1 23:58 /root vi apache2.conf 
+  868  2015-01-07 16:05:43 billn pts/1 23:58 /root vi httpd.conf 
+  869  2015-01-07 16:05:55 billn pts/1 23:58 /root service apache2 stop
+  870  2015-01-07 16:06:18 billn pts/1 23:58 /root service apache2 start; tail -f /var/log/apache2/error.log 
+  871  2015-01-07 16:06:43 billn pts/1 23:58 /root service apache2 start
+  872  2015-01-07 16:08:34 billn pts/1 23:58 /root vi httpd.conf 
+  873  2015-01-07 16:08:48 billn pts/1 23:58 /root service apache2 start
+  874  2015-01-07 16:09:04 billn pts/1 23:58 /root tail -f /var/log/apache2/error.log 
+  875  2015-01-07 16:09:50 billn pts/1 23:58 /root tail -f /var/log/apache2/ssl_access.log 
+  876  2015-01-07 16:13:58 billn pts/1 23:58 /root vi httpd.conf 
+  877  2015-01-07 16:17:05 billn pts/1 23:58 /root service apache2 stop
+  878  2015-01-07 16:17:22 billn pts/1 23:58 /root service apache2 start
+  879  2015-01-07 16:17:48 billn pts/1 23:58 /root cat httpd.conf
+  880  2015-01-07 16:25:22 billn pts/1 23:58 /root pwd
+  881  2015-01-07 16:25:27 billn pts/1 23:58 /root cd /usr/java/bill-dashboard/logs/
+  882  2015-01-07 16:25:27 billn pts/1 23:58 /root ll
+  883  2015-01-07 16:25:29 billn pts/1 23:58 /root ls -slart
+  884  2015-01-07 16:25:35 billn pts/1 23:58 /root tail -f dashboard.log.2015-01-07 
+  885  2015-01-07 16:30:04 billn pts/1 23:58 /root cd ..
+  886  2015-01-07 16:30:04 billn pts/1 23:58 /root ll
+  887  2015-01-07 16:30:06 billn pts/1 23:58 /root cd webapps/
+  888  2015-01-07 16:30:07 billn pts/1 23:58 /root ll
+  889  2015-01-07 16:30:15 billn pts/1 23:58 /root mkdir static
+  890  2015-01-07 16:30:17 billn pts/1 23:58 /root cd static/
+  891  2015-01-07 16:30:17 billn pts/1 23:58 /root l
+  892  2015-01-07 16:30:18 billn pts/1 23:58 /root ll
+  893  2015-01-07 16:30:32 billn pts/1 23:58 /root cp -rp ../../../www-static/www-static-elixir/* .
+  894  2015-01-07 16:30:42 billn pts/1 23:58 /root df 0g 
+  895  2015-01-07 16:30:43 billn pts/1 23:58 /root df -h 
+  896  2015-01-07 16:30:51 billn pts/1 23:58 /root cd ..
+  897  2015-01-07 16:31:07 billn pts/1 23:58 /root cd webapps/dashboard/WEB-INF/messages/
+  898  2015-01-07 16:31:08 billn pts/1 23:58 /root ll
+  899  2015-01-07 16:31:11 billn pts/1 23:58 /root vi messages.properties 
+  900  2015-01-07 16:31:56 billn pts/1 23:58 /root cd ..
+  901  2015-01-07 16:31:56 billn pts/1 23:58 /root pwd
+  902  2015-01-07 16:31:57 billn pts/1 23:58 /root cd ..
+  903  2015-01-07 16:32:00 billn pts/1 23:58 /root cd ../../bin/
+  904  2015-01-07 16:32:00 billn pts/1 23:58 /root ls
+  905  2015-01-07 16:32:10 billn pts/1 23:58 /root ./shutdown.sh 
+  906  2015-01-07 16:32:14 billn pts/1 23:58 /root su - naehas 
+  907  2015-01-07 17:14:48 billn pts/1 23:58 /root cd /usr/java/bill-dashboard/webapps/
+  908  2015-01-07 17:14:49 billn pts/1 23:58 /root ll
+  909  2015-01-07 17:14:53 billn pts/1 23:58 /root rm -rf static/
+  910  2015-01-07 17:15:00 billn pts/1 23:58 /root df -h 
+  911  2015-01-07 17:15:02 billn pts/1 23:58 /root ll
+  912  2015-01-07 17:15:04 billn pts/1 23:58 /root cd ..
+  913  2015-01-07 17:15:04 billn pts/1 23:58 /root ll
+  914  2015-01-07 17:15:14 billn pts/1 23:58 /root cd ../bill2-dashboard/
+  915  2015-01-07 17:15:15 billn pts/1 23:58 /root ll
+  916  2015-01-07 17:16:10 billn pts/1 23:58 /root cd webapps/static/
+  917  2015-01-07 17:16:10 billn pts/1 23:58 /root ll
+  918  2015-01-07 17:16:39 billn pts/1 23:58 /root cp -rp ../../../www-static/www-static-elixir/* .
+  919  2015-01-07 17:16:51 billn pts/1 23:58 /root rm -rf *
+  920  2015-01-07 17:16:53 billn pts/1 23:58 /root cp -rp ../../../www-static/www-static-elixir/* .
+  921  2015-01-07 17:16:57 billn pts/1 23:58 /root ll
+  922  2015-01-07 17:19:20 billn pts/1 23:58 /root cd ..
+  923  2015-01-07 17:19:21 billn pts/1 23:58 /root pwd
+  924  2015-01-07 17:19:22 billn pts/1 23:58 /root ll
+  925  2015-01-07 17:19:42 billn pts/1 23:58 /root tail -f ../logs/catalina.out 
+  926  2015-01-07 17:22:46 billn pts/1 23:58 /root cd ../logs/
+  927  2015-01-07 17:22:46 billn pts/1 23:58 /root ll
+  928  2015-01-07 17:22:57 billn pts/1 23:58 /root tail -f catalina.out 
+  929  2015-01-07 17:23:01 billn pts/1 23:58 /root ps aux | grep 
+  930  2015-01-07 17:23:07 billn pts/1 23:58 /root ps aux | grep java
+  931  2015-01-07 17:23:13 billn pts/1 23:58 /root cd ../bin/
+  932  2015-01-07 17:23:17 billn pts/1 23:58 /root ./shutdown.sh 
+  933  2015-01-07 17:23:34 billn pts/1 23:58 /root pwd
+  934  2015-01-07 17:23:43 billn pts/1 23:58 /root df -h 
+  935  2015-01-07 17:49:19 billn pts/1 23:58 /root pkill java
+  936  2015-01-07 17:49:24 billn pts/1 23:58 /root ps aux | grep java
+  937  2015-01-07 17:49:36 billn pts/1 23:58 /root kill 17214 
+  938  2015-01-07 17:49:40 billn pts/1 23:58 /root kill -9 17214 
+  939  2015-01-07 17:49:43 billn pts/1 23:58 /root ps aux | grep java
+  940  2015-01-07 17:49:51 billn pts/1 23:58 /root kill 19830
+  941  2015-01-07 17:49:55 billn pts/1 23:58 /root kill -9 19830
+  942  2015-01-07 17:50:00 billn pts/1 23:58 /root pwd
+  943  2015-01-07 17:50:03 billn pts/1 23:58 /root su - naehas
+  944  2015-01-07 17:51:44 billn pts/1 23:58 /root chown -R naehas:naeha /usr/java/
+  945  2015-01-07 17:51:49 billn pts/1 23:58 /root chown -R naehas:naehas /usr/java/
+  946  2015-01-07 17:51:55 billn pts/1 23:58 /root chown -R naehas:naeha /usr/java/
+  947  2015-01-07 17:51:57 billn pts/1 23:58 /root chown -R naehas:naehas /usr/java/
+  948  2015-01-07 17:51:58 billn pts/1 23:58 /root pwd
+  949  2015-01-07 17:52:10 billn pts/1 23:58 /root ./startup.sh
+  950  2015-01-07 17:52:13 billn pts/1 23:58 /root cd ../logs/
+  951  2015-01-07 17:52:19 billn pts/1 23:58 /root tail -f catalina.out 
+  952  2015-01-07 17:52:36 billn pts/1 23:58 /root pwd
+  953  2015-01-07 17:52:40 billn pts/1 23:58 /root ps aux | grep java
+  954  2015-01-07 17:52:44 billn pts/1 23:58 /root cd ..
+  955  2015-01-07 17:52:46 billn pts/1 23:58 /root cd bin/
+  956  2015-01-07 17:53:04 billn pts/1 23:58 /root cp -r ../../bill-dashboard/memOpts.env ./.
+  957  2015-01-07 17:53:06 billn pts/1 23:58 /root cd ..
+  958  2015-01-07 17:53:13 billn pts/1 23:58 /root cp -r ../../bill-dashboard/memOpts.env .
+  959  2015-01-07 17:53:20 billn pts/1 23:58 /root cp -r ../bill-dashboard/memOpts.env .
+  960  2015-01-07 17:53:21 billn pts/1 23:58 /root ll
+  961  2015-01-07 17:53:37 billn pts/1 23:58 /root vi memOpts.env 
+  962  2015-01-07 17:53:49 billn pts/1 23:58 /root vi bin/startup.sh
+  963  2015-01-07 17:54:21 billn pts/1 23:58 /root pwd
+  964  2015-01-07 17:57:52 billn pts/1 23:58 /root pwd
+  965  2015-01-07 17:57:53 billn pts/1 23:58 /root ll
+  966  2015-01-07 17:57:58 billn pts/1 23:58 /root pwd
+  967  2015-01-07 17:58:00 billn pts/1 23:58 /root ps aux 
+  968  2015-01-07 17:58:03 billn pts/1 23:58 /root ps aux | grep java
+  969  2015-01-07 17:58:20 billn pts/1 23:58 /root chown -R naehas:naehas /usr/java
+  970  2015-01-07 17:58:22 billn pts/1 23:58 /root cd /usr/java
+  971  2015-01-07 17:58:23 billn pts/1 23:58 /root pwd
+  972  2015-01-07 17:58:23 billn pts/1 23:58 /root ls
+  973  2015-01-07 17:58:24 billn pts/1 23:58 /root ll
+  974  2015-01-07 17:58:36 billn pts/1 23:58 /root cd bill-dashboard/webapps/
+  975  2015-01-07 17:58:37 billn pts/1 23:58 /root ll
+  976  2015-01-07 17:58:49 billn pts/1 23:58 /root ln -s ../../www-static/www-static-elixir ./static
+  977  2015-01-07 17:58:49 billn pts/1 23:58 /root ll
+  978  2015-01-07 17:58:51 billn pts/1 23:58 /root cd static
+  979  2015-01-07 17:58:51 billn pts/1 23:58 /root l
+  980  2015-01-07 17:58:52 billn pts/1 23:58 /root ll
+  981  2015-01-07 17:58:54 billn pts/1 23:58 /root cd ..
+  982  2015-01-07 17:59:05 billn pts/1 23:58 /root cd ../../bill2-dashboard/webapps/
+  983  2015-01-07 17:59:06 billn pts/1 23:58 /root ll
+  984  2015-01-07 17:59:15 billn pts/1 23:58 /root rm -rf static/
+  985  2015-01-07 17:59:16 billn pts/1 23:58 /root ll
+  986  2015-01-07 17:59:26 billn pts/1 23:58 /root ln -s ../../www-static/www-static-elixir ./static
+  987  2015-01-07 17:59:27 billn pts/1 23:58 /root ll
+  988  2015-01-07 17:59:28 billn pts/1 23:58 /root cd static
+  989  2015-01-07 17:59:29 billn pts/1 23:58 /root ll
+  990  2015-01-07 17:59:30 billn pts/1 23:58 /root cd ..
+  991  2015-01-07 17:59:30 billn pts/1 23:58 /root pwd
+  992  2015-01-07 17:59:31 billn pts/1 23:58 /root ll
+  993  2015-01-07 17:59:36 billn pts/1 23:58 /root cd ../bin/
+  994  2015-01-07 18:00:01 billn pts/1 23:58 /root cd ../../bill-dashboard/bin/
+  995  2015-01-07 18:00:01 billn pts/1 23:58 /root ll
+  996  2015-01-07 18:00:12 billn pts/1 23:58 /root vi startup.sh
+  997  2015-01-07 18:00:23 billn pts/1 23:58 /root cd ..
+  998  2015-01-07 18:00:31 billn pts/1 23:58 /root grep -R memOpt *
+  999  2015-01-07 18:01:01 billn pts/1 23:58 /root ll -d bin/startup.sh
+ 1000  2015-01-07 18:01:49 billn pts/1 23:58 /root su - naehas
+ 1001  2015-01-07 23:58:27 billn pts/1 23:58 /root pwd
+ 1002  2015-01-07 23:58:27 billn pts/1 23:58 /root ll
+ 1003  2015-01-07 23:58:38 billn pts/1 23:58 /root su - naehas
+ 1004  2015-01-08 00:24:56 billn pts/1 23:58 /root cd
+ 1005  2015-01-08 00:25:04 billn pts/1 23:58 /root passwd naehas
+ 1006  2015-01-08 00:25:38 billn pts/1 23:58 /root pwd
+ 1007  2015-01-08 00:25:39 billn pts/1 23:58 /root ll
+ 1008  2015-01-08 00:25:42 billn pts/1 23:58 /root cd
+ 1009  2015-01-08 00:25:43 billn pts/1 23:58 /root pwd
+ 1010  2015-01-08 00:32:30 billn pts/1 23:58 /root ll
+ 1011  2015-01-08 00:32:40 billn pts/1 23:58 /root rm -rf mysql*
+ 1012  2015-01-08 00:32:58 billn pts/1 23:58 /root pwd
+ 1013  2015-01-08 00:32:59 billn pts/1 23:58 /root df -h 
+ 1014  2015-01-08 00:33:12 billn pts/1 23:58 /root history | grep mysql
+ 1015  2015-01-08 00:33:37 billn pts/1 23:58 /root history >  out

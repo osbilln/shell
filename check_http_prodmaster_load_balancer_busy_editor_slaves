@@ -1,0 +1,53 @@
+#! /bin/bash
+
+STATE_OK=0
+STATE_WARNING=1
+STATE_CRITICAL=2
+STATE_UNKNOWN=3
+STATE_DEPENDENT=4
+
+if test -x /usr/bin/printf; then
+	ECHO=/usr/bin/printf
+else
+	ECHO=echo
+fi
+
+#wget "prodmerge.naehas.com:6060/master/services/action/server" -O /tmp/check_http_prodmaster_server.txt
+wget "prodmerge.naehas.com:6060/master/services/action/server" -O /tmp/check_http_prodmaster_server_busy_all_slaves.txt
+cat /tmp/check_http_prodmaster_server_busy_slaves.txt | sed -e $'s/},/}\\\n /g' > /tmp/check_http_prodmaster_server_busy_all_slaves_formatted.txt
+grep EDITOR /tmp/check_http_prodmaster_server_busy_all_slaves_formatted.txt > /tmp/check_http_prodmaster_server_busy_editor_slaves_formatted.txt
+capacity=0
+free=0
+while read server_line
+do
+current_capacity=`echo $server_line | cut -d ',' -f 5 | cut -d ':' -f2`
+#echo $current_capacity
+capacity=`expr $capacity + $current_capacity`
+done < /tmp/check_http_prodmaster_server_busy_editor_slaves_formatted.txt
+
+while read server_line
+do
+current_free=`echo $server_line | cut -d ',' -f 6 | cut -d ':' -f2`
+#echo $current_free
+free=`expr $free + $current_free`
+done < /tmp/check_http_prodmaster_server_busy_editor_slaves_formatted.txt
+
+echo capacity is $capacity
+echo free is $free
+#master_busy_count=`grep -f /usr/lib/nagios/plugins/check_http_prodmerge_server_busy_pattern.txt -o /tmp/check_http_prodmaster_server_busy_editor_slaves_formatted.txt | wc -l`
+
+#echo MASTERBUSYCOUNT: $master_busy_count
+
+#if [ $master_busy_count -gt 5 ]; then
+#	master_status=CRITICAL
+#else
+#	master_status=OK
+#fi
+
+#echo MASTERSTATUS: $master_status
+
+#if [ "$master_status" = "CRITICAL" ]; then
+#	exit $STATE_CRITICAL
+#else
+#	exit $STATE_OK
+#fi

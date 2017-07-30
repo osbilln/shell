@@ -1,0 +1,12 @@
+knife ec2 server create 
+  --image ami-ce7b6fba
+  --flavor m1.small
+  --region eu-west-1
+  --server-connect-attribute private_ip_address
+  --ssh-gateway user@gateway.ec2.example.com
+  --ssh-user ubuntu
+  --identity-file ~/.ssh/clarkdave.pem
+  --subnet subnet-8d034be5
+  --environment production
+  --node-name web1
+  --run-list 'role[base],role[web_server]'

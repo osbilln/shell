@@ -1,0 +1,46 @@
+#!/bin/bash -x
+# Backs up all naehas tables.
+# Excludes customer tables, and rendermap tables.
+
+PASSWORD=n3admin
+
+
+if [[ "$1" == "" ]] ; then 
+	DB=dmiplatform
+else
+	DB=$1
+fi
+echo $DB
+
+
+# Uncomment these lines to import the latest (or someother) data-list and it's TMP & DLOR child tables.
+LOOKUP_IDS=`echo "select max(d2.id) from N_DATA_LISTS d2 join N_DATA_FEEDS df on d2.datafeed_id = df.id where df.purpose != 'DATA_LIST' group by df.name" | mysql -uroot -p$PASSWORD ${DB}_staging -A -s`
+#echo $LOOKUP_IDS
+#exit 1
+LOOKUP_IDS2=`echo $LOOKUP_IDS | tr ' ' ',' `
+LOOKUPS=`echo "select tablename from N_DATA_LISTS d join N_DATA_FEEDS df2 on d.datafeed_id = df2.id where d.id in (${LOOKUP_IDS2})" | mysql -uroot -p$PASSWORD ${DB}_staging -A -s ` 
+#echo $LOOKUPS
+#exit 1
+LOOKUPS2=
+for LU in $LOOKUPS ; do
+  echo $LU
+  LOOKUPS2=$LOOKUPS2 `echo 'show tables like "$LU"' | mysql -uroot -p$PASSWORD ${DB}_staging -A -s `
+done
+
+ACLTABLES="acl_entry acl_object_identity"
+
+
+NAEHAS_TABLES=`echo "show tables like 'N\_%';" | mysql -uroot -p$PASSWORD ${DB}_staging -A -s | egrep -v '_BACKUP|_TMP'`
+#RENDER_MAPS=`echo "show tables like '%_RENDER_MAP';" | mysql -uroot -p$PASSWORD ${DB}_staging -A -s`
+
+echo Backing up $DB $NEWEST_LISTS $NAEHAS_TABLES $LOOKUPS2
+#mysqldump -u root -p$PASSWORD $DB $NAEHAS_TABLES                                 | gzip > $DB.sql.gz
+mysqldump -u root -p$PASSWORD ${DB}_staging $NEWEST_LISTS $NAEHAS_TABLES $ACLTABLES $LOOKUPS2 | gzip > ${DB}_staging.sql.gz
+#mysqldump -u root -p$PASSWORD ${DB}_bonita_core                                  | gzip > ${DB}_workflow.sql.gz
+#mysqldump -u root -p$PASSWORD ${DB}_bonita_history                               | gzip > ${DB}_workflowhistory.sql.gz
+
+# You could install these onto a target db with:
+### zcat $DB.sql.gz | mysql -uroot -p -A [target]
+### zcat $DB_staging].sql.gz | mysql -uroot -p -A [target]_staging
+
+echo 'Done.'

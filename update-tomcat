@@ -1,0 +1,6 @@
+echo "Updating dashboard $1 from $2"
+#cd /usr/java/$1/bin
+#./shutdown.sh
+rsync -avzb --exclude "logs/" --exclude "work/" --exclude "*.log" --exclude "catalina.pid" --backup-dir=/usr/java/backup naehas@$2:/usr/java/$1 /usr/java/${machineDir}
+#cd /usr/java/$1/bin
+#./startup.sh

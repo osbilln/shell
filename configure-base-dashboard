@@ -1,0 +1,52 @@
+#!/bin/bash
+configFile="base-dashboard.cfg"
+if ! [[ -e ${configFile} ]]
+then
+    echo "No configuration file! Expecting ${configFile} in working directory."
+    exit 1
+fi
+
+prod_flag=1
+domain=dashboard
+if [[ "" -eq `hostname | awk '/prod/ {print $1}'` ]]
+then
+    prod_flag=0
+    domain=${DOMAIN}
+fi
+
+
+## DATABASE
+# set_database_info now does an inplace sed replacement. Maybe we don't need these "original" files anymore?
+cp webapps/dashboard/META-INF/context.original.xml webapps/dashboard/META-INF/context.xml
+cp webapps/dashboard/WEB-INF/naehas-hibernate-test.original.xml webapps/dashboard/WEB-INF/naehas-hibernate-test.xml
+cp webapps/dashboard/WEB-INF/naehas-hibernate-staging.original.xml webapps/dashboard/WEB-INF/naehas-hibernate-staging.xml
+cp conf/server.original.xml conf/server.xml
+cp conf/Catalina/localhost/dashboard.xml.original conf/Catalina/localhost/dashboard.xml
+${scriptDir}/set_database_info
+
+
+INSTANCE_CONFIG=webapps/dashboard/WEB-INF/global-beans.xml
+cp webapps/dashboard/WEB-INF/global-beans.xml.original $INSTANCE_CONFIG
+
+## URL
+echo "Configuring url variables to $URL"
+sed -i "s/DummyDashboard/${URL}/g" $INSTANCE_CONFIG
+sed -i "s/STAGING_DOMAIN_SUFFIX/${STAGING_DOMAIN_SUFFIX}/g" $INSTANCE_CONFIG
+sed -i "s/TEST_EM_DOMAIN/${TEST_EM_DOMAIN}/g" $INSTANCE_CONFIG
+sed -i "s/STAGING_EM_DOMAIN/${STAGING_EM_DOMAIN}/g" $INSTANCE_CONFIG
+sed -i "s/PROD_EM_DOMAIN/${PROD_EM_DOMAIN}/g" $INSTANCE_CONFIG
+
+# This was probably here for backward compatibility. Will not work right anymore because the dashboard config file structure has changed
+## HOSTNAME
+# sed -i "s/xxx/${domain}/g" $INSTANCE_CONFIG
+
+## INSTANCE_ID
+sed -i "s/99999/${INSTANCE_ID}/g" $INSTANCE_CONFIG
+
+## INSTANCE_MANAGER_HOST
+sed -i "s|INSTANCE_MANAGER_HOST|${INSTANCE_MANAGER_HOST}|g" $INSTANCE_CONFIG
+
+## EXTRAS
+cp conf/webtestconfig.original.properties conf/webtestconfig.properties
+cp webapps/dashboard/WEB-INF/naehas-hibernate-default.original.xml webapps/dashboard/WEB-INF/naehas-hibernate-default.xml
+

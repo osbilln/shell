@@ -1,0 +1,52 @@
+#!/bin/bash
+
+PROGRAM_NAME=`basename $0`;
+if [[ (-z $1) || (-z $2) ]]; then
+    echo "ERROR: usage";
+    echo "$PROGRAM_NAME <source> <path> [<original_request_flag>]";
+    exit 1; 
+fi
+
+source=`basename $1`;
+path=`basename $2`;
+original=$3;
+
+if [[ ! -d /usr/java/staging/$path ]]; then
+    echo "ERROR: /usr/java/staging/$path does not exist";
+    exit 1;
+fi
+
+cd /usr/java/staging/$path
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: Could not cd to /usr/java/staging/$path";
+    exit 1;
+fi
+
+svn update
+
+if [[ $? -ne 0 ]]; then
+    echo "ERROR: svn update unsuccessful.";
+    exit 1;
+fi
+
+if [[ "${original}" == "1" ]]; then
+    echo "`date`" >> /usr/java/staging/$path/SYNC-timestamps.txt
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: date echo failed."
+        exit 1;
+    fi
+
+    svn add . --force
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: svn add all failed."
+        exit 1;
+    fi
+
+    svn commit -m "Sync Commit."
+    if [[ $? -ne 0 ]]; then
+        echo "ERROR: svn commit failed."
+        exit 1;
+    fi
+
+fi
+

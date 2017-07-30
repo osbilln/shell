@@ -1,0 +1,27 @@
+#! /bin/bash
+
+STATE_OK=0
+STATE_WARNING=1
+STATE_CRITICAL=2
+STATE_UNKNOWN=3
+STATE_DEPENDENT=4
+
+if test -x /usr/bin/printf; then
+        ECHO=/usr/bin/printf
+else
+        ECHO=echo
+fi
+
+if [ -f /home/naehas/mtr_share/100kused2.txt ]; then
+        hundredkused_status=`echo CRITICAL`
+else
+        hundredkused_status=`echo OK`
+fi
+
+echo HUNDREDKUSEDSTATUS: $hundredkused_status
+
+if [ "$hundredkused_status" = "CRITICAL" ]; then
+        exit $STATE_CRITICAL
+else
+        exit $STATE_OK
+fi

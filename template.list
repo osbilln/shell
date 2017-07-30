@@ -1,0 +1,17 @@
+Connecting to XenServer host [33mxen7[0m...
++----------------------------------------------+--------+-------------+----------------------+
+| NAME                                         | MEMORY | GUEST_TOOLS | NETWORKS             |
++----------------------------------------------+--------+-------------+----------------------+
+| Windows Merge Template 12-2013 Xen6.2        | 4096   | true        | Pool-wide network... |
+|   uuid: 0774f51a-853a-2fa6-bd24-3bf6c2d433d7 |        |             |                      |
+| Naehas Lucid 12-13 Template Xen6.2           | 1024   | true        | Pool-wide network... |
+|   uuid: 048a1c0f-8611-c36a-76f2-1073555c43ff |        |             |                      |
+| XenServer Transfer VM 6.2.0-70314c           | 68     | false       |                      |
+|   uuid: f3b102b5-d049-7f17-41dc-a4d06451f363 |        |             |                      |
+| Ubuntu Precise Webserver Template            | 4096   | true        | Pool-wide network... |
+|   uuid: 1deb5a44-a5ed-9b4e-a7b6-c381578f7cb8 |        |             |                      |
+| Naehas Precise Oct-2014 Template Xen6.2      | 1024   | true        | Pool-wide network... |
+|   uuid: 537adb08-2161-35db-e7d1-0191ddf5c0f9 |        |             |                      |
+| billtest1                                    | 4096   | true        | Pool-wide network... |
+|   uuid: 01b504fc-5217-4d32-1424-b5d37d35392d |        |             |                      |
++----------------------------------------------+--------+-------------+----------------------+

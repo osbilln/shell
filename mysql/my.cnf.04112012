@@ -1,0 +1,155 @@
+[mysqld_multi]
+mysqld = /usr/sbin/mysqld
+mysqladmin = /usr/bin/mysqladmin
+user = root
+
+[mysqld]
+table_cache     = 2048
+thread_cache_size = 16
+back_log = 100
+max_connect_errors = 10000
+open-files-limit = 20000
+interactive_timeout = 28800
+wait_timeout = 360000
+
+max_connections = 600
+group_concat_max_len = 16384
+max_allowed_packet = 100M
+tmp_table_size = 64M
+max_heap_table_size = 64M
+query_cache_size = 32M
+sort_buffer_size = 1M
+read_buffer_size = 1M
+read_rnd_buffer_size = 8M
+join_buffer_size = 1M
+key_buffer_size = 512M
+
+key_buffer              = 13G
+myisam_sort_buffer_size = 2048M
+bulk_insert_buffer_size=1024M
+
+innodb_buffer_pool_size = 5G
+innodb_flush_method = O_DIRECT
+sync_binlog = 0
+skip-slave-start
+
+
+
+
+[mysqld1]
+socket          = /var/lib/mysql/db4.sock
+pid-file	= /var/lib/mysql/db4.pid
+datadir         = /var/lib/mysql/db4
+tmpdir          = /mysqltmp/db4
+#tmpdir          = /tmp
+bind-address	= 192.168.209.43
+skip-external-locking
+user		= mysql
+
+
+#Innodb
+innodb_log_file_size = 200M
+
+server-id               = 241
+
+
+## Logging
+#log-bin                = /mysqllogs/db4/bin-log
+#log-bin-index = /mysqllogs/bin-log.index
+#slow_query_log = 1
+#slow_query_log_file = /var/log/mysql/slow_query.log
+#long_query_time = 5
+#log-queries-not-using-indexes  = 1
+#relay-log-index=/mysqllogs/db4/relay-log.index
+#relay-log = /mysqllogs/db4/db4-relay-bin
+log_error = /var/log/mysql/mysqld_db4.log
+
+[mysqld2]
+socket          = /var/lib/mysql/db2.sock
+pid-file	= /var/lib/mysql/db2.pid
+datadir         = /var/lib/mysql/db2
+tmpdir          = /mysqltmp/db2
+bind-address	= 192.168.209.42
+port		= 3306
+skip-external-locking
+user		= mysql
+
+#Replication
+server-id		= 242
+max_binlog_size         = 100M
+
+#Innodb
+innodb_log_file_size = 5M 
+
+## Logging
+#log-bin		= /var/lib/mysqllogs/bin-log
+#log-bin-index = /var/lib/mysqllogs/bin-log.index
+#slow_query_log = 1
+#slow_query_log_file = /var/log/mysql/slow_query.log
+#long_query_time = 5
+##log-queries-not-using-indexes  = 1
+log_error = /var/log/mysql/mysqld_db2.log
+
+[mysqld3]
+socket          = /var/lib/mysql/db6.sock
+pid-file        = /var/lib/mysql/db6.pid
+datadir         = /var/lib/mysql/db6
+tmpdir          = /mysqltmp/db6
+bind-address    = 192.168.209.44
+port            = 3306
+skip-external-locking
+user            = mysql
+
+group_concat_max_len=16384
+
+#Replication
+server-id               = 243
+
+#Innodb
+innodb_log_file_size = 200M
+
+## Logging
+log_error = /var/log/mysql/mysqld_db6.log
+
+[mysqld4]
+socket          = /var/lib/mysql/uatdb5.sock
+pid-file        = /var/lib/mysql/uatdb5.pid
+datadir         = /var/lib/mysql/uatdb5
+tmpdir          = /mysqltmp/uatdb5
+bind-address    = 192.168.209.41
+port            = 3306
+skip-external-locking
+user            = mysql
+
+group_concat_max_len=16384
+
+#Replication
+server-id               = 244
+
+#Innodb
+innodb_log_file_size = 200M
+
+## Logging
+log_error = /var/log/mysql/mysqld_uatdb5.log
+
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow_query_uatdb5.log
+long_query_time = 5
+
+
+[mysqldump]
+quick
+quote-names
+max_allowed_packet      = 100M
+
+[mysql]
+#no-auto-rehash # faster start of mysql but no tab completition
+
+[isamchk]
+key_buffer              = 16M
+
+#
+# * IMPORTANT: Additional settings that can override those from this file!
+#   The files must end with '.cnf', otherwise they'll be ignored.
+#
+!includedir /etc/mysql/conf.d/

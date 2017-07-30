@@ -1,0 +1,171 @@
+#!/bin/bash
+
+set -x
+
+PROGRAM_NAME=`basename $0`
+
+usage() {
+    echo "ERROR: usage: ${PROGRAM_NAME} url port proxyHost"
+    echo "              url             eg. MyDashboard, CanonDashboard, ValueDirectDashboard"
+    echo "              port            eg. 12345, 54320"
+    echo "              proxyHost       eg. 127.0.0.1, cluster3, prodcluster"
+    echo ""
+    exit 1;
+}
+
+if [[ (-z $1) || (-z $2) || (-z $3) ]]; then
+    usage
+fi
+
+URL=$1
+PORT=$2
+port=`expr $PORT + 1`
+proxyHost=$3
+scriptDir=`dirname $0`
+TS=`date '+%Y%m%d-%H%M%S'`
+HAPROXY_HOME=/etc/haproxy
+HAPROXY_CONF=/etc/haproxy/haproxy.cfg
+HAPROXY=/usr/sbin/haproxy
+NAEHAS_ADMIN=/tmp/naehas-admin
+port=`expr $PORT + 1`
+
+function haproxy_cfg_before()
+	{
+	cp -r /etc/haproxy/haproxy.cfg $NAEHAS_ADMIN/haproxy.cfg.${TS}.before
+}
+
+function haproxy_cfg_after()
+	{
+	cp -r /tmp/haproxy.cfg $NAEHAS_ADMIN/haproxy.cfg.${TS}.after
+}
+
+function update_haproxy_config()
+	{
+	sudo mv /tmp/haproxy.cfg $HAPROXY_CONF
+}
+
+function haproxy_status()
+{
+	output=$(cat /var/run/haproxy.pid)
+        if [ $? -eq 0 ]; then
+            echo " * $service_name is running (pid $pid)."
+        else
+            echo " * $service_name is not running"
+            exit 1
+        fi;
+}
+
+function check_existing_dashboard()
+{
+        grep $1 /etc/haproxy/haproxy.cfg	
+        if [ $? -eq 0 ]; then
+           echo "ERROR: There is an existing dashboard entry in the /etc/haproxy/haproxy.cfg"
+	   echo " Please check your setup"
+           exit 1
+        fi;
+}
+
+function check_haproxy_config()
+{
+	$HAPROXY -c -f "/tmp/haproxy.cfg" >/dev/null
+        if [ $? -eq 1 ]; then
+                echo "haproxy failed, please check your steps"
+                exit 1
+        fi
+       
+}
+
+function dashboard_status() 
+{
+        output=$(lsof -i tcp:${PORT} | grep -i listen)
+        if [ $? -eq 0 ]; then
+            pid=$(echo -e "$output" | tail -n 1 | awk -F" " '{print $2}')
+            echo " * $service_name is running (pid $pid)."
+        else
+            echo " * $service_name is not running"
+            exit 1
+        fi;
+}
+
+function frontend () 
+{
+	sed "/bind \*\:80/a \        acl ${URL} path_reg ^/${URL}/?\n \       use_backend ${URL} if ${URL}\n" $2/haproxy.cfg > /tmp/haproxy.cfg.1
+	sed "/bind \*\:443/a \        acl ${URL} path_reg ^/${URL}/?\n \       use_backend ${URL} if ${URL}\n" /tmp/haproxy.cfg.1 > /tmp/haproxy.cfg.2
+}
+
+function backend () 
+{
+	cat <<EOF >> /tmp/haproxy.cfg.2
+backend ${URL}
+        balance roundrobin
+        option  http-server-close
+        timeout http-keep-alive 3000
+        option  forwardfor
+        option http-keep-alive
+	option  httpchk HEAD /healthCheck HTTP/1.1\r\nHost:\ qa6.naehas.com/${DMI}/
+        cookie JSESSIONID prefix
+	reqrep ^([^\ :]*)\ /${URL}/(.*) \1\ /dashboard/\2
+        rspirep ^(Location:)\ http://([^/]*)/dashboard/(.*)$    \1\ https://\2/${URL}/\3
+	redirect scheme https if !{ ssl_fc }
+        server $node1 $node1_ip:${port} cookie check
+EOF
+	mv /tmp/haproxy.cfg.2 /tmp/haproxy.cfg
+	rm /tmp/haproxy.cfg.1
+}
+
+function check_env ()
+{
+	if [ $ENV = qadb1 ]; then
+	   node1=qa5
+	   node1_ip=`echo $qa5` 
+	   node2=qa6
+	   node2_ip=`echo $qa6`
+	fi
+	if [ $ENV = perfdb1 ]; then
+	   node1=perfnode1
+	   node1_ip=`echo $perfnode3`
+	   node2=perfnode2
+	   node2_ip=`echo $perfweb4`
+	fi
+	if [ $ENV = uatdb1 ]; then
+	   node1=uatnode3
+	   node1_ip=`echo $uatnode3`
+	   node2=uatweb4
+	   node2_ip=`echo $uatweb4`
+	fi
+	if [ $ENV = db1 ]; then
+	   node1=web1
+	   node1_ip=`echo $web1`
+	   node2=node2
+	   node2_ip=`echo $web2`
+	   node3=node3
+	   node3_ip=`echo $web3`
+	fi
+}
+
+DASHBOARD_DIRNAME=`echo $URL | tr A-Z a-z | sed "s/dashboard/-dashboard/"`
+cd /usr/java/$DASHBOARD_DIRNAME
+source base-dashboard.properties
+ENV=$dbHost
+cd /home/naehas/proxy-bin
+source env.properties
+check_env 
+
+cd $HAPROXY_HOME
+if ! [[ -e /tmp/naehas-admin ]]; then
+    mkdir /tmp/naehas-admin
+    chmod a+rwx /tmp/naehas-admin
+fi
+
+haproxy_cfg_before
+
+cd $HAPROXY_HOME
+check_existing_dashboard $URL
+frontend $NAEHAS_ADMIN $HAPROXY_HOME
+backend $NAEHAS_ADMIN $HAPROXY_HOME
+check_haproxy_config
+#
+haproxy_cfg_after
+update_haproxy_config
+~naehas/proxy-bin/update-haproxy
+exit 0;
